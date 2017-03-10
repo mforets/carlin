@@ -2,4 +2,5 @@
 Carleman linearization of polynomial differential equations
 ===========================================================
 
-[![Build Status](https://api.travis-ci.org/mforets/carlin.svg)](https://api.travis-ci.org/mforets/carlin)
+.. image:: https://api.travis-ci.org/mforets/carlin.svg
+   :target: https://api.travis-ci.org/mforets/carlin
