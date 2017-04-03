@@ -15,4 +15,4 @@ To install the package use the following command::
 Documentation
 ~~~~~~~~~~~~
 
-Go to the `HTML documentation <http://mforets.github.io/carlin/doc/html/>`
+Go to the `HTML documentation <http://mforets.github.io/carlin/doc/html/>`_.
