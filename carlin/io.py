@@ -133,3 +133,34 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
 
     return F, n, k
     
+#===============================================
+# Functions to export a model
+#===============================================
+    
+def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
+
+    from scipy.io import savemat
+
+    if '.sage' in model_filename:
+        mat_model_filename = model_filename.replace(".sage", ".mat")
+    elif '.mat' in model_filename:
+        mat_model_filename = model_filename
+    else:
+        raise ValueError("Expected .sage or .mat file format in model filename.")
+
+
+    got_Fj = False if F is None else True
+
+    if not got_Fj:
+        [F, n, k] = get_Fj_from_model(model_filename)
+
+    d = dict()
+
+    d['F'] = F
+    d['n'] = n
+    d['k'] = k
+
+    savemat(mat_model_filename, d)
+
+    return    
+    

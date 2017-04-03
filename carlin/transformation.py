@@ -1,14 +1,8 @@
 r"""
-This is the core model for Carleman linearization.
+Carleman linearization of polynomial differential equations in SageMath.
 
-It contains:
-- functions to compute Carleman linearization
-- functions to export the results
-
-AUTHORS:
-
-- Marcelo Forets (2016-12) First version
-
+- Marcelo Forets  (first draft: 10 Dic 2016)
+                  (last modified: 10 Feb 2017)
 """
 
 #************************************************************************
@@ -22,30 +16,23 @@ AUTHORS:
 #************************************************************************
 
 #===============================================
-# Working numerical libraries
+# Dependencies
 #===============================================
 
+# Working numerical libraries
 import numpy as np
-
 import scipy
 from scipy import inf
 from scipy.io import savemat
-
 import scipy.sparse as sp
 from scipy.sparse import kron, eye
 import scipy.sparse.linalg
 
-#===============================================
-# Carleman libraries
-#===============================================
+# Carleman input/output libraries
+from carlin.io import get_Fj_from_model
 
-from io import get_Fj_from_model
-
-#===============================================
-# Libraries for handling polytopes
-#===============================================
-
-from lib.polyFunctions_core import polyhedron_sup_norm, PolyhedronToHSpaceRep, chebyshev_center
+# Toolbox for operations on polytopes
+from polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
 
 #===============================================
 # Functions to compute Carleman linearization
@@ -201,7 +188,8 @@ def error_function(model_filename, N, x0):
     import scipy as sp
     from scipy import inf
     from numpy.linalg import norm
-
+    from sage.symbolic.ring import SR
+    
     [F, n, k] = get_Fj_from_model(model_filename)
     [Fquad, nquad, kquad] = quadratic_reduction(F, n, k)
     ch = characteristics(Fquad, nquad, kquad);
@@ -209,8 +197,8 @@ def error_function(model_filename, N, x0):
     norm_F1_tilde = ch['norm_Fi_inf'][0]
     norm_F2_tilde = ch['norm_Fi_inf'][1]
 
-
     x0_hat = [kron_power(x0, i+1) for i in range(k-1)]
+    
     #transform to flat list
     x0_hat = [item for sublist in x0_hat for item in sublist]
 
@@ -220,42 +208,14 @@ def error_function(model_filename, N, x0):
 
     Ts = 1/norm_F1_tilde*log(1+1/beta0)
 
-    var('t')
-    eps(t) = norm_x0_hat*exp(norm_F1_tilde*t)/(1+beta0-beta0*exp(norm_F1_tilde*t))*(beta0*(exp(norm_F1_tilde*t)-1))^N
+    t = SR.var('t')
+    error = norm_x0_hat*exp(norm_F1_tilde*t)/(1+beta0-beta0*exp(norm_F1_tilde*t))*(beta0*(exp(norm_F1_tilde*t)-1))**N
 
-    return [Ts, eps]
-
+    return [Ts, error]
 
 #===============================================
 # Functions to export Carleman linearization
 #===============================================
-
-def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
-
-    from scipy.io import savemat
-
-    if '.sage' in model_filename:
-        mat_model_filename = model_filename.replace(".sage", ".mat")
-    elif '.mat' in model_filename:
-        mat_model_filename = model_filename
-    else:
-        raise ValueError("Expected .sage or .mat file format in model filename.")
-
-
-    got_Fj = False if F is None else True
-
-    if not got_Fj:
-        [F, n, k] = get_Fj_from_model(model_filename)
-
-    d = dict()
-
-    d['F'] = F
-    d['n'] = n
-    d['k'] = k
-
-    savemat(mat_model_filename, d)
-
-    return
 
 def carleman_export(model_filename, target_filename, N, x0, **kwargs):
     r""" Compute Carleman linearization and export to a MAT file.
@@ -330,7 +290,7 @@ def carleman_export(model_filename, target_filename, N, x0, **kwargs):
 
         #use crossnorm property
         nx0 = np.linalg.norm(x0, ord=inf)
-        norm_x0_hat = max([nx0^i for i in [1.0..k-1]])
+        norm_x0_hat = max([nx0^i for i in range(1, k)])
 
         dic['norm_x0_tilde'] = norm_x0_hat
 
