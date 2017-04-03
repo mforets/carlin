@@ -1,5 +1,6 @@
 r"""
 This is the core model for Carleman linearization.
+
 It contains:
 - functions to compute Carleman linearization
 - functions to export the results
@@ -38,7 +39,7 @@ import scipy.sparse.linalg
 # Carleman libraries
 #===============================================
 
-from src.carleman_utils import get_Fj_from_model, kron_power, characteristics
+from io import get_Fj_from_model
 
 #===============================================
 # Libraries for handling polytopes
@@ -51,7 +52,7 @@ from lib.polyFunctions_core import polyhedron_sup_norm, PolyhedronToHSpaceRep, c
 #===============================================
 
 def transfer_matrices(N, F, n, k):
-    r""" A = transfer_matrices(N, F, n, k)
+    r""" Finite order transfer matrices `A_ij`.
 
     INPUTS:
 
@@ -77,7 +78,7 @@ def transfer_matrices(N, F, n, k):
     # first row is trivial
     A.append(F)
 
-    for i in [1..N-1]:
+    for i in range(1, N):
         newRow = []
         for j in range(k):
             L = kron(A[i-1][j], eye(n))
@@ -87,9 +88,8 @@ def transfer_matrices(N, F, n, k):
 
     return A
 
-
 def truncated_matrix(N, *args, **kwargs):
-    r""" BN = truncated_matrix(N, *args, **kwargs)
+    r""" Finite order Carleman linearization. 
 
     INPUTS:
 
@@ -107,11 +107,6 @@ def truncated_matrix(N, *args, **kwargs):
     - "A" : the transfer matrices $A^{i}_{i+j-1}$ that correspond to
             $i = 1, \ldots , N$. It is given as a list of lists.
             Each inner list has dimension $k$.
-
-    TO-DO:
-
-    - Update docstring.
-
     """
 
     from scipy.sparse import bmat
@@ -201,8 +196,6 @@ def quadratic_reduction(F, n, k):
 
     return [F_tilde, nquad, kquad]
 
-
-
 def error_function(model_filename, N, x0):
 
     import scipy as sp
@@ -264,19 +257,8 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 
     return
 
-
-
 def carleman_export(model_filename, target_filename, N, x0, **kwargs):
     r""" Compute Carleman linearization and export to a MAT file.
-
-    INPUTS:
-
-    OUTPUTS:
-
-    EXAMPLES:
-
-
-
     """
 
     dic = dict()
@@ -383,3 +365,154 @@ def carleman_export(model_filename, target_filename, N, x0, **kwargs):
 
 
     return
+
+#===============================================
+# Auxiliary mathematical functions
+#===============================================
+
+def kron_prod(x,y):
+    r""" Compute the Kronecker product of two vectors x and y.
+    
+    A list is returned. The method len should be available.
+    """
+    return [x[i]*y[j]  for i in range(len(x)) for j in range(len(y))]
+
+
+def kron_power(x, i):
+    r""" Receives a nx1 vector and computes its Kronecker power x^[i]. Assuming that i >= 1.
+    """
+    if (i > 2):
+        return kron_prod(x, kron_power(x,i-1))
+    elif (i == 2):
+        return kron_prod(x,x)
+    elif (i == 1):
+        return x
+    #elif (i==0):
+#        return 1
+    else:
+        raise ValueError('Index i should be an integer >= 1')
+
+
+def get_key_from_index(i, j, n):
+
+    x = polygen(QQ, ['x'+str(1+k) for k in range(n)])
+    x_power_j = kron_power(x, j)
+    d = x_power_j[i].dict()
+
+    return list(d.items()[0][0])
+
+
+def get_index_from_key(key, j, n):
+    r"""
+
+    NOTES:
+
+    - We assume n >= 2. Notice that if n=1, we would return always that:
+    first_occurence = 0.
+
+    TO-DO:
+
+    - Include some bounds check?
+
+    - Case j = sum(key) = 0. kron_power(x, 0) = 1
+
+    """
+
+    x = polygen(QQ, ['x'+str(1+k) for k in range(n)])
+    x_power_j = kron_power(x, j)
+
+    for i, monomial in enumerate(x_power_j):
+        if ( list(monomial.dict().keys()[0]) == key):
+            first_occurence = i
+            break
+
+    return first_occurence
+
+
+def log_norm(A, p='inf'):
+    r"""Compute the logarithmic norm of a matrix.
+
+    INPUTS:
+
+    * "A" - A rectangular (Sage dense) matrix of order n. The coefficients can be either real or complex.
+
+    * "p" - (default: 'inf'). The vector norm; possible choices are 1, 2, or 'inf'.
+
+    OUTPUT:
+
+    * "lognorm" - The log-norm of A in the p norm.
+
+    TO-DO:
+
+    - Add support for a Numpy array for all values of p. (added - not tested).
+
+    - Add support for an arbitrary p >= 1 vector norm. (how?)
+
+    - Check assumed shape. (not sure if I want this)
+
+    """
+
+    # parse the input matrix
+    if 'scipy.sparse' in str(type(A)):
+        # cast into numpy array (or ndarray)
+        A = A.toarray()
+        n = A.shape[0]
+    elif 'numpy.array' in str(type(A)) or 'numpy.ndarray' in str(type(A)):
+        n = A.shape[0]
+    else:
+        # assuming sage matrix
+        n = A.nrows();
+
+    # computation, depending on the chosen norm p
+    if (p == 'inf' or p == oo):
+        z = max( real_part(A[i][i]) + sum( abs(A[i][j]) for j in range(n)) - abs(A[i][i]) for i in range(n))
+        return z
+
+    elif (p == 1):
+        n = A.nrows();
+        return max( real_part(A[j][j]) + sum( abs(A[i][j]) for i in range(n)) - abs(A[j][j]) for j in range(n))
+
+    elif (p == 2):
+
+        if not (A.base_ring() == RR or A.base_ring() == CC):
+            return 1/2*max((A+A.H).eigenvalues())
+        else:
+            # Alternative, always numerical
+            z = 1/2*max( np.linalg.eigvals( np.matrix(A+A.H, dtype=complex) ) )
+            return real_part(z) if imag_part(z) == 0 else z
+
+    else:
+        raise ValueError('Value of p not understood or not implemented.')
+
+def characteristics(F, n, k):
+    r""" c = characteristics(F, n, k)
+    where c is a dictionary containing information about the norms of the matrices in F.
+
+    INPUTS:
+
+    - "F" : list of matrices in a Numpy sparse format. The method toarray should be available.
+
+    TO-DO:
+
+    - Accept an optional parameter (params) that specifies:
+        - norms chosen
+    """
+
+    import scipy as sp
+    from scipy import inf
+    from numpy.linalg import norm
+
+    c = dict()
+
+    c['norm_Fi_inf'] = [norm(F[i].toarray(), ord=inf) for i in range(k)]
+
+    c['log_norm_F1_inf'] = log_norm(F[0], p='inf')
+
+    if k > 1:
+        if c['norm_Fi_inf'][0] != 0:
+            c['beta0_const'] = c['norm_Fi_inf'][1]/c['norm_Fi_inf'][0]
+        else:
+            c['beta0_const'] = 'inf'
+
+    return c
+    
