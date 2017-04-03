@@ -13,10 +13,6 @@ AUTHOR:
 
 - Marcelo Forets  (first draft: 20 Oct 2016)
                   (last modified: 10 Feb 2017)
-
-EXAMPLES:
-
-See 'Examples-polyFunctions-core.ipynb'.
 """
 
 #************************************************************************
