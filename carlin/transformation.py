@@ -32,7 +32,10 @@ import scipy.sparse.linalg
 from carlin.io import get_Fj_from_model
 
 # Toolbox for operations on polytopes
-from polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
+from carlin.polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
+
+# Sage objects
+from sage.rings.rational_field import QQ
 
 #===============================================
 # Functions to compute Carleman linearization
@@ -354,7 +357,7 @@ def kron_power(x, i):
 
 
 def get_key_from_index(i, j, n):
-
+    
     x = polygen(QQ, ['x'+str(1+k) for k in range(n)])
     x_power_j = kron_power(x, j)
     d = x_power_j[i].dict()

@@ -25,6 +25,9 @@ AUTHOR:
 #                  http://www.gnu.org/licenses/
 #************************************************************************
 
+# Sage objects
+from sage.rings.rational_field import QQ
+
 def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     r"""Extract half-space representation of an input polytope P. 
     
@@ -174,8 +177,7 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
                 b.append(pi_vec[0])
 
     return [matrix(RDF, A), vector(RDF, b), matrix(RDF, Aeq), vector(RDF, beq)]
-    
-    
+        
 def polyhedron_from_Hrep(A, b, base_ring=QQ):
     r"""Builds a polytope given the H-representation, in the form Ax <= b
 
