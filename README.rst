@@ -13,16 +13,23 @@ To install the package use the following command::
    sage -pip install --upgrade -v git+https://github.com/mforets/carlin.git
 
 Documentation
-~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
-Go to the `HTML documentation <http://mforets.github.io/carlin/doc/html/>`_.
+There is an online `HTML documentation <http://mforets.github.io/carlin/doc/html/>`_.
 
-To build the HTML documentation::
+For a local build of the HTML documentation::
 
    sage -sh -c "make latexpdf"
     
-To build the pdf documentation::
+The PDF format can be built with::
 
    sage -sh -c "make latexpdf"
 
 These commands shall be executed inside the `docs` directory.
+
+Unit tests
+~~~~~~~~~~
+
+Compile and run the tests with the following Sage command::
+
+    sage -bt carlin/*.py
