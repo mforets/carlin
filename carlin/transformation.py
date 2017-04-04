@@ -35,7 +35,7 @@ from carlin.io import get_Fj_from_model
 from carlin.polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
 
 # Sage objects: Rings and Polynomials
-from sage.rings.all import RR, QQ, ZZ
+from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
 
