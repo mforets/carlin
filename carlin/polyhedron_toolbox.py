@@ -27,6 +27,7 @@ AUTHOR:
 
 # Sage objects
 from sage.rings.rational_field import QQ
+from sage.rings.real_double import RDF
 
 def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     r"""Extract half-space representation of an input polytope P. 
@@ -67,7 +68,7 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     ....: [0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
     ....: [0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
     sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
-    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep
+    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep, polyhedron_from_Hrep
     sage: P = polyhedron_from_Hrep(A, b, base_ring = RDF); P
     A 3-dimensional polyhedron in RDF^6 defined as the convex hull of 8 vertices
     sage: [A, b] = polyhedron_to_Hrep(P)
