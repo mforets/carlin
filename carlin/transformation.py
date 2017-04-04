@@ -15,9 +15,9 @@ Carleman linearization of polynomial differential equations in SageMath.
 #                  http://www.gnu.org/licenses/
 #************************************************************************
 
-#=============
+#===============================================
 # Dependencies
-#=============
+#===============================================
 
 # Working numerical libraries
 import numpy as np
@@ -39,9 +39,9 @@ from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
 
-#============================================
+#===============================================
 # Functions to compute Carleman linearization
-#============================================
+#===============================================
 
 def transfer_matrices(N, F, n, k):
     r""" Finite order transfer matrices `A_ij`.

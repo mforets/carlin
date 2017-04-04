@@ -67,9 +67,9 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     ....: [0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
     ....: [0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
     sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
+    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep
     sage: P = polyhedron_from_Hrep(A, b, base_ring = RDF); P
     A 3-dimensional polyhedron in RDF^6 defined as the convex hull of 8 vertices
-
     sage: [A, b] = polyhedron_to_Hrep(P)
     sage: A
     [-0.0  1.0 -0.0 -0.0 -0.0 -0.0]
@@ -216,7 +216,6 @@ def polyhedron_from_Hrep(A, b, base_ring=QQ):
     ....: [ 0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
     ....: [ 0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
     ....: [ 0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
-
     sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
     sage: P = polyhedron_from_Hrep(A, b, base_ring=QQ); P
     A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices
@@ -421,9 +420,9 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
 
     EXAMPLES::
 
+    sage: from polyhedron_toolbox import BoxInfty
     sage: P = BoxInfty([1,2,3], 1); P
     A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
-
     sage: supp_fun_polyhedron(P, [1,1,1], return_xopt=True)
     (9.0, {0: 2.0, 1: 3.0, 2: 4.0})
     
@@ -533,7 +532,6 @@ def BoxInfty(lengths=None, center=None, radius=None, base_ring=QQ, return_HSpace
 
     sage: P = BoxInfty([1,2,3], 1); P
     A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
-
     sage: P.plot(aspect_ratio=1)    # not tested (plot)
 
     NOTES::
