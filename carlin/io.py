@@ -20,10 +20,9 @@ AUTHORS:
 #                  http://www.gnu.org/licenses/
 #************************************************************************
 
-
-#===============================================
+#=============
 # Dependencies
-#===============================================
+#=============
 
 import numpy as np
 
@@ -33,7 +32,13 @@ import scipy.sparse as sp
 import scipy.sparse.linalg
 
 # this is a dependency for load
-from sage.rings.integer import Integer     
+from sage.rings.integer import Integer   
+
+# Sage objects: Rings and Polynomials
+from sage.rings.rational_field import QQ
+from sage.rings.all import CC
+from sage.rings.real_double import RDF
+from sage.rings.polynomial.polynomial_ring import polygens 
 
 #===============================================
 # Functions to load a model
