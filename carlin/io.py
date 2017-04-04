@@ -22,7 +22,7 @@ AUTHORS:
 
 
 #===============================================
-# Working numerical libraries
+# Dependencies
 #===============================================
 
 import numpy as np
@@ -31,6 +31,9 @@ import scipy
 from scipy import inf
 import scipy.sparse as sp
 import scipy.sparse.linalg
+
+# this is a dependency for load
+from sage.rings.integer import Integer     
 
 #===============================================
 # Functions to load a model
@@ -53,13 +56,11 @@ def load_model(model_filename):
 
     TO-DO:
 
-    - Accept file that is not polynomial and try to convert it to polynomial form. See ```automatic_recastic.ipynb`` notebook.
+    - Accept file that is not polynomial and try to convert it to polynomial form. 
+    See ```automatic_recastic.ipynb`` notebook.
 
     """
     from sage.structure.sage_object import load
-    
-    # dependencies for load 
-    from sage.rings.integer import Integer
     
     # should define n and f
     load(model_filename)
