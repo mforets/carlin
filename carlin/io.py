@@ -120,7 +120,8 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
     dictionary_f = [fi.dict() for fi in f];
 
     if (n>1):
-
+        from carlin.transformation import get_index_from_key
+        
         for i, dictionary_f_i in enumerate(dictionary_f):
             for key in dictionary_f_i.iterkeys():
                 row = i;
