@@ -35,7 +35,8 @@ from carlin.io import get_Fj_from_model
 from carlin.polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
 
 # Sage objects
-from sage.rings.rational_field import QQ
+from sage.rings.rational_field import QQ, RR, CC
+from sage.rings.polynomial.polynomial_ring import polygens
 
 #===============================================
 # Functions to compute Carleman linearization
@@ -72,7 +73,7 @@ def transfer_matrices(N, F, n, k):
         newRow = []
         for j in range(k):
             L = kron(A[i-1][j], eye(n))
-            R = kron(eye(n^(i)), F[j])
+            R = kron(eye(n**i), F[j])
             newRow += [np.add(L, R)]
         A.append(newRow)
 
@@ -166,10 +167,10 @@ def quadratic_reduction(F, n, k):
         for h in range(k-1):
 
             for j in range(k-2):
-                newRow.append(lil_matrix((n^(i+1), n^(h+j+2))))
+                newRow.append(lil_matrix((n**(i+1), n**(h+j+2))))
 
             if h>i:
-                newRow.append(lil_matrix((n^(i+1), n^(h+k))))
+                newRow.append(lil_matrix((n**(i+1), n**(h+k))))
             else:
                 newRow.append(A[i][k-i-1+h])
 
@@ -223,6 +224,7 @@ def error_function(model_filename, N, x0):
 def carleman_export(model_filename, target_filename, N, x0, **kwargs):
     r""" Compute Carleman linearization and export to a MAT file.
     """
+    from sage.modules.free_module_element import vector
 
     dic = dict()
     dic['model_name'] = model_filename
@@ -273,7 +275,7 @@ def carleman_export(model_filename, target_filename, N, x0, **kwargs):
         beta0 = ch['beta0_const']*norm_x0_hat
         dic['beta0'] = beta0
 
-        Ts = 1/norm_F1_tilde*log(1+1/beta0)
+        Ts = 1./norm_F1_tilde*log(1+1./beta0)
         dic['Ts'] = Ts
 
         [F, g] = PolyhedronToHSpaceRep(x0)
@@ -380,7 +382,7 @@ def get_index_from_key(key, j, n):
     - Case j = sum(key) = 0. kron_power(x, 0) = 1
 
     """
-
+    
     x = polygens(QQ, ['x'+str(1+k) for k in range(n)])
     x_power_j = kron_power(x, j)
 
