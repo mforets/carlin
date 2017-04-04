@@ -358,7 +358,7 @@ def kron_power(x, i):
 
 def get_key_from_index(i, j, n):
     
-    x = polygen(QQ, ['x'+str(1+k) for k in range(n)])
+    x = polygens(QQ, ['x'+str(1+k) for k in range(n)])
     x_power_j = kron_power(x, j)
     d = x_power_j[i].dict()
 
@@ -381,7 +381,7 @@ def get_index_from_key(key, j, n):
 
     """
 
-    x = polygen(QQ, ['x'+str(1+k) for k in range(n)])
+    x = polygens(QQ, ['x'+str(1+k) for k in range(n)])
     x_power_j = kron_power(x, j)
 
     for i, monomial in enumerate(x_power_j):

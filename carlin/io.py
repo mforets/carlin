@@ -29,27 +29,23 @@ import numpy as np
 
 import scipy
 from scipy import inf
-
 import scipy.sparse as sp
-from scipy.sparse import kron, eye
 import scipy.sparse.linalg
-from scipy.io import loadmat, savemat
 
 #===============================================
 # Functions to load a model
 #===============================================
 
 def load_model(model_filename):
-    r""" [f, n, k] = load(model_filename)
-    Read an input system.
+    r""" Read an input ODE system.
 
     INPUTS:
 
-    - "model_filename" : string containin the filename
+    - "model_filename" : string with the model filename
 
     OUTPUTS:
 
-    - "f" : polynomial vector field. Each component belongs to the polynomial ring QQ[x1,...,xn]
+    - "f" : polynomial vector field. Each component belongs to the polynomial ring `\mathbf{Q}[x1,...,xn]`
 
     - "n" : dimension of f.
 
@@ -57,10 +53,11 @@ def load_model(model_filename):
 
     TO-DO:
 
-    - Accept file that is not polynomial and try to convert it to polynomial form. See automatic_recastic.ipynb notebook.
+    - Accept file that is not polynomial and try to convert it to polynomial form. See ```automatic_recastic.ipynb`` notebook.
 
     """
-
+    from sage.structure.sage_object import load
+    
     # should define n and f
     load(model_filename)
 
