@@ -58,6 +58,9 @@ def load_model(model_filename):
     """
     from sage.structure.sage_object import load
     
+    # dependencies for load 
+    from sage.rings.integer import Integer
+    
     # should define n and f
     load(model_filename)
 
