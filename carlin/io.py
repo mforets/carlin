@@ -35,8 +35,7 @@ import scipy.sparse.linalg
 from sage.rings.integer import Integer   
 
 # Sage objects: Rings and Polynomials
-from sage.rings.rational_field import QQ
-from sage.rings.all import CC
+from sage.rings.all import RR, QQ, ZZ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
 

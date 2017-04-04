@@ -35,8 +35,7 @@ from carlin.io import get_Fj_from_model
 from carlin.polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
 
 # Sage objects: Rings and Polynomials
-from sage.rings.rational_field import QQ
-from sage.rings.all import CC
+from sage.rings.all import RR, QQ, ZZ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
 
@@ -223,7 +222,7 @@ def error_function(model_filename, N, x0):
 # Functions to export Carleman linearization
 #===============================================
 
-def carleman_export(model_filename, target_filename, N, x0, **kwargs):
+def linearize(model_filename, target_filename, N, x0, **kwargs):
     r""" Compute Carleman linearization and export to a MAT file.
     """
     from sage.modules.free_module_element import vector
