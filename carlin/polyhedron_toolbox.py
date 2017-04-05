@@ -219,6 +219,7 @@ def polyhedron_from_Hrep(A, b, base_ring=QQ):
     ....: [ 0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
     ....: [ 0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
     sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
+    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep
     sage: P = polyhedron_from_Hrep(A, b, base_ring=QQ); P
     A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices
 
@@ -318,6 +319,7 @@ def chebyshev_center(P=None, A=None, b=None):
     * "cheby_center" - the Chebyshev center, as a vector. The base_ring is preserved.
 
     """
+    from sage.numerical.mip import MixedIntegerLinearProgram
     
     # parse input
     got_P, got_Ab = False, False;
