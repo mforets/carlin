@@ -1,16 +1,14 @@
 .. nodoctest
 
-Installation
-~~~~~~~~~~~~
+How to install through Sage's pip
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To install the package use the following command::
 
    sage -pip install --upgrade -v git+https://github.com/mforets/carlin.git
 
-Documentation
-~~~~~~~~~~~~~
-
-There is an online `HTML documentation <http://mforets.github.io/carlin/doc/html/>`_.
+How to build the project locally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For a local build of the HTML documentation::
 

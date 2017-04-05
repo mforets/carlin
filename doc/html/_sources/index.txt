@@ -23,7 +23,7 @@ Examples
 .. toctree::
    :maxdepth: 1
 
-    examples
+   examples
     
 Methods
 =======
