@@ -39,6 +39,7 @@ from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
 from sage.modules.free_module_element import vector
+from sage.functions.other import real_part, imag_part
 
 #===============================================
 # Functions to compute Carleman linearization
@@ -417,7 +418,7 @@ def log_norm(A, p='inf'):
     - Check assumed shape. (not sure if I want this)
 
     """
-
+    
     # parse the input matrix
     if 'scipy.sparse' in str(type(A)):
         # cast into numpy array (or ndarray)
