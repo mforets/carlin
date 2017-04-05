@@ -19,7 +19,7 @@ There is an online `HTML documentation <http://mforets.github.io/carlin/doc/html
 
 For a local build of the HTML documentation::
 
-   sage -sh -c "make latexpdf"
+   sage -sh -c "make html"
     
 The PDF format can be built with::
 
