@@ -1,7 +1,7 @@
 .. nodoctest
 
 
-Avaiable Transformations
+Available Transformations
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. automodule:: carlin.transformation
