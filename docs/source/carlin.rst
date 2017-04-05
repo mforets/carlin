@@ -1,7 +1,7 @@
 .. nodoctest
 
-Carlin
-======
+Carleman
+============
 
 .. automodule:: carlin.transformation
    :members:

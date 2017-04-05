@@ -34,10 +34,11 @@ from carlin.io import get_Fj_from_model
 # Toolbox for operations on polytopes
 from carlin.polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
 
-# Sage objects: Rings and Polynomials
+# Sage objects: Rings, Polynomials, Linear algebra
 from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
+from sage.modules.free_module_element import vector
 
 #===============================================
 # Functions to compute Carleman linearization
@@ -59,9 +60,9 @@ def transfer_matrices(N, F, n, k):
 
     OUTPUTS:
 
-    - "A" : the transfer matrices $A^{i}_{i+j-1}$ that correspond
-            to $i = 1, \ldots , N$. It is given as a list of lists.
-            Each inner list has dimension $k$.
+    - "A" : the transfer matrices `A^{i}_{i+j-1}` that correspond
+            to `i = 1, \ldots , N`. It is given as a list of lists.
+            Each inner list has dimension `k`.
 
     """
 
@@ -225,8 +226,7 @@ def error_function(model_filename, N, x0):
 def linearize(model_filename, target_filename, N, x0, **kwargs):
     r""" Compute Carleman linearization and export to a MAT file.
     """
-    from sage.modules.free_module_element import vector
-
+    
     dic = dict()
     dic['model_name'] = model_filename
     dic['N'] = N

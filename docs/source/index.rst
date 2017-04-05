@@ -1,5 +1,5 @@
 ==================================
-Carleman Linearization in SageMath
+Carleman Linearization in Sage
 ==================================
 
 This is a package for symbolic compuations on polynomial differential equations. 
@@ -9,13 +9,29 @@ This work is licensed under a `Creative Commons Attribution-Share Alike
 
 __ https://creativecommons.org/licenses/by-sa/3.0/
 
-Carlin
-======
+Installation
+============
 
 .. toctree::
    :maxdepth: 1
 
-   carlin
+   installation
+
+Examples
+========
+
+.. toctree::
+   :maxdepth: 1
+
+    examples
+    
+Methods
+=======
+        
+.. toctree::
+  :maxdepth: 1
+
+  carlin
 
 
 Indices and Tables
