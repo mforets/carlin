@@ -266,7 +266,7 @@ def linearize(model_filename, target_filename, N, x0, **kwargs):
         norm_initial_states = polyhedron_sup_norm(x0).n()
 
         if (norm_initial_states >= 1):
-            norm_x0_hat = norm_initial_states^(k-1)
+            norm_x0_hat = norm_initial_states**(k-1)
         elif (norm_initial_states < 1):
             norm_x0_hat = norm_initial_states
 
@@ -297,7 +297,7 @@ def linearize(model_filename, target_filename, N, x0, **kwargs):
 
         #use crossnorm property
         nx0 = np.linalg.norm(x0, ord=inf)
-        norm_x0_hat = max([nx0^i for i in range(1, k)])
+        norm_x0_hat = max([nx0**i for i in range(1, k)])
 
         dic['norm_x0_tilde'] = norm_x0_hat
 
