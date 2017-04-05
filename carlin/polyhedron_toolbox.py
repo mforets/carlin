@@ -30,7 +30,8 @@ from sage.rings.rational_field import QQ
 from sage.rings.real_double import RDF
 
 from sage.geometry.polyhedron.constructor import Polyhedron
-from sage.matrix.constructor import matrix, vector, zero_vector
+from sage.matrix.constructor import matrix, vector
+from sage.modules.free_module_element import zero_vector
 
 def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     r"""Extract half-space representation of an input polytope P. 
