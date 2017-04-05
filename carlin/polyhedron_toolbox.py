@@ -29,6 +29,9 @@ AUTHOR:
 from sage.rings.rational_field import QQ
 from sage.rings.real_double import RDF
 
+from sage.geometry.polyhedron.constructor import Polyhedron
+from sage.matrix.constructor import matrix, vector
+
 def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     r"""Extract half-space representation of an input polytope P. 
     
@@ -230,7 +233,7 @@ def polyhedron_from_Hrep(A, b, base_ring=QQ):
      Note that Polyhedron automatically removes redundant constraints.
 
     """
-
+    
     if (base_ring == RDF):
 
         if 'numpy.ndarray' in str(type(A)):
@@ -317,7 +320,7 @@ def chebyshev_center(P=None, A=None, b=None):
     * "cheby_center" - the Chebyshev center, as a vector. The base_ring is preserved.
 
     """
-
+    
     # parse input
     got_P, got_Ab = False, False;
     if (P is not None):
@@ -374,7 +377,8 @@ def radius(P):
     The difference with mult-methods is that they check also for the type of the arguments.
 
     """
-
+    from carlin.polyhedron_toolbox import supp_fun_polyhedron
+    
     if (type(P) == list):
 
         A = P[0]; b = P[1];
@@ -531,6 +535,7 @@ def BoxInfty(lengths=None, center=None, radius=None, base_ring=QQ, return_HSpace
 
     EXAMPLES:
 
+    sage: from carlin.polyhedron_toolbox import BoxInfty
     sage: P = BoxInfty([1,2,3], 1); P
     A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
     sage: P.plot(aspect_ratio=1)    # not tested (plot)

@@ -279,7 +279,7 @@ def linearize(model_filename, target_filename, N, x0, **kwargs):
         Ts = 1./norm_F1_tilde*log(1+1./beta0)
         dic['Ts'] = Ts
 
-        [F, g] = PolyhedronToHSpaceRep(x0)
+        [F, g] = polyhedron_to_Hrep(x0)
 
         #dic['F'] = F; dic['g'] = g.column()
         dic['x0'] = {'F' : F, 'g' : g.column()}
