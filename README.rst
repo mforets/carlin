@@ -26,10 +26,3 @@ The PDF format can be built with::
    sage -sh -c "make latexpdf"
 
 These commands shall be executed inside the `docs` directory.
-
-Unit tests
-~~~~~~~~~~
-
-Compile and run the tests with the following Sage command::
-
-    sage -bt carlin/*.py
