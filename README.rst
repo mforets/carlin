@@ -26,3 +26,8 @@ The PDF format can be built with::
    sage -sh -c "make latexpdf"
 
 These commands shall be executed inside the `docs` directory.
+
+Examples
+~~~~~~~~
+
+Browse the Jupyter notebooks available in the `/examples` folder in this repository.
