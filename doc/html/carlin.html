@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Avaiable Transformations &mdash; Carleman linearization of ordinary differential equations 0.0.1 documentation</title>
+    <title>Available Transformations &mdash; Carleman linearization of ordinary differential equations 0.0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -50,16 +50,26 @@
           <div class="body" role="main">
             
   <div class="section" id="module-carlin.transformation">
-<span id="avaiable-transformations"></span><h1>Avaiable Transformations<a class="headerlink" href="#module-carlin.transformation" title="Permalink to this headline">¶</a></h1>
+<span id="available-transformations"></span><h1>Available Transformations<a class="headerlink" href="#module-carlin.transformation" title="Permalink to this headline">¶</a></h1>
 <p>Carleman linearization of polynomial differential equations in SageMath.</p>
+<p>Features:</p>
+<ul class="simple">
+<li>reduction of a polynomial vector field to a quadratic field in higher dimensions</li>
+<li>truncation</li>
+<li>calculation of the truncation error by the method of a priori estimates</li>
+<li>calculation of the truncation error by the method of generating functions</li>
+</ul>
+<p>AUTHOR:</p>
 <ul>
 <li><dl class="first docutils">
-<dt>Marcelo Forets  (first draft: 10 Dic 2016)</dt>
-<dd><p class="first last">(last modified: 10 Feb 2017)</p>
+<dt>Marcelo Forets (Dec 2016 at VERIMAG - France)</dt>
+<dd><p class="first last">(Apr 2016 at MPI-SWS - Germany)</p>
 </dd>
 </dl>
 </li>
 </ul>
+<p>The theoretical results have been obtained in collaboration with 
+Amaury Pouly at MPI-SWS, Germany.</p>
 <dl class="function">
 <dt id="carlin.transformation.characteristics">
 <code class="descclassname">carlin.transformation.</code><code class="descname">characteristics</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.characteristics" title="Permalink to this definition">¶</a></dt>
@@ -201,13 +211,15 @@ Each inner list has dimension $k$.</p>
 </div>
 <div class="section" id="module-carlin.io">
 <span id="handling-input-output"></span><h1>Handling Input/Output<a class="headerlink" href="#module-carlin.io" title="Permalink to this headline">¶</a></h1>
-<p>This is the utils module for Carleman linearization.
-It contains:
-- functions to load a model
-- auxiliary mathematical functions</p>
-<p>AUTHORS:</p>
+<p>Carleman linearization input/output functions.</p>
+<p>Features:</p>
 <ul class="simple">
-<li>Marcelo Forets (2016-12) First version</li>
+<li>functions to load model polynomial ODE&#8217;s</li>
+<li>auxiliary mathematical functions</li>
+</ul>
+<p>AUTHOR:</p>
+<ul class="simple">
+<li>Marcelo Forets (Dec 2016 at VERIMAG - UGA)</li>
 </ul>
 <dl class="function">
 <dt id="carlin.io.export_model_to_mat">
@@ -270,20 +282,14 @@ However, now that case is handled separately.</p>
 <p>Numerical computations with polytopes, with a focus on computational geometry.</p>
 <p>Features:</p>
 <ul class="simple">
-<li>an &#8220;abstract&#8221; Polyhedron class</li>
-<li>computations with support functions</li>
-<li>Hausdorff distance computation, exact and approximate algorithms</li>
-<li>polytope projections via Lotov&#8217;s algorithm</li>
-<li>a bunch of commonly used functions</li>
+<li>use <span class="math">\((A, b)\)</span> notation for polytope construction</li>
+<li>a bunch of commonly used functions, which do not require the double description</li>
 </ul>
+<p>of the polytope
+- calculation of support functions</p>
 <p>AUTHOR:</p>
-<ul>
-<li><dl class="first docutils">
-<dt>Marcelo Forets  (first draft: 20 Oct 2016)</dt>
-<dd><p class="first last">(last modified: 10 Feb 2017)</p>
-</dd>
-</dl>
-</li>
+<ul class="simple">
+<li>Marcelo Forets (Oct 2016 at VERIMAG - UGA)</li>
 </ul>
 <dl class="function">
 <dt id="carlin.polyhedron_toolbox.BoxInfty">
@@ -590,7 +596,7 @@ sage: supp_fun_polyhedron(P, [1,1,1], solver=&#8217;GLPK&#8217;)
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Avaiable Transformations</a></li>
+<li><a class="reference internal" href="#">Available Transformations</a></li>
 <li><a class="reference internal" href="#module-carlin.io">Handling Input/Output</a></li>
 <li><a class="reference internal" href="#module-carlin.polyhedron_toolbox">Polyhedron Toolbox</a></li>
 </ul>
