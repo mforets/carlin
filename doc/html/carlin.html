@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/MathJax.js?config=TeX-AMS_HTML-full,../mathjax_sage.js"></script>
     <link rel="top" title="Carleman linearization of ordinary differential equations 0.0.1 documentation" href="index.html" />
-    <link rel="prev" title="Sage Sample Package" href="index.html" /> 
+    <link rel="prev" title="Carleman Linearization in SageMath" href="index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -35,7 +35,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="index.html" title="Sage Sample Package"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Carleman Linearization in SageMath"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -46,8 +49,531 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="carlin">
-<h1>Carlin<a class="headerlink" href="#carlin" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-carlin.transformation">
+<span id="carlin"></span><h1>Carlin<a class="headerlink" href="#module-carlin.transformation" title="Permalink to this headline">¶</a></h1>
+<p>Carleman linearization of polynomial differential equations in SageMath.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Marcelo Forets  (first draft: 10 Dic 2016)</dt>
+<dd><p class="first last">(last modified: 10 Feb 2017)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="function">
+<dt id="carlin.transformation.characteristics">
+<code class="descclassname">carlin.transformation.</code><code class="descname">characteristics</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.characteristics" title="Permalink to this definition">¶</a></dt>
+<dd><p>c = characteristics(F, n, k)
+where c is a dictionary containing information about the norms of the matrices in F.</p>
+<p>INPUTS:</p>
+<ul class="simple">
+<li>&#8220;F&#8221; : list of matrices in a Numpy sparse format. The method toarray should be available.</li>
+</ul>
+<p>TO-DO:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Accept an optional parameter (params) that specifies:</dt>
+<dd><ul class="first last simple">
+<li>norms chosen</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.error_function">
+<code class="descclassname">carlin.transformation.</code><code class="descname">error_function</code><span class="sig-paren">(</span><em>model_filename</em>, <em>N</em>, <em>x0</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.error_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.get_index_from_key">
+<code class="descclassname">carlin.transformation.</code><code class="descname">get_index_from_key</code><span class="sig-paren">(</span><em>key</em>, <em>j</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.get_index_from_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>NOTES:</p>
+<ul class="simple">
+<li>We assume n &gt;= 2. Notice that if n=1, we would return always that:</li>
+</ul>
+<p>first_occurence = 0.</p>
+<p>TO-DO:</p>
+<ul class="simple">
+<li>Include some bounds check?</li>
+<li>Case j = sum(key) = 0. kron_power(x, 0) = 1</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.get_key_from_index">
+<code class="descclassname">carlin.transformation.</code><code class="descname">get_key_from_index</code><span class="sig-paren">(</span><em>i</em>, <em>j</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.get_key_from_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.kron_power">
+<code class="descclassname">carlin.transformation.</code><code class="descname">kron_power</code><span class="sig-paren">(</span><em>x</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receives a nx1 vector and computes its Kronecker power x^[i]. Assuming that i &gt;= 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.kron_prod">
+<code class="descclassname">carlin.transformation.</code><code class="descname">kron_prod</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_prod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Kronecker product of two vectors x and y.</p>
+<p>A list is returned. The method len should be available.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.linearize">
+<code class="descclassname">carlin.transformation.</code><code class="descname">linearize</code><span class="sig-paren">(</span><em>model_filename</em>, <em>target_filename</em>, <em>N</em>, <em>x0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.linearize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Carleman linearization and export to a MAT file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.log_norm">
+<code class="descclassname">carlin.transformation.</code><code class="descname">log_norm</code><span class="sig-paren">(</span><em>A</em>, <em>p='inf'</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.log_norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the logarithmic norm of a matrix.</p>
+<p>INPUTS:</p>
+<ul class="simple">
+<li>&#8220;A&#8221; - A rectangular (Sage dense) matrix of order n. The coefficients can be either real or complex.</li>
+<li>&#8220;p&#8221; - (default: &#8216;inf&#8217;). The vector norm; possible choices are 1, 2, or &#8216;inf&#8217;.</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li>&#8220;lognorm&#8221; - The log-norm of A in the p norm.</li>
+</ul>
+<p>TO-DO:</p>
+<ul class="simple">
+<li>Add support for a Numpy array for all values of p. (added - not tested).</li>
+<li>Add support for an arbitrary p &gt;= 1 vector norm. (how?)</li>
+<li>Check assumed shape. (not sure if I want this)</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.quadratic_reduction">
+<code class="descclassname">carlin.transformation.</code><code class="descname">quadratic_reduction</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.quadratic_reduction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.transfer_matrices">
+<code class="descclassname">carlin.transformation.</code><code class="descname">transfer_matrices</code><span class="sig-paren">(</span><em>N</em>, <em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.transfer_matrices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finite order transfer matrices <span class="math">\(A_ij\)</span>.</p>
+<p>INPUTS:</p>
+<ul class="simple">
+<li>&#8220;N&#8221; : order of truncation.</li>
+<li>&#8220;F&#8221; : sequence of matrices $F_j$ (list).</li>
+<li>&#8220;n&#8221; : the dimension of the state-space.</li>
+<li>&#8220;k&#8221; : the order of the polynomial vector field. It is equal to len(F).</li>
+</ul>
+<p>OUTPUTS:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>&#8220;A&#8221;</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices $A^{i}_{i+j-1}$ that correspond</span><dd><p class="first last">to $i = 1, ldots , N$. It is given as a list of lists.
+Each inner list has dimension $k$.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.truncated_matrix">
+<code class="descclassname">carlin.transformation.</code><code class="descname">truncated_matrix</code><span class="sig-paren">(</span><em>N</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.truncated_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finite order Carleman linearization.</p>
+<p>INPUTS:</p>
+<ul class="simple">
+<li>&#8220;N&#8221; : order of truncation.</li>
+<li>&#8220;input_format&#8221; : sequence of matrices $F_j$ (list).</li>
+<li>&#8220;F&#8221; : the dimension of the state-space.</li>
+<li>&#8220;input_format&#8221; : the order of the polynomial vector field. It is equal to len(F).</li>
+</ul>
+<p>OUTPUTS:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>&#8220;A&#8221;</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices $A^{i}_{i+j-1}$ that correspond to</span><dd><p class="first last">$i = 1, ldots , N$. It is given as a list of lists.
+Each inner list has dimension $k$.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<span class="target" id="module-carlin.io"></span><p>This is the utils module for Carleman linearization.
+It contains:
+- functions to load a model
+- auxiliary mathematical functions</p>
+<p>AUTHORS:</p>
+<ul class="simple">
+<li>Marcelo Forets (2016-12) First version</li>
+</ul>
+<dl class="function">
+<dt id="carlin.io.export_model_to_mat">
+<code class="descclassname">carlin.io.</code><code class="descname">export_model_to_mat</code><span class="sig-paren">(</span><em>model_filename</em>, <em>F=None</em>, <em>n=None</em>, <em>k=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.export_model_to_mat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="carlin.io.get_Fj_from_model">
+<code class="descclassname">carlin.io.</code><code class="descname">get_Fj_from_model</code><span class="sig-paren">(</span><em>model_filename=None</em>, <em>f=None</em>, <em>n=None</em>, <em>k=None</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.get_Fj_from_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>[F, n, k] = get_Fj_from_model(...)
+Transform an input model of a polynomial vector field into standard form as a sum of Kronecker products.
+The model can be given either as an external file (model_filename), or as the tuple (f, n, k).</p>
+<p>INPUTS:</p>
+<ul class="simple">
+<li>&#8220;model_filename&#8221; : string containing the filename</li>
+</ul>
+<p>OUTPUTS:</p>
+<ul class="simple">
+<li>&#8220;F&#8221; : F is a list of sparse matrices F1, ..., Fk. These are formatted in dok (dictionary-of-keys) form.</li>
+<li>&#8220;n&#8221; : dimension of the state-space of the system</li>
+<li>&#8220;k&#8221; : degree of the system</li>
+</ul>
+<p>EXAMPLE:</p>
+<p>NOTES:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>There was a problem with sum(1) with Sage&#8217;s sum, that happens for the scalar case</dt>
+<dd><p class="first last">(n=1). In that case we can use: from scipy import sum
+However, now that case is handled separately.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.io.load_model">
+<code class="descclassname">carlin.io.</code><code class="descname">load_model</code><span class="sig-paren">(</span><em>model_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read an input ODE system.</p>
+<p>INPUTS:</p>
+<ul class="simple">
+<li>&#8220;model_filename&#8221; : string with the model filename</li>
+</ul>
+<p>OUTPUTS:</p>
+<ul class="simple">
+<li>&#8220;f&#8221; : polynomial vector field. Each component belongs to the polynomial ring <span class="math">\(\mathbf{Q}[x1,...,xn]\)</span></li>
+<li>&#8220;n&#8221; : dimension of f.</li>
+<li>&#8220;k&#8221; : degree of f.</li>
+</ul>
+<p>TO-DO:</p>
+<ul class="simple">
+<li>Accept file that is not polynomial and try to convert it to polynomial form.</li>
+</ul>
+<p>See <code class="docutils literal"><span class="pre">`automatic_recastic.ipynb</span></code> notebook.</p>
+</dd></dl>
+
+<span class="target" id="module-carlin.polyhedron_toolbox"></span><p>Numerical computations with polytopes, with a focus on computational geometry.</p>
+<p>Features:</p>
+<ul class="simple">
+<li>an &#8220;abstract&#8221; Polyhedron class</li>
+<li>computations with support functions</li>
+<li>Hausdorff distance computation, exact and approximate algorithms</li>
+<li>polytope projections via Lotov&#8217;s algorithm</li>
+<li>a bunch of commonly used functions</li>
+</ul>
+<p>AUTHOR:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Marcelo Forets  (first draft: 20 Oct 2016)</dt>
+<dd><p class="first last">(last modified: 10 Feb 2017)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="function">
+<dt id="carlin.polyhedron_toolbox.BoxInfty">
+<code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">BoxInfty</code><span class="sig-paren">(</span><em>lengths=None</em>, <em>center=None</em>, <em>radius=None</em>, <em>base_ring=Rational Field</em>, <em>return_HSpaceRep=False</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.BoxInfty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a box (hyper-rectangle) in the supremum norm.</p>
+<p>It can be constructed from its center and radius, in which case it is a box. It can also be constructed giving the lengths of the sides, in which case it is an hyper-rectangle. In all cases, it is defined as the Cartesian product of intervals.</p>
+<p>INPUT:</p>
+<ul>
+<li><p class="first">&#8220;args&#8221; - Available options are:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">by center and radius:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;center&#8221; - a vector (or a list) containing the coordinates of the center of the ball.</li>
+<li>&#8220;radius&#8221; - a number representing the radius of the ball.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">by lengths:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;lenghts&#8221; - a list of tuples containing the length of each side with respect to the coordinate axes, in the form [(min_x1, max_x1), ..., (min_xn, max_xn)]</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">&#8220;base_ring&#8221; - (default: QQ) base ring passed to the Polyhedron constructor. Valid choices are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;&#8216;QQ&#8217;&#8221;: rational</li>
+<li>&#8220;&#8216;RDF&#8217;&#8221;: real double field</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">&#8220;return_HSpaceRep&#8221; - (default: False) If True, it does not construct the Polyhedron P, and returns instead the pairs [A, b] corresponding to P in half-space representation, as Ax &lt;= b.</p>
+</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li>&#8220;P&#8221; - a Polyhedron object. If the flag return_HSpaceRep=True, it is returned as [A, b] with A and b matrices, assuming Ax &lt;= b.</li>
+</ul>
+<p>EXAMPLES:</p>
+<p>sage: from carlin.polyhedron_toolbox import BoxInfty
+sage: P = BoxInfty([1,2,3], 1); P
+A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
+sage: P.plot(aspect_ratio=1)    # not tested (plot)</p>
+<p>NOTES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">The</span> <span class="n">possibility</span> <span class="n">to</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="n">form</span> <span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="ow">is</span> <span class="n">especially</span> <span class="n">interesting</span> 
+</pre></div>
+</div>
+<p>for more than 15 variable systems.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.polyhedron_toolbox.chebyshev_center">
+<code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">chebyshev_center</code><span class="sig-paren">(</span><em>P=None</em>, <em>A=None</em>, <em>b=None</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.chebyshev_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Chebyshev center of polytope.</p>
+<p>The Chebyshev center of a polytope is the center of the largest hypersphere enclosed by the polytope.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li>&#8220;A, b&#8221; - Matrix and vector representing the polyhedron, as Ax &lt;= b.</li>
+<li>&#8220;P&#8221; - Polyhedron object.</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li>&#8220;cheby_center&#8221; - the Chebyshev center, as a vector. The base_ring is preserved.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.polyhedron_toolbox.polyhedron_from_Hrep">
+<code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">polyhedron_from_Hrep</code><span class="sig-paren">(</span><em>A</em>, <em>b</em>, <em>base_ring=Rational Field</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.polyhedron_from_Hrep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a polytope given the H-representation, in the form Ax &lt;= b</p>
+<p>INPUT:</p>
+<ul>
+<li><p class="first">&#8220;A&#8221; - matrix of size m x n, in RDF or QQ ring. Accepts generic Sage matrix, and also a Numpy arrays with a matrix shape.</p>
+</li>
+<li><p class="first">&#8220;b&#8221; - vector of size m, in RDF or QQ ring. Accepts generic Sage matrix, and also a Numpy array.</p>
+</li>
+<li><p class="first">&#8220;base_ring&#8221; - (default: QQ). Specifies the ring (base_ring) for the Polyhedron constructor. Valid choices are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>QQ - rational. Uses &#8216;ppl&#8217; (Parma Polyhedra Library) backend</li>
+<li>RDF - Real double field. Uses &#8216;cdd&#8217; backend.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li>&#8220;P&#8221; - a Polyhedron object</li>
+</ul>
+<p>TO-DO:</p>
+<ul class="simple">
+<li>accept numpy arrays. notice that we often handle numpy arrays (for instance if we load some data from matlab using the function</li>
+</ul>
+<p>scipy.io.loadmat(...), then the data will be loaded as a dictionary of numpy arrays)</p>
+<p>EXAMPLES:</p>
+<p>sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
+....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
+....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],
+....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],
+....: [ 0.0,  0.0, -1.0,  0.0,  0.0,  0.0],
+....: [ 0.0,  0.0,  1.0,  0.0,  0.0,  0.0],
+....: [ 0.0,  0.0,  0.0, -1.0,  0.0,  0.0],
+....: [ 0.0,  0.0,  0.0,  1.0,  0.0,  0.0],
+....: [ 0.0,  0.0,  0.0,  0.0,  1.0,  0.0],
+....: [ 0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
+....: [ 0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
+....: [ 0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
+sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
+sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep
+sage: P = polyhedron_from_Hrep(A, b, base_ring=QQ); P
+A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices</p>
+<p>NOTE:</p>
+<p>This function is useful especially when the input matrices A, b are ill-defined 
+(constraints that differ by tiny amounts making the input data to be degenerate or almost degenerate), 
+causing problems to Polyhedron(...). 
+In this case it is recommended to use base_ring = QQ. Each element of A and b will be converted to rational, and this will be sent to Polyhedron.</p>
+<blockquote>
+<div>Note that Polyhedron automatically removes redundant constraints.</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.polyhedron_toolbox.polyhedron_to_Hrep">
+<code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">polyhedron_to_Hrep</code><span class="sig-paren">(</span><em>P</em>, <em>separate_equality_constraints=False</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.polyhedron_to_Hrep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract half-space representation of an input polytope P.</p>
+<p>By default, returns matrices [A, b] representing P as Ax &lt;= b. 
+If separate_equality_constraints = True, returns matrices [A, b, Aeq, beq], 
+with separated inequality and equality constraints.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li>&#8220;P&#8221; - object of class polyhedron</li>
+<li>&#8220;separate_equality_constraints&#8221; - (default = False) If True, returns Aeq, beq containing the equality constraints,</li>
+</ul>
+<p>removing the corresponding lines from A and b.</p>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li>&#8220;[A, b]&#8221; - dense matrix and vector respectively (dense, RDF).</li>
+<li>&#8220;[A, b, Aeq, beq]&#8221; - (if the flag separate_equality_constraints is True), matrices and vectors (dense, RDF).</li>
+</ul>
+<p>NOTES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Equality</span> <span class="n">constraints</span> <span class="n">are</span> <span class="n">removed</span> <span class="kn">from</span> <span class="nn">A</span> <span class="ow">and</span> <span class="n">put</span> <span class="n">into</span> <span class="n">Aeq</span><span class="o">.</span>
+<span class="o">-</span> <span class="n">This</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">revert</span> <span class="n">the</span> <span class="n">job</span> <span class="n">of</span> <span class="n">polytopeFromHalfSpaceRep</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">base_ring</span> <span class="o">=</span> <span class="n">RDF</span><span class="p">)</span><span class="o">.</span> 
+<span class="o">-</span> <span class="n">However</span><span class="p">,</span> <span class="n">it</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">the</span> <span class="n">inverse</span> <span class="n">generally</span><span class="p">,</span> <span class="n">because</span> <span class="n">of</span><span class="p">:</span> 
+</pre></div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li>automatic reordering of rows (this is uncontrolled, internal to Polyhedron), and</li>
+<li>scaling. In the example of above, with a polyhedron in RDF we see reordering of rows.</li>
+</ul>
+</div></blockquote>
+<p>EXAMPLES:</p>
+<p>sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
+....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
+....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],
+....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],
+....: [0.0,  0.0, -1.0,  0.0,  0.0,  0.0],
+....: [0.0,  0.0,  1.0,  0.0,  0.0,  0.0],
+....: [0.0,  0.0,  0.0, -1.0,  0.0,  0.0],
+....: [0.0,  0.0,  0.0,  1.0,  0.0,  0.0],
+....: [0.0,  0.0,  0.0,  0.0,  1.0,  0.0],
+....: [0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
+....: [0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
+....: [0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
+sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
+sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep, polyhedron_to_Hrep
+sage: P = polyhedron_from_Hrep(A, b, base_ring = RDF); P
+A 3-dimensional polyhedron in RDF^6 defined as the convex hull of 8 vertices
+sage: [A, b] = polyhedron_to_Hrep(P)
+sage: A
+[-0.0  1.0 -0.0 -0.0 -0.0 -0.0]
+[ 0.0 -1.0  0.0  0.0  0.0  0.0]
+[-0.0 -0.0 -0.0 -0.0  1.0 -0.0]
+[ 0.0  0.0  0.0  0.0 -1.0  0.0]
+[-0.0 -0.0 -0.0 -0.0 -0.0  1.0]
+[ 0.0  0.0  0.0  0.0  0.0 -1.0]
+[-1.0 -0.0 -0.0 -0.0 -0.0 -0.0]
+[ 1.0 -0.0 -0.0 -0.0 -0.0 -0.0]
+[-0.0 -0.0 -1.0 -0.0 -0.0 -0.0]
+[-0.0 -0.0  1.0 -0.0 -0.0 -0.0]
+[-0.0 -0.0 -0.0 -1.0 -0.0 -0.0]
+[-0.0 -0.0 -0.0  1.0 -0.0 -0.0]
+sage: b
+(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.2, 0.2, 0.1, 0.1)</p>
+<p>TESTS:</p>
+<p>If we choose QQ, then we have both reordering and rescaling:</p>
+<p>sage: P = polyhedron_from_Hrep(A, b, base_ring = QQ); P
+A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices</p>
+<p>sage: [A, b] = polyhedron_to_Hrep(P)
+sage: A
+[  0.0   0.0   0.0   0.0   0.0  -1.0]
+[  0.0   0.0   0.0   0.0   0.0   1.0]
+[  0.0   0.0   0.0   0.0  -1.0   0.0]
+[  0.0   0.0   0.0   0.0   1.0   0.0]
+[  0.0  -1.0   0.0   0.0   0.0   0.0]
+[  0.0   1.0   0.0   0.0   0.0   0.0]
+[ -1.0   0.0   0.0   0.0   0.0   0.0]
+[  0.0   0.0   5.0   0.0   0.0   0.0]
+[  0.0   0.0  -5.0   0.0   0.0   0.0]
+[  0.0   0.0   0.0 -10.0   0.0   0.0]
+[  0.0   0.0   0.0  10.0   0.0   0.0]
+[  1.0   0.0   0.0   0.0   0.0   0.0]
+sage: b
+(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 10.0)</p>
+<p>The polytope P is not full-dimensional. To extract the equality constraints we use the flag separate_equality_constraints:</p>
+<p>sage: [A, b, Aeq, beq] = polyhedron_to_Hrep(P, separate_equality_constraints = True)
+sage: A
+[ -1.0   0.0   0.0   0.0   0.0   0.0]
+[  0.0   0.0   5.0   0.0   0.0   0.0]
+[  0.0   0.0  -5.0   0.0   0.0   0.0]
+[  0.0   0.0   0.0 -10.0   0.0   0.0]
+[  0.0   0.0   0.0  10.0   0.0   0.0]
+[  1.0   0.0   0.0   0.0   0.0   0.0]
+sage: b
+(0.0, 1.0, 1.0, 1.0, 1.0, 10.0)
+sage: Aeq
+[ 0.0  0.0  0.0  0.0  0.0 -1.0]
+[ 0.0  0.0  0.0  0.0 -1.0  0.0]
+[ 0.0 -1.0  0.0  0.0  0.0  0.0]
+sage: beq
+(0.0, 0.0, 0.0)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.polyhedron_toolbox.radius">
+<code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">radius</code><span class="sig-paren">(</span><em>P</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute maximum norm of any element in a polyhedron (in the sup norm).</p>
+<p>It is defined as <span class="math">\(max_{x in P} \Vert x \Vert|_inf\)</span>. It can be computed with support functions as 
+<span class="math">\(max_{i=1,...,n} max{|rho(P, ei)|, |rho(P,-ei)|}`\)</span>, 
+where <span class="math">\(rho(P, ei)`\)</span> is the support function of <span class="math">\(P\)</span> evaluated at <span class="math">\(ei\)</span>, and <span class="math">\(ei\)</span> is the i-th canonical vector in <span class="math">\(\\R^n\)</span>.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li>&#8220;P&#8221; - an object of class Polyhedron. It can also be given as [A, b] with A and b matrices, assuming Ax &lt;= b.</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li>&#8220;snorm&#8221; - the value of the max norm of any element of P, in the sup-norm.</li>
+</ul>
+<p>TO-DO:</p>
+<p>To use <a href="#id1"><span class="problematic" id="id2">*</span></a>args so that it works both with polyhedron_sup_norm(A, b) and with polyhedron_sup_norm(P) (depending on the number of the arguments). 
+The difference with mult-methods is that they check also for the type of the arguments.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.polyhedron_toolbox.supp_fun_polyhedron">
+<code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">supp_fun_polyhedron</code><span class="sig-paren">(</span><em>P</em>, <em>d</em>, <em>verbose=0</em>, <em>return_xopt=False</em>, <em>solver='GLPK'</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.supp_fun_polyhedron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute support function of a convex polytope.</p>
+<p>It is defined as <span class="math">\(max_{x in P} &lt;x,d&gt;\)</span> , where <span class="math">\(d\)</span> is an input vector.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li>&#8220;P&#8221; - an object of class Polyhedron. It can also be given as [A, b] with A and b matrices, assuming Ax &lt;= b.</li>
+<li>&#8220;d&#8221; - a vector (or list) where the support function is evaluated.</li>
+<li>&#8220;verbose&#8221; - (default: 0) If 1, print the status of the LP.</li>
+<li>&#8220;solver&#8221; - (default: &#8216;GLPK&#8217;) the LP solver used.</li>
+<li>&#8220;return_xopt&#8221; - (default: False) If True, the optimal point is returned, and sf = [oval, opt].</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li>&#8220;sf&#8221; - the value of the support function.</li>
+</ul>
+<p>EXAMPLES:</p>
+<p>sage: from carlin.polyhedron_toolbox import BoxInfty, supp_fun_polyhedron
+sage: P = BoxInfty([1,2,3], 1); P
+A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
+sage: supp_fun_polyhedron(P, [1,1,1], return_xopt=True)
+(9.0, {0: 2.0, 1: 3.0, 2: 4.0})</p>
+<p>TO-DO:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Test</span> <span class="k">with</span> <span class="n">more</span> <span class="n">solvers</span> <span class="p">(</span><span class="n">GLPK</span><span class="p">,</span> <span class="n">Gurobi</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>NOTES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">The</span> <span class="n">possibility</span> <span class="n">of</span> <span class="n">giving</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">polytope</span> <span class="k">as</span> <span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">a</span> 
+</pre></div>
+</div>
+<p>polyhedron P is useful in cases when the dimensions are high  (in practice, 
+more than 30, but it depends on the particular system -number of 
+constraints- as well).</p>
+<ul class="simple">
+<li>In fact, it is often the case that the data is given in matrix format (A, b),</li>
+</ul>
+<p>hence it might be preferable to avoid the overhead of  building the Polyhedra, 
+if our intention is solely to make computations that can be performed on 
+the matrices A and b directly. The improve in speed is quite considerable.</p>
+<ul class="simple">
+<li>If a different solver is given, it should be installed properly.</li>
+</ul>
+<p>sage: from carlin.polyhedron_toolbox import supp_fun_polyhedron
+sage: supp_fun_polyhedron(P, [1,1,1], solver=&#8217;GLPK&#8217;)
+9.0</p>
+</dd></dl>
+
 </div>
 
 
@@ -58,7 +584,7 @@
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
-                        title="previous chapter">Sage Sample Package</a></p>
+                        title="previous chapter">Carleman Linearization in SageMath</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -87,7 +613,10 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="index.html" title="Sage Sample Package"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Carleman Linearization in SageMath"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.1 documentation</a> &raquo;</li> 
       </ul>
