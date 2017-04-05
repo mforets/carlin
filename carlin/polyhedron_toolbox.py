@@ -30,7 +30,7 @@ from sage.rings.rational_field import QQ
 from sage.rings.real_double import RDF
 
 from sage.geometry.polyhedron.constructor import Polyhedron
-from sage.matrix.constructor import matrix, vector
+from sage.matrix.constructor import matrix, vector, zero_vector
 
 def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     r"""Extract half-space representation of an input polytope P. 
@@ -55,7 +55,11 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     NOTES::
     
     - Equality constraints are removed from A and put into Aeq.
-
+    - This function is used to revert the job of polytopeFromHalfSpaceRep(A, b, base_ring = RDF). 
+    - However, it is not the inverse generally, because of: 
+        - automatic reordering of rows (this is uncontrolled, internal to Polyhedron), and 
+        - scaling. In the example of above, with a polyhedron in RDF we see reordering of rows.    
+        
     EXAMPLES::
 
     sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
@@ -71,7 +75,7 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     ....: [0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
     ....: [0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
     sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
-    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep, polyhedron_from_Hrep
+    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep, polyhedron_to_Hrep
     sage: P = polyhedron_from_Hrep(A, b, base_ring = RDF); P
     A 3-dimensional polyhedron in RDF^6 defined as the convex hull of 8 vertices
     sage: [A, b] = polyhedron_to_Hrep(P)
@@ -89,14 +93,7 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     [-0.0 -0.0 -0.0 -1.0 -0.0 -0.0]
     [-0.0 -0.0 -0.0  1.0 -0.0 -0.0]
     sage: b
-    (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.2, 0.2, 0.1, 0.1)
-
-    NOTES::
-
-    - This function is used to revert the job of polytopeFromHalfSpaceRep(A, b, base_ring = RDF). 
-    - However, it is not the inverse generally, because of: 
-        - automatic reordering of rows (this is uncontrolled, internal to Polyhedron), and 
-        - scaling. In the example of above, with a polyhedron in RDF we see reordering of rows. 
+    (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.2, 0.2, 0.1, 0.1) 
         
     TESTS:: 
     
@@ -405,7 +402,7 @@ def radius(P):
 def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK'):
     r"""Compute support function of a convex polytope.
 
-    It is defined as max_{x in P} <x,d> , where d is an input vector.
+    It is defined as `max_{x in P} <x,d>` , where `d` is an input vector.
 
     INPUT:
 
@@ -425,7 +422,7 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
 
     EXAMPLES::
 
-    sage: from polyhedron_toolbox import BoxInfty
+    sage: from carlin.polyhedron_toolbox import BoxInfty, supp_fun_polyhedron
     sage: P = BoxInfty([1,2,3], 1); P
     A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
     sage: supp_fun_polyhedron(P, [1,1,1], return_xopt=True)
@@ -449,6 +446,7 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
 
     - If a different solver is given, it should be installed properly.
 
+    sage: from carlin.polyhedron_toolbox import supp_fun_polyhedron
     sage: supp_fun_polyhedron(P, [1,1,1], solver='Gurobi')
     9.0
     """
