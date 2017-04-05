@@ -3,16 +3,14 @@ Numerical computations with polytopes, with a focus on computational geometry.
 
 Features:
 
-- an "abstract" Polyhedron class 
-- computations with support functions
-- Hausdorff distance computation, exact and approximate algorithms
-- polytope projections via Lotov's algorithm
-- a bunch of commonly used functions
+- use `(A, b)` notation for polytope construction
+- a bunch of commonly used functions, which do not require the double description
+of the polytope
+- calculation of support functions
 
 AUTHOR:
 
-- Marcelo Forets  (first draft: 20 Oct 2016)
-                  (last modified: 10 Feb 2017)
+- Marcelo Forets (Oct 2016 at VERIMAG - UGA)
 """
 
 #************************************************************************

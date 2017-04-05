@@ -1,13 +1,14 @@
 r"""
-This is the utils module for Carleman linearization.
-It contains:
-- functions to load a model
+Carleman linearization input/output functions.
+
+Features:
+
+- functions to load model polynomial ODE's
 - auxiliary mathematical functions
 
-AUTHORS:
+AUTHOR:
 
-- Marcelo Forets (2016-12) First version
-
+- Marcelo Forets (Dec 2016 at VERIMAG - UGA)
 """
 
 #************************************************************************

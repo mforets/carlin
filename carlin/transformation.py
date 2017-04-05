@@ -1,10 +1,21 @@
 r"""
 Carleman linearization of polynomial differential equations in SageMath.
 
-- Marcelo Forets  (first draft: 10 Dic 2016)
-                  (last modified: 10 Feb 2017)
-"""
+Features:
 
+- reduction of a polynomial vector field to a quadratic field in higher dimensions
+- truncation 
+- calculation of the truncation error by the method of a priori estimates
+- calculation of the truncation error by the method of generating functions
+
+AUTHOR:
+
+- Marcelo Forets (Dec 2016 at VERIMAG - France)
+                 (Apr 2016 at MPI-SWS - Germany)
+
+The theoretical results have been obtained in collaboration with 
+Amaury Pouly at MPI-SWS, Germany.
+"""
 #************************************************************************
 #       Copyright (C) 2016 Marcelo Forets <mforets@nonlinearnotes.com>
 #
