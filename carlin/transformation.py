@@ -38,8 +38,11 @@ from carlin.polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radi
 from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
+
 from sage.modules.free_module_element import vector
+
 from sage.functions.other import real_part, imag_part
+from sage.functions.log import function_log
 
 #===============================================
 # Functions to compute Carleman linearization
@@ -102,7 +105,6 @@ def truncated_matrix(N, *args, **kwargs):
             $i = 1, \ldots , N$. It is given as a list of lists.
             Each inner list has dimension $k$.
     """
-
     from scipy.sparse import bmat
 
     if 'input_format' not in kwargs.keys():
