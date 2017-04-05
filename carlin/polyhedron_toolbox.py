@@ -453,6 +453,7 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
     sage: supp_fun_polyhedron(P, [1,1,1], solver='Gurobi')
     9.0
     """
+    from sage.numerical.mip import MixedIntegerLinearProgram
 
     # avoid formulating the LP if P = []
     if P.is_empty():
