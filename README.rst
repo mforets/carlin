@@ -21,7 +21,7 @@ For a local build of the HTML documentation::
 
    sage -sh -c "make html"
     
-The PDF format can be built with::
+The documentation in PDF format can be built with::
 
    sage -sh -c "make latexpdf"
 
