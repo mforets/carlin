@@ -53,7 +53,7 @@ def load_model(model_filename):
 
     OUTPUTS:
 
-    - ``f`` : polynomial vector field. Each component belongs to the polynomial ring `\QQ[x_1,\ldots,x_n]`
+    - ``f`` : polynomial vector field. Each component belongs to the polynomial ring `\mathbf{Q}[x_1,\ldots,x_n]`
 
     - ``n`` : dimension of f
 
@@ -87,7 +87,7 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
 
     OUTPUTS:
 
-    - ``F`` : F is a list of sparse matrices `F1, ..., Fk`. These are formatted in dok (dictionary-of-keys) form.
+    - ``F`` : F is a list of sparse matrices `F_1, ..., F_k`. These are formatted in dok (dictionary-of-keys) form.
 
     - ``n`` : dimension of the state-space of the system
 

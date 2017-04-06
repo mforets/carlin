@@ -53,7 +53,7 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     NOTES:
         
     - Equality constraints are removed from A and put into Aeq.
-    - This function is used to revert the job of polytopeFromHalfSpaceRep(A, b, base_ring = RDF). 
+    - This function is used to revert the job of ``polyhedron_from_Hrep(A, b, base_ring = RDF)``. 
     - However, it is not the inverse generally, because of: 
         - automatic reordering of rows (this is uncontrolled, internal to Polyhedron), and 
         - scaling. In the example of above, with a polyhedron in RDF we see reordering of rows.    
@@ -201,7 +201,7 @@ def polyhedron_from_Hrep(A, b, base_ring=QQ):
     * accept numpy arrays. notice that we often handle numpy arrays (for instance if we load some data from matlab using the function
     ``scipy.io.loadmat(..)``, then the data will be loaded as a dictionary of numpy arrays)
 
-    EXAMPLES:
+    EXAMPLES::
 
         sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
         ....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
@@ -503,42 +503,44 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
 def BoxInfty(lengths=None, center=None, radius=None, base_ring=QQ, return_HSpaceRep=False):
     r"""Generate a box (hyper-rectangle) in the supremum norm.
 
-    It can be constructed from its center and radius, in which case it is a box. It can also be constructed giving the lengths of the sides, in which case it is an hyper-rectangle. In all cases, it is defined as the Cartesian product of intervals.
+    It can be constructed from its center and radius, in which case it is a box. 
+    It can also be constructed giving the lengths of the sides, in which case it is an hyper-rectangle. 
+    In all cases, it is defined as the Cartesian product of intervals.
 
     INPUT:
 
-    * "args" - Available options are:
+    * ``args`` - Available options are:
 
         * by center and radius:
 
-            * "center" - a vector (or a list) containing the coordinates of the center of the ball.
+            * ``center" - a vector (or a list) containing the coordinates of the center of the ball.
 
-            * "radius" - a number representing the radius of the ball.
+            * ``radius`` - a number representing the radius of the ball.
 
         * by lengths:
 
-            * "lenghts" - a list of tuples containing the length of each side with respect to the coordinate axes, in the form [(min_x1, max_x1), ..., (min_xn, max_xn)]
+            * ``lenghts`` - a list of tuples containing the length of each side with respect to the coordinate axes, in the form [(min_x1, max_x1), ..., (min_xn, max_xn)]
 
-    * "base_ring" - (default: QQ) base ring passed to the Polyhedron constructor. Valid choices are:
+    * ``base_ring`` - (default: QQ) base ring passed to the Polyhedron constructor. Valid choices are:
 
-        * "'QQ'": rational
+        * ``'QQ'``: rational
 
-        * "'RDF'": real double field
+        * ``'RDF'``: real double field
 
-    * "return_HSpaceRep" - (default: False) If True, it does not construct the Polyhedron P, and returns instead the pairs [A, b] corresponding to P in half-space representation, as Ax <= b.
+    * ``return_HSpaceRep`` - (default: False) If True, it does not construct the Polyhedron P, and returns instead the pairs ``[A, b]`` corresponding to P in half-space representation, and is understood that `Ax <= b`.
 
     OUTPUT:
 
-    * "P" - a Polyhedron object. If the flag return_HSpaceRep=True, it is returned as [A, b] with A and b matrices, assuming Ax <= b.
+    * ``P`` - a Polyhedron object. If the flag ``return_HSpaceRep`` is true, it is returned as ``[A, b]`` with `A` and `b` matrices, and is understood that `Ax <= b`.
 
-    EXAMPLES:
+    EXAMPLES::
 
-    sage: from carlin.polyhedron_toolbox import BoxInfty
-    sage: P = BoxInfty([1,2,3], 1); P
-    A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
-    sage: P.plot(aspect_ratio=1)    # not tested (plot)
+        sage: from carlin.polyhedron_toolbox import BoxInfty
+        sage: P = BoxInfty([1,2,3], 1); P
+        A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
+        sage: P.plot(aspect_ratio=1)    # not tested (plot)
 
-    NOTES::
+    NOTES:
 
     - The possibility to output in matrix form [A, b] is especially interesting 
     for more than 15 variable systems.
