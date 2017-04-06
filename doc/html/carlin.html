@@ -63,7 +63,6 @@
 <ul class="simple">
 <li>Marcelo Forets (Dec 2016 at VERIMAG - France)</li>
 </ul>
-<p>NOTE:</p>
 <p>MF acknowledges the hospitality at Max-Planck Institute for Software
 Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <dl class="function">
@@ -153,7 +152,7 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <dl class="function">
 <dt id="carlin.transformation.transfer_matrices">
 <code class="descclassname">carlin.transformation.</code><code class="descname">transfer_matrices</code><span class="sig-paren">(</span><em>N</em>, <em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.transfer_matrices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finite order transfer matrices <span class="math">\(A_ij\)</span>.</p>
+<dd><p>Higher order transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span>.</p>
 <p>INPUTS:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">N</span></code> : order of truncation.</li>
@@ -165,7 +164,7 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <ul>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">A</span></code></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond</span><dd><p class="first last">to <span class="math">\(i = 1, \ldots , N\)</span>. It is given as a list of lists.
+ <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond</span><dd><p class="first last">to <span class="math">\(i = 1, \ldots, N\)</span>. It is given as a list of lists.
 Each inner list has dimension <span class="math">\(k\)</span>.</p>
 </dd>
 </dl>
@@ -188,7 +187,7 @@ Each inner list has dimension <span class="math">\(k\)</span>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">A</span></code></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to</span><dd><p class="first last"><span class="math">\(i = 1, \ldots , N\)</span>. It is given as a list of lists.
+ <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to</span><dd><p class="first last"><span class="math">\(i = 1, \ldots, N\)</span>. It is given as a list of lists.
 Each inner list has dimension <span class="math">\(k\)</span>.</p>
 </dd>
 </dl>
@@ -225,7 +224,7 @@ Each inner list has dimension <span class="math">\(k\)</span>.</p>
 </ul>
 <p>OUTPUTS:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">F</span></code> : F is a list of sparse matrices <span class="math">\(F1, ..., Fk\)</span>. These are formatted in dok (dictionary-of-keys) form.</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> : F is a list of sparse matrices <span class="math">\(F_1, ..., F_k\)</span>. These are formatted in dok (dictionary-of-keys) form.</li>
 <li><code class="docutils literal"><span class="pre">n</span></code> : dimension of the state-space of the system</li>
 <li><code class="docutils literal"><span class="pre">k</span></code> : degree of the system</li>
 </ul>
@@ -247,7 +246,7 @@ However, now that case is handled separately.</li>
 </ul>
 <p>OUTPUTS:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">f</span></code> : polynomial vector field. Each component belongs to the polynomial ring <span class="math">\(\QQ[x_1,\ldots,x_n]\)</span></li>
+<li><code class="docutils literal"><span class="pre">f</span></code> : polynomial vector field. Each component belongs to the polynomial ring <span class="math">\(\mathbf{Q}[x_1,\ldots,x_n]\)</span></li>
 <li><code class="docutils literal"><span class="pre">n</span></code> : dimension of f</li>
 <li><code class="docutils literal"><span class="pre">k</span></code> : degree of f</li>
 </ul>
@@ -276,54 +275,58 @@ However, now that case is handled separately.</li>
 <dt id="carlin.polyhedron_toolbox.BoxInfty">
 <code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">BoxInfty</code><span class="sig-paren">(</span><em>lengths=None</em>, <em>center=None</em>, <em>radius=None</em>, <em>base_ring=Rational Field</em>, <em>return_HSpaceRep=False</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.BoxInfty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a box (hyper-rectangle) in the supremum norm.</p>
-<p>It can be constructed from its center and radius, in which case it is a box. It can also be constructed giving the lengths of the sides, in which case it is an hyper-rectangle. In all cases, it is defined as the Cartesian product of intervals.</p>
+<p>It can be constructed from its center and radius, in which case it is a box. 
+It can also be constructed giving the lengths of the sides, in which case it is an hyper-rectangle. 
+In all cases, it is defined as the Cartesian product of intervals.</p>
 <p>INPUT:</p>
 <ul>
-<li><p class="first">&#8220;args&#8221; - Available options are:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">args</span></code> - Available options are:</p>
 <blockquote>
 <div><ul>
 <li><p class="first">by center and radius:</p>
 <blockquote>
 <div><ul class="simple">
-<li>&#8220;center&#8221; - a vector (or a list) containing the coordinates of the center of the ball.</li>
-<li>&#8220;radius&#8221; - a number representing the radius of the ball.</li>
+<li><a href="#id1"><span class="problematic" id="id2">``</span></a>center&#8221; - a vector (or a list) containing the coordinates of the center of the ball.</li>
+<li><code class="docutils literal"><span class="pre">radius</span></code> - a number representing the radius of the ball.</li>
 </ul>
 </div></blockquote>
 </li>
 <li><p class="first">by lengths:</p>
 <blockquote>
 <div><ul class="simple">
-<li>&#8220;lenghts&#8221; - a list of tuples containing the length of each side with respect to the coordinate axes, in the form [(min_x1, max_x1), ..., (min_xn, max_xn)]</li>
+<li><code class="docutils literal"><span class="pre">lenghts</span></code> - a list of tuples containing the length of each side with respect to the coordinate axes, in the form [(min_x1, max_x1), ..., (min_xn, max_xn)]</li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">&#8220;base_ring&#8221; - (default: QQ) base ring passed to the Polyhedron constructor. Valid choices are:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">base_ring</span></code> - (default: QQ) base ring passed to the Polyhedron constructor. Valid choices are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>&#8220;&#8216;QQ&#8217;&#8221;: rational</li>
-<li>&#8220;&#8216;RDF&#8217;&#8221;: real double field</li>
+<li><code class="docutils literal"><span class="pre">'QQ'</span></code>: rational</li>
+<li><code class="docutils literal"><span class="pre">'RDF'</span></code>: real double field</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">&#8220;return_HSpaceRep&#8221; - (default: False) If True, it does not construct the Polyhedron P, and returns instead the pairs [A, b] corresponding to P in half-space representation, as Ax &lt;= b.</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">return_HSpaceRep</span></code> - (default: False) If True, it does not construct the Polyhedron P, and returns instead the pairs <code class="docutils literal"><span class="pre">[A,</span> <span class="pre">b]</span></code> corresponding to P in half-space representation, and is understood that <span class="math">\(Ax &lt;= b\)</span>.</p>
 </li>
 </ul>
 <p>OUTPUT:</p>
 <ul class="simple">
-<li>&#8220;P&#8221; - a Polyhedron object. If the flag return_HSpaceRep=True, it is returned as [A, b] with A and b matrices, assuming Ax &lt;= b.</li>
+<li><code class="docutils literal"><span class="pre">P</span></code> - a Polyhedron object. If the flag <code class="docutils literal"><span class="pre">return_HSpaceRep</span></code> is true, it is returned as <code class="docutils literal"><span class="pre">[A,</span> <span class="pre">b]</span></code> with <span class="math">\(A\)</span> and <span class="math">\(b\)</span> matrices, and is understood that <span class="math">\(Ax &lt;= b\)</span>.</li>
 </ul>
 <p>EXAMPLES:</p>
-<p>sage: from carlin.polyhedron_toolbox import BoxInfty
-sage: P = BoxInfty([1,2,3], 1); P
-A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
-sage: P.plot(aspect_ratio=1)    # not tested (plot)</p>
-<p>NOTES:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">The</span> <span class="n">possibility</span> <span class="n">to</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="n">form</span> <span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="ow">is</span> <span class="n">especially</span> <span class="n">interesting</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.polyhedron_toolbox</span> <span class="kn">import</span> <span class="n">BoxInfty</span>
+<span class="gp">sage: </span><span class="n">P</span> <span class="o">=</span> <span class="n">BoxInfty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span> <span class="n">P</span>
+<span class="go">A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices</span>
+<span class="gp">sage: </span><span class="n">P</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># not tested (plot)</span>
 </pre></div>
 </div>
+<p>NOTES:</p>
+<ul class="simple">
+<li>The possibility to output in matrix form [A, b] is especially interesting</li>
+</ul>
 <p>for more than 15 variable systems.</p>
 </dd></dl>
 
@@ -372,23 +375,24 @@ sage: P.plot(aspect_ratio=1)    # not tested (plot)</p>
 </ul>
 <p><code class="docutils literal"><span class="pre">scipy.io.loadmat(..)</span></code>, then the data will be loaded as a dictionary of numpy arrays)</p>
 <p>EXAMPLES:</p>
-<blockquote>
-<div>sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
-....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
-....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],
-....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],
-....: [ 0.0,  0.0, -1.0,  0.0,  0.0,  0.0],
-....: [ 0.0,  0.0,  1.0,  0.0,  0.0,  0.0],
-....: [ 0.0,  0.0,  0.0, -1.0,  0.0,  0.0],
-....: [ 0.0,  0.0,  0.0,  1.0,  0.0,  0.0],
-....: [ 0.0,  0.0,  0.0,  0.0,  1.0,  0.0],
-....: [ 0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
-....: [ 0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
-....: [ 0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
-sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
-sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep
-sage: P = polyhedron_from_Hrep(A, b, base_ring=QQ); P
-A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">A</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">RDF</span><span class="p">,</span> <span class="p">[[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">],</span>
+<span class="go">....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],</span>
+<span class="go">....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],</span>
+<span class="go">....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],</span>
+<span class="go">....: [ 0.0,  0.0, -1.0,  0.0,  0.0,  0.0],</span>
+<span class="go">....: [ 0.0,  0.0,  1.0,  0.0,  0.0,  0.0],</span>
+<span class="go">....: [ 0.0,  0.0,  0.0, -1.0,  0.0,  0.0],</span>
+<span class="go">....: [ 0.0,  0.0,  0.0,  1.0,  0.0,  0.0],</span>
+<span class="go">....: [ 0.0,  0.0,  0.0,  0.0,  1.0,  0.0],</span>
+<span class="go">....: [ 0.0,  0.0,  0.0,  0.0, -1.0,  0.0],</span>
+<span class="go">....: [ 0.0,  0.0,  0.0,  0.0,  0.0,  1.0],</span>
+<span class="go">....: [ 0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])</span>
+<span class="gp">sage: </span><span class="n">b</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">RDF</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.polyhedron_toolbox</span> <span class="kn">import</span> <span class="n">polyhedron_from_Hrep</span>
+<span class="gp">sage: </span><span class="n">P</span> <span class="o">=</span> <span class="n">polyhedron_from_Hrep</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">base_ring</span><span class="o">=</span><span class="n">QQ</span><span class="p">);</span> <span class="n">P</span>
+<span class="go">A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices</span>
+</pre></div>
+</div>
 <p>NOTES:</p>
 <ul class="simple">
 <li>This function is useful especially when the input matrices A, b are ill-defined</li>
@@ -424,7 +428,7 @@ with separated inequality and equality constraints.</p>
 <ul>
 <li><p class="first">Equality constraints are removed from A and put into Aeq.</p>
 </li>
-<li><p class="first">This function is used to revert the job of polytopeFromHalfSpaceRep(A, b, base_ring = RDF).</p>
+<li><p class="first">This function is used to revert the job of <code class="docutils literal"><span class="pre">polyhedron_from_Hrep(A,</span> <span class="pre">b,</span> <span class="pre">base_ring</span> <span class="pre">=</span> <span class="pre">RDF)</span></code>.</p>
 </li>
 <li><dl class="first docutils">
 <dt>However, it is not the inverse generally, because of: </dt>
@@ -532,7 +536,7 @@ where <span class="math">\(\rho(P, e_i)\)</span> is the support function of <spa
 </ul>
 <p>TO-DO:</p>
 <ul class="simple">
-<li>To use &#8216;<a href="#id1"><span class="problematic" id="id2">*</span></a>args&#8217; so that it works both with <code class="docutils literal"><span class="pre">polyhedron_sup_norm(A,</span> <span class="pre">b)</span></code> and with <code class="docutils literal"><span class="pre">polyhedron_sup_norm(P)</span></code></li>
+<li>To use &#8216;<a href="#id3"><span class="problematic" id="id4">*</span></a>args&#8217; so that it works both with <code class="docutils literal"><span class="pre">polyhedron_sup_norm(A,</span> <span class="pre">b)</span></code> and with <code class="docutils literal"><span class="pre">polyhedron_sup_norm(P)</span></code></li>
 </ul>
 <p>(depending on the number of the arguments).</p>
 <ul class="simple">
