@@ -12,8 +12,6 @@ AUTHOR:
 
 - Marcelo Forets (Dec 2016 at VERIMAG - France)
 
-NOTE:
-
 MF acknowledges the hospitality at Max-Planck Institute for Software
 Systems, Saarbrucken, Germany, where this package was written (Apr 2016).
 """
