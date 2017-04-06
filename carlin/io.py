@@ -53,7 +53,7 @@ def load_model(model_filename):
 
     OUTPUTS:
 
-    - ``f`` : polynomial vector field. Each component belongs to the polynomial ring `\mathbf{Q}[x_1,\ldots,x_n]`
+    - ``f`` : polynomial vector field. Each component belongs to the polynomial ring `\mathbb{Q}[x_1,\ldots,x_n]`
 
     - ``n`` : dimension of f
 

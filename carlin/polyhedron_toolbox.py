@@ -355,11 +355,11 @@ def chebyshev_center(P=None, A=None, b=None):
         raise ValueError('The input should be either as a Polyhedron, P, or as matrices, [A, b].')    
     
 def radius(P):
-    r"""Compute maximum norm of any element in a polyhedron (in the sup norm).
+    r"""Maximum norm of any element in a polyhedron, with respect to the supremum norm.
 
-    It is defined as `max\limits_{x in P} \Vert x \Vert_\inf`. It can be computed with support functions as 
-    `max\limits_{i=1,\ldots,n} \max \{|\rho(P, e_i)|, |\rho(P, -e_i)|}`, 
-    where `\rho(P, e_i)` is the support function of `P` evaluated at `e_i`, and `e_i` is the i-th canonical vector in `\RR^n`.
+    It is defined as `\max\limits_{x in P} \Vert x \Vert_\inf`. It can be computed with support functions as 
+    `\max\limits_{i=1,\ldots,n} \max \{|\rho_P(e_i)|, |\rho_P(-e_i)|}`, 
+    where `\rho_P(e_i)` is the support function of `P` evaluated at the i-th canonical vector `e_i`.
 
     INPUT:
 
