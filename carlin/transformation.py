@@ -11,10 +11,11 @@ Features:
 AUTHOR:
 
 - Marcelo Forets (Dec 2016 at VERIMAG - France)
-                 (Apr 2016 at MPI-SWS - Germany)
 
-The theoretical results have been obtained in collaboration with 
-Amaury Pouly at MPI-SWS, Germany.
+NOTE:
+
+MF acknowledges the hospitality at Max-Planck Institute for Software
+Systems, Saarbrucken, Germany, where this package was written (Apr 2016).
 """
 #************************************************************************
 #       Copyright (C) 2016 Marcelo Forets <mforets@nonlinearnotes.com>
@@ -64,21 +65,20 @@ def transfer_matrices(N, F, n, k):
 
     INPUTS:
 
-    - "N" : order of truncation.
+    - ``N`` : order of truncation.
 
-    - "F" : sequence of matrices $F_j$ (list).
+    - ``F`` : sequence of matrices `F_j` (list).
 
-    - "n" : the dimension of the state-space.
+    - ``n`` : the dimension of the state-space.
 
-    - "k" : the order of the polynomial vector field. It is equal to len(F).
+    - ``k`` : the order of the polynomial vector field. It is equal to ``len(F)``.
 
 
     OUTPUTS:
 
-    - "A" : the transfer matrices `A^{i}_{i+j-1}` that correspond
+    - ``A`` : the transfer matrices `A^{i}_{i+j-1}` that correspond
             to `i = 1, \ldots , N`. It is given as a list of lists.
             Each inner list has dimension `k`.
-
     """
 
     A = []
@@ -101,20 +101,19 @@ def truncated_matrix(N, *args, **kwargs):
 
     INPUTS:
 
-    - "N" : order of truncation.
+    - ``N`` : order of truncation.
 
-    - "input_format" : sequence of matrices $F_j$ (list).
+    - ``input_format`` : sequence of matrices `F_j` (list).
 
-    - "F" : the dimension of the state-space.
+    - ``F`` : the dimension of the state-space.
 
-    - "input_format" : the order of the polynomial vector field. It is equal to len(F).
-
+    - ``input_format`` : the order of the polynomial vector field, equal to ``len(F)``.
 
     OUTPUTS:
 
-    - "A" : the transfer matrices $A^{i}_{i+j-1}$ that correspond to
-            $i = 1, \ldots , N$. It is given as a list of lists.
-            Each inner list has dimension $k$.
+    - ``A`` : the transfer matrices `A^{i}_{i+j-1}` that correspond to
+            `i = 1, \ldots , N`. It is given as a list of lists.
+            Each inner list has dimension `k`.
     """
     from scipy.sparse import bmat
 
@@ -359,7 +358,9 @@ def kron_prod(x,y):
 
 
 def kron_power(x, i):
-    r""" Receives a nx1 vector and computes its Kronecker power x^[i]. Assuming that i >= 1.
+    r""" Receives a nx1 vector and computes its Kronecker power `x^[i]`. 
+    
+    Assuming that `i >= 1`.
     """
     if (i > 2):
         return kron_prod(x, kron_power(x,i-1))
@@ -387,15 +388,13 @@ def get_index_from_key(key, j, n):
 
     NOTES:
 
-    - We assume n >= 2. Notice that if n=1, we would return always that:
-    first_occurence = 0.
+    - We assume `n >= 2`. Notice that if `n=1`, we would return always that ``first_occurence = 0``.
 
     TO-DO:
 
     - Include some bounds check?
 
     - Case j = sum(key) = 0. kron_power(x, 0) = 1
-
     """
     
     x = polygens(QQ, ['x'+str(1+k) for k in range(n)])
@@ -414,13 +413,13 @@ def log_norm(A, p='inf'):
 
     INPUTS:
 
-    * "A" - A rectangular (Sage dense) matrix of order n. The coefficients can be either real or complex.
+    * ``A`` - A rectangular (Sage dense) matrix of order `n`. The coefficients can be either real or complex.
 
-    * "p" - (default: 'inf'). The vector norm; possible choices are 1, 2, or 'inf'.
+    * ``p`` - (default: ``'inf'``). The vector norm; possible choices are ``1``, ``2``, or ``'inf'``.
 
     OUTPUT:
 
-    * "lognorm" - The log-norm of A in the p norm.
+    * ``lognorm`` - The log-norm of A in the p-norm.
 
     TO-DO:
 
@@ -429,7 +428,6 @@ def log_norm(A, p='inf'):
     - Add support for an arbitrary p >= 1 vector norm. (how?)
 
     - Check assumed shape. (not sure if I want this)
-
     """
     
     # parse the input matrix
@@ -465,17 +463,15 @@ def log_norm(A, p='inf'):
         raise ValueError('Value of p not understood or not implemented.')
 
 def characteristics(F, n, k):
-    r""" c = characteristics(F, n, k)
-    where c is a dictionary containing information about the norms of the matrices in F.
+    r""" Information about the norms of the matrices in F.
 
     INPUTS:
 
-    - "F" : list of matrices in a Numpy sparse format. The method toarray should be available.
+    - ``F`` : list of matrices in a Numpy sparse format. The method toarray should be available.
 
     TO-DO:
 
-    - Accept an optional parameter (params) that specifies:
-        - norms chosen
+    - Accept an optional params which allows to specifie a norm.
     """
 
     import scipy as sp

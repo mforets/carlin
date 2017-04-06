@@ -4,8 +4,7 @@ Numerical computations with polytopes, with a focus on computational geometry.
 Features:
 
 - use `(A, b)` notation for polytope construction
-- a bunch of commonly used functions, which do not require the double description
-of the polytope
+- a bunch of commonly used functions, which do not require the double description of the polytope
 - calculation of support functions
 
 AUTHOR:
@@ -32,27 +31,27 @@ from sage.matrix.constructor import matrix, vector
 from sage.modules.free_module_element import zero_vector
 
 def polyhedron_to_Hrep(P, separate_equality_constraints = False):
-    r"""Extract half-space representation of an input polytope P. 
+    r"""Extract half-space representation of polytope. 
     
-    By default, returns matrices [A, b] representing P as Ax <= b. 
-    If separate_equality_constraints = True, returns matrices [A, b, Aeq, beq], 
+    By default, returns matrices ``[A, b]`` representing `P` as `Ax <= b`. 
+    If ``separate_equality_constraints = True``, returns matrices ``[A, b, Aeq, beq]``, 
     with separated inequality and equality constraints.
 
     INPUT:
 
-    * "P" - object of class polyhedron
+    * ``P`` - object of class polyhedron
 
-    * "separate_equality_constraints" - (default = False) If True, returns Aeq, beq containing the equality constraints, 
+    * ``separate_equality_constraints`` - (default = False) If True, returns Aeq, beq containing the equality constraints, 
     removing the corresponding lines from A and b.
 
     OUTPUT:
 
-    * "[A, b]" - dense matrix and vector respectively (dense, RDF).
+    * ``[A, b]`` - dense matrix and vector respectively (dense, RDF).
 
-    * "[A, b, Aeq, beq]" - (if the flag separate_equality_constraints is True), matrices and vectors (dense, RDF). 
+    * ``[A, b, Aeq, beq]`` - (if the flag separate_equality_constraints is True), matrices and vectors (dense, RDF). 
     
-    NOTES::
-    
+    NOTES:
+        
     - Equality constraints are removed from A and put into Aeq.
     - This function is used to revert the job of polytopeFromHalfSpaceRep(A, b, base_ring = RDF). 
     - However, it is not the inverse generally, because of: 
@@ -61,81 +60,81 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
         
     EXAMPLES::
 
-    sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [0.0,  0.0, -1.0,  0.0,  0.0,  0.0],
-    ....: [0.0,  0.0,  1.0,  0.0,  0.0,  0.0],
-    ....: [0.0,  0.0,  0.0, -1.0,  0.0,  0.0],
-    ....: [0.0,  0.0,  0.0,  1.0,  0.0,  0.0],
-    ....: [0.0,  0.0,  0.0,  0.0,  1.0,  0.0],
-    ....: [0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
-    ....: [0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
-    ....: [0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
-    sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
-    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep, polyhedron_to_Hrep
-    sage: P = polyhedron_from_Hrep(A, b, base_ring = RDF); P
-    A 3-dimensional polyhedron in RDF^6 defined as the convex hull of 8 vertices
-    sage: [A, b] = polyhedron_to_Hrep(P)
-    sage: A
-    [-0.0  1.0 -0.0 -0.0 -0.0 -0.0]
-    [ 0.0 -1.0  0.0  0.0  0.0  0.0]
-    [-0.0 -0.0 -0.0 -0.0  1.0 -0.0]
-    [ 0.0  0.0  0.0  0.0 -1.0  0.0]
-    [-0.0 -0.0 -0.0 -0.0 -0.0  1.0]
-    [ 0.0  0.0  0.0  0.0  0.0 -1.0]
-    [-1.0 -0.0 -0.0 -0.0 -0.0 -0.0]
-    [ 1.0 -0.0 -0.0 -0.0 -0.0 -0.0]
-    [-0.0 -0.0 -1.0 -0.0 -0.0 -0.0]
-    [-0.0 -0.0  1.0 -0.0 -0.0 -0.0]
-    [-0.0 -0.0 -0.0 -1.0 -0.0 -0.0]
-    [-0.0 -0.0 -0.0  1.0 -0.0 -0.0]
-    sage: b
-    (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.2, 0.2, 0.1, 0.1) 
+        sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [0.0,  0.0, -1.0,  0.0,  0.0,  0.0],
+        ....: [0.0,  0.0,  1.0,  0.0,  0.0,  0.0],
+        ....: [0.0,  0.0,  0.0, -1.0,  0.0,  0.0],
+        ....: [0.0,  0.0,  0.0,  1.0,  0.0,  0.0],
+        ....: [0.0,  0.0,  0.0,  0.0,  1.0,  0.0],
+        ....: [0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
+        ....: [0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
+        ....: [0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
+        sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
+        sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep, polyhedron_to_Hrep
+        sage: P = polyhedron_from_Hrep(A, b, base_ring = RDF); P
+        A 3-dimensional polyhedron in RDF^6 defined as the convex hull of 8 vertices
+        sage: [A, b] = polyhedron_to_Hrep(P)
+        sage: A
+        [-0.0  1.0 -0.0 -0.0 -0.0 -0.0]
+        [ 0.0 -1.0  0.0  0.0  0.0  0.0]
+        [-0.0 -0.0 -0.0 -0.0  1.0 -0.0]
+        [ 0.0  0.0  0.0  0.0 -1.0  0.0]
+        [-0.0 -0.0 -0.0 -0.0 -0.0  1.0]
+        [ 0.0  0.0  0.0  0.0  0.0 -1.0]
+        [-1.0 -0.0 -0.0 -0.0 -0.0 -0.0]
+        [ 1.0 -0.0 -0.0 -0.0 -0.0 -0.0]
+        [-0.0 -0.0 -1.0 -0.0 -0.0 -0.0]
+        [-0.0 -0.0  1.0 -0.0 -0.0 -0.0]
+        [-0.0 -0.0 -0.0 -1.0 -0.0 -0.0]
+        [-0.0 -0.0 -0.0  1.0 -0.0 -0.0]
+        sage: b
+        (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.2, 0.2, 0.1, 0.1) 
         
     TESTS:: 
     
     If we choose QQ, then we have both reordering and rescaling::
 
-    sage: P = polyhedron_from_Hrep(A, b, base_ring = QQ); P
-    A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices
+        sage: P = polyhedron_from_Hrep(A, b, base_ring = QQ); P
+        A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices
 
-    sage: [A, b] = polyhedron_to_Hrep(P)
-    sage: A
-    [  0.0   0.0   0.0   0.0   0.0  -1.0]
-    [  0.0   0.0   0.0   0.0   0.0   1.0]
-    [  0.0   0.0   0.0   0.0  -1.0   0.0]
-    [  0.0   0.0   0.0   0.0   1.0   0.0]
-    [  0.0  -1.0   0.0   0.0   0.0   0.0]
-    [  0.0   1.0   0.0   0.0   0.0   0.0]
-    [ -1.0   0.0   0.0   0.0   0.0   0.0]
-    [  0.0   0.0   5.0   0.0   0.0   0.0]
-    [  0.0   0.0  -5.0   0.0   0.0   0.0]
-    [  0.0   0.0   0.0 -10.0   0.0   0.0]
-    [  0.0   0.0   0.0  10.0   0.0   0.0]
-    [  1.0   0.0   0.0   0.0   0.0   0.0]
-    sage: b
-    (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 10.0)
+        sage: [A, b] = polyhedron_to_Hrep(P)
+        sage: A
+        [  0.0   0.0   0.0   0.0   0.0  -1.0]
+        [  0.0   0.0   0.0   0.0   0.0   1.0]
+        [  0.0   0.0   0.0   0.0  -1.0   0.0]
+        [  0.0   0.0   0.0   0.0   1.0   0.0]
+        [  0.0  -1.0   0.0   0.0   0.0   0.0]
+        [  0.0   1.0   0.0   0.0   0.0   0.0]
+        [ -1.0   0.0   0.0   0.0   0.0   0.0]
+        [  0.0   0.0   5.0   0.0   0.0   0.0]
+        [  0.0   0.0  -5.0   0.0   0.0   0.0]
+        [  0.0   0.0   0.0 -10.0   0.0   0.0]
+        [  0.0   0.0   0.0  10.0   0.0   0.0]
+        [  1.0   0.0   0.0   0.0   0.0   0.0]
+        sage: b
+        (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 10.0)
 
-    The polytope P is not full-dimensional. To extract the equality constraints we use the flag separate_equality_constraints::
+    The polytope P is not full-dimensional. To extract the equality constraints we use the flag ``separate_equality_constraints``::
 
-    sage: [A, b, Aeq, beq] = polyhedron_to_Hrep(P, separate_equality_constraints = True)
-    sage: A
-    [ -1.0   0.0   0.0   0.0   0.0   0.0]
-    [  0.0   0.0   5.0   0.0   0.0   0.0]
-    [  0.0   0.0  -5.0   0.0   0.0   0.0]
-    [  0.0   0.0   0.0 -10.0   0.0   0.0]
-    [  0.0   0.0   0.0  10.0   0.0   0.0]
-    [  1.0   0.0   0.0   0.0   0.0   0.0]
-    sage: b
-    (0.0, 1.0, 1.0, 1.0, 1.0, 10.0)
-    sage: Aeq
-    [ 0.0  0.0  0.0  0.0  0.0 -1.0]
-    [ 0.0  0.0  0.0  0.0 -1.0  0.0]
-    [ 0.0 -1.0  0.0  0.0  0.0  0.0]
-    sage: beq
-    (0.0, 0.0, 0.0)
+        sage: [A, b, Aeq, beq] = polyhedron_to_Hrep(P, separate_equality_constraints = True)
+        sage: A
+        [ -1.0   0.0   0.0   0.0   0.0   0.0]
+        [  0.0   0.0   5.0   0.0   0.0   0.0]
+        [  0.0   0.0  -5.0   0.0   0.0   0.0]
+        [  0.0   0.0   0.0 -10.0   0.0   0.0]
+        [  0.0   0.0   0.0  10.0   0.0   0.0]
+        [  1.0   0.0   0.0   0.0   0.0   0.0]
+        sage: b
+        (0.0, 1.0, 1.0, 1.0, 1.0, 10.0)
+        sage: Aeq
+        [ 0.0  0.0  0.0  0.0  0.0 -1.0]
+        [ 0.0  0.0  0.0  0.0 -1.0  0.0]
+        [ 0.0 -1.0  0.0  0.0  0.0  0.0]
+        sage: beq
+        (0.0, 0.0, 0.0)
 """
     if not separate_equality_constraints:
         # a priori I don't know number of equalities; actually m may be bigger than len(P.Hrepresentation()) !
@@ -179,19 +178,19 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     return [matrix(RDF, A), vector(RDF, b), matrix(RDF, Aeq), vector(RDF, beq)]
         
 def polyhedron_from_Hrep(A, b, base_ring=QQ):
-    r"""Builds a polytope given the H-representation, in the form Ax <= b
+    r"""Builds a polytope given the H-representation, in the form `Ax <= b`
 
     INPUT:
 
-    * "A" - matrix of size m x n, in RDF or QQ ring. Accepts generic Sage matrix, and also a Numpy arrays with a matrix shape.
+    * ``A`` - matrix of size m x n, in RDF or QQ ring. Accepts generic Sage matrix, and also a Numpy arrays with a matrix shape.
 
-    * "b" - vector of size m, in RDF or QQ ring. Accepts generic Sage matrix, and also a Numpy array.
+    * ``b`` - vector of size m, in RDF or QQ ring. Accepts generic Sage matrix, and also a Numpy array.
 
-    * "base_ring" - (default: QQ). Specifies the ring (base_ring) for the Polyhedron constructor. Valid choices are:
+    * ``base_ring`` - (default: ``QQ``). Specifies the ring (base_ring) for the Polyhedron constructor. Valid choices are:
 
-        * QQ - rational. Uses 'ppl' (Parma Polyhedra Library) backend
+        * ``QQ`` - rational. Uses ``'ppl'`` (Parma Polyhedra Library) backend
 
-        * RDF - Real double field. Uses 'cdd' backend.
+        * ``RDF`` - Real double field. Uses ``'cdd'`` backend.
 
     OUTPUT:
 
@@ -200,33 +199,34 @@ def polyhedron_from_Hrep(A, b, base_ring=QQ):
     TO-DO:
 
     * accept numpy arrays. notice that we often handle numpy arrays (for instance if we load some data from matlab using the function
-    scipy.io.loadmat(...), then the data will be loaded as a dictionary of numpy arrays)
+    ``scipy.io.loadmat(..)``, then the data will be loaded as a dictionary of numpy arrays)
 
     EXAMPLES:
 
-    sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],
-    ....: [ 0.0,  0.0, -1.0,  0.0,  0.0,  0.0],
-    ....: [ 0.0,  0.0,  1.0,  0.0,  0.0,  0.0],
-    ....: [ 0.0,  0.0,  0.0, -1.0,  0.0,  0.0],
-    ....: [ 0.0,  0.0,  0.0,  1.0,  0.0,  0.0],
-    ....: [ 0.0,  0.0,  0.0,  0.0,  1.0,  0.0],
-    ....: [ 0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
-    ....: [ 0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
-    ....: [ 0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
-    sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
-    sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep
-    sage: P = polyhedron_from_Hrep(A, b, base_ring=QQ); P
-    A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices
+        sage: A = matrix(RDF, [[-1.0, 0.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [ 1.0,  0.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [ 0.0,  1.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [ 0.0, -1.0,  0.0,  0.0,  0.0,  0.0],
+        ....: [ 0.0,  0.0, -1.0,  0.0,  0.0,  0.0],
+        ....: [ 0.0,  0.0,  1.0,  0.0,  0.0,  0.0],
+        ....: [ 0.0,  0.0,  0.0, -1.0,  0.0,  0.0],
+        ....: [ 0.0,  0.0,  0.0,  1.0,  0.0,  0.0],
+        ....: [ 0.0,  0.0,  0.0,  0.0,  1.0,  0.0],
+        ....: [ 0.0,  0.0,  0.0,  0.0, -1.0,  0.0],
+        ....: [ 0.0,  0.0,  0.0,  0.0,  0.0,  1.0],
+        ....: [ 0.0,  0.0,  0.0,  0.0,  0.0, -1.0]])
+        sage: b = vector(RDF, [0.0, 10.0, 0.0, 0.0, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0])
+        sage: from carlin.polyhedron_toolbox import polyhedron_from_Hrep
+        sage: P = polyhedron_from_Hrep(A, b, base_ring=QQ); P
+        A 3-dimensional polyhedron in QQ^6 defined as the convex hull of 8 vertices
 
-    NOTE:
+    NOTES:
 
-    This function is useful especially when the input matrices A, b are ill-defined 
+    - This function is useful especially when the input matrices A, b are ill-defined 
     (constraints that differ by tiny amounts making the input data to be degenerate or almost degenerate), 
     causing problems to Polyhedron(...). 
-    In this case it is recommended to use base_ring = QQ. Each element of A and b will be converted to rational, and this will be sent to Polyhedron.
+    
+    - In this case it is recommended to use base_ring = QQ. Each element of A and b will be converted to rational, and this will be sent to Polyhedron.
      Note that Polyhedron automatically removes redundant constraints.
 
     """
@@ -308,13 +308,13 @@ def chebyshev_center(P=None, A=None, b=None):
 
     INPUT:
 
-    * "A, b" - Matrix and vector representing the polyhedron, as Ax <= b.
+    * ``A, b`` - Matrix and vector representing the polyhedron, as `Ax <= b`.
 
-    * "P" - Polyhedron object.
+    * ``P`` - Polyhedron object.
 
     OUTPUT:
 
-    * "cheby_center" - the Chebyshev center, as a vector. The base_ring is preserved.
+    * ``cheby_center`` - the Chebyshev center, as a vector. The base ring is preserved.
 
     """
     from sage.numerical.mip import MixedIntegerLinearProgram
@@ -357,22 +357,24 @@ def chebyshev_center(P=None, A=None, b=None):
 def radius(P):
     r"""Compute maximum norm of any element in a polyhedron (in the sup norm).
 
-    It is defined as `max_{x in P} \Vert x \Vert|_inf`. It can be computed with support functions as 
-    `max_{i=1,...,n} max{|rho(P, ei)|, |rho(P,-ei)|}``, 
-    where `rho(P, ei)`` is the support function of `P` evaluated at `ei`, and `ei` is the i-th canonical vector in `\\R^n`.
+    It is defined as `max\limits_{x in P} \Vert x \Vert_\inf`. It can be computed with support functions as 
+    `max\limits_{i=1,\ldots,n} \max \{|\rho(P, e_i)|, |\rho(P, -e_i)|}`, 
+    where `\rho(P, e_i)` is the support function of `P` evaluated at `e_i`, and `e_i` is the i-th canonical vector in `\RR^n`.
 
     INPUT:
 
-    * "P" - an object of class Polyhedron. It can also be given as [A, b] with A and b matrices, assuming Ax <= b.
+    * ``P`` - an object of class Polyhedron. It can also be given as ``[A, b]`` with A and b matrices, assuming `Ax <= b`.
 
     OUTPUT:
 
-    * "snorm" - the value of the max norm of any element of P, in the sup-norm.
+    * ``snorm`` - the value of the max norm of any element of P, in the sup-norm.
 
     TO-DO:
 
-    To use *args so that it works both with polyhedron_sup_norm(A, b) and with polyhedron_sup_norm(P) (depending on the number of the arguments). 
-    The difference with mult-methods is that they check also for the type of the arguments.
+    - To use '*args' so that it works both with ``polyhedron_sup_norm(A, b)`` and with ``polyhedron_sup_norm(P)`` 
+    (depending on the number of the arguments). 
+    
+    - The difference with mult-methods is that they check also for the type of the arguments.
 
     """
     from carlin.polyhedron_toolbox import supp_fun_polyhedron
@@ -403,39 +405,39 @@ def radius(P):
 def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK'):
     r"""Compute support function of a convex polytope.
 
-    It is defined as `max_{x in P} <x,d>` , where `d` is an input vector.
+    It is defined as `max_{x in P} \langle x, d \rangle` , where `d` is an input vector.
 
     INPUT:
 
-    * "P" - an object of class Polyhedron. It can also be given as [A, b] with A and b matrices, assuming Ax <= b.
+    * ``P`` - an object of class Polyhedron. It can also be given as ``[A, b]`` meaning `Ax <= b`.
 
-    * "d" - a vector (or list) where the support function is evaluated.
+    * ``d`` - a vector (or list) where the support function is evaluated.
 
-    * "verbose" - (default: 0) If 1, print the status of the LP.
+    * ``verbose`` - (default: 0) If 1, print the status of the LP.
 
-    * "solver" - (default: 'GLPK') the LP solver used.
+    * ``solver`` - (default: ``'GLPK'``) the LP solver used.
 
-    * "return_xopt" - (default: False) If True, the optimal point is returned, and sf = [oval, opt].
+    * ``return_xopt`` - (default: False) If True, the optimal point is returned, and ``sf = [oval, opt]``.
 
     OUTPUT:
 
-    * "sf" - the value of the support function.
+    * ``sf`` - the value of the support function.
 
     EXAMPLES::
 
-    sage: from carlin.polyhedron_toolbox import BoxInfty, supp_fun_polyhedron
-    sage: P = BoxInfty([1,2,3], 1); P
-    A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
-    sage: supp_fun_polyhedron(P, [1,1,1], return_xopt=True)
-    (9.0, {0: 2.0, 1: 3.0, 2: 4.0})
+        sage: from carlin.polyhedron_toolbox import BoxInfty, supp_fun_polyhedron
+        sage: P = BoxInfty([1,2,3], 1); P
+        A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
+        sage: supp_fun_polyhedron(P, [1,1,1], return_xopt=True)
+        (9.0, {0: 2.0, 1: 3.0, 2: 4.0})
     
-    TO-DO::
+    TO-DO:
 
     - Test with more solvers (GLPK, Gurobi, ...)
 
-    NOTES::
+    NOTES:
 
-    - The possibility of giving the input polytope as [A, b] instead of a 
+    - The possibility of giving the input polytope as ``[A, b]`` instead of a 
     polyhedron P is useful in cases when the dimensions are high  (in practice, 
     more than 30, but it depends on the particular system -number of 
     constraints- as well). 
@@ -446,10 +448,6 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
     the matrices A and b directly. The improve in speed is quite considerable.
 
     - If a different solver is given, it should be installed properly.
-
-    sage: from carlin.polyhedron_toolbox import supp_fun_polyhedron
-    sage: supp_fun_polyhedron(P, [1,1,1], solver='GLPK')
-    9.0
     """
     from sage.numerical.mip import MixedIntegerLinearProgram
 

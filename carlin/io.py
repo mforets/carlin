@@ -49,20 +49,20 @@ def load_model(model_filename):
 
     INPUTS:
 
-    - "model_filename" : string with the model filename
+    - ``model_filename`` : string with the model filename
 
     OUTPUTS:
 
-    - "f" : polynomial vector field. Each component belongs to the polynomial ring `\mathbf{Q}[x1,...,xn]`
+    - ``f`` : polynomial vector field. Each component belongs to the polynomial ring `\QQ[x_1,\ldots,x_n]`
 
-    - "n" : dimension of f.
+    - ``n`` : dimension of f
 
-    - "k" : degree of f.
+    - ``k`` : degree of f
 
     TO-DO:
 
     - Accept file that is not polynomial and try to convert it to polynomial form. 
-    See ```automatic_recastic.ipynb`` notebook.
+    See ``automatic_recastic.ipynb`` notebook.
 
     """
     from sage.structure.sage_object import load
@@ -76,30 +76,28 @@ def load_model(model_filename):
 
 
 def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
-    r""" [F, n, k] = get_Fj_from_model(...)
-    Transform an input model of a polynomial vector field into standard form as a sum of Kronecker products.
-    The model can be given either as an external file (model_filename), or as the tuple (f, n, k).
+    r""" Transform an input model of a polynomial vector field into standard form as a sum of Kronecker products.
+    
+    
+    The model can be given either as an external file (model_filename), or as the tuple ``(f, n, k)``.
 
     INPUTS:
 
-    - "model_filename" : string containing the filename
+    - ``model_filename`` : string containing the filename
 
     OUTPUTS:
 
-    - "F" : F is a list of sparse matrices F1, ..., Fk. These are formatted in dok (dictionary-of-keys) form.
+    - ``F`` : F is a list of sparse matrices `F1, ..., Fk`. These are formatted in dok (dictionary-of-keys) form.
 
-    - "n" : dimension of the state-space of the system
+    - ``n`` : dimension of the state-space of the system
 
-    - "k" : degree of the system
-
-    EXAMPLE:
+    - ``k`` : degree of the system
 
     NOTES:
 
     - There was a problem with sum(1) with Sage's sum, that happens for the scalar case
-       (n=1). In that case we can use: from scipy import sum
-       However, now that case is handled separately.
-
+      (n=1). In that case we can use: from scipy import sum
+      However, now that case is handled separately.
     """
 
     if model_filename is not None and f is None:
