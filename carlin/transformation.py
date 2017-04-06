@@ -59,7 +59,7 @@ from sage.functions.log import log, exp
 #===============================================
 
 def transfer_matrices(N, F, n, k):
-    r""" Finite order transfer matrices `A_ij`.
+    r""" Higher order transfer matrices `A^{i}_{i+j-1}`.
 
     INPUTS:
 
@@ -75,8 +75,8 @@ def transfer_matrices(N, F, n, k):
     OUTPUTS:
 
     - ``A`` : the transfer matrices `A^{i}_{i+j-1}` that correspond
-            to `i = 1, \ldots , N`. It is given as a list of lists.
-            Each inner list has dimension `k`.
+              to `i = 1, \ldots, N`. It is given as a list of lists.
+              Each inner list has dimension `k`.
     """
 
     A = []
@@ -110,8 +110,8 @@ def truncated_matrix(N, *args, **kwargs):
     OUTPUTS:
 
     - ``A`` : the transfer matrices `A^{i}_{i+j-1}` that correspond to
-            `i = 1, \ldots , N`. It is given as a list of lists.
-            Each inner list has dimension `k`.
+              `i = 1, \ldots, N`. It is given as a list of lists.
+              Each inner list has dimension `k`.
     """
     from scipy.sparse import bmat
 
