@@ -246,7 +246,7 @@ However, now that case is handled separately.</li>
 </ul>
 <p>OUTPUTS:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">f</span></code> : polynomial vector field. Each component belongs to the polynomial ring <span class="math">\(\mathbf{Q}[x_1,\ldots,x_n]\)</span></li>
+<li><code class="docutils literal"><span class="pre">f</span></code> : polynomial vector field. Each component belongs to the polynomial ring <span class="math">\(\mathbb{Q}[x_1,\ldots,x_n]\)</span></li>
 <li><code class="docutils literal"><span class="pre">n</span></code> : dimension of f</li>
 <li><code class="docutils literal"><span class="pre">k</span></code> : degree of f</li>
 </ul>
@@ -522,10 +522,10 @@ with separated inequality and equality constraints.</p>
 <dl class="function">
 <dt id="carlin.polyhedron_toolbox.radius">
 <code class="descclassname">carlin.polyhedron_toolbox.</code><code class="descname">radius</code><span class="sig-paren">(</span><em>P</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.polyhedron_toolbox.radius" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute maximum norm of any element in a polyhedron (in the sup norm).</p>
-<p>It is defined as <span class="math">\(max\limits_{x in P} \Vert x \Vert_\inf\)</span>. It can be computed with support functions as 
-<span class="math">\(max\limits_{i=1,\ldots,n} \max \{|\rho(P, e_i)|, |\rho(P, -e_i)|}\)</span>, 
-where <span class="math">\(\rho(P, e_i)\)</span> is the support function of <span class="math">\(P\)</span> evaluated at <span class="math">\(e_i\)</span>, and <span class="math">\(e_i\)</span> is the i-th canonical vector in <span class="math">\(\RR^n\)</span>.</p>
+<dd><p>Maximum norm of any element in a polyhedron, with respect to the supremum norm.</p>
+<p>It is defined as <span class="math">\(\max\limits_{x in P} \Vert x \Vert_\inf\)</span>. It can be computed with support functions as 
+<span class="math">\(\max\limits_{i=1,\ldots,n} \max \{|\rho_P(e_i)|, |\rho_P(-e_i)|}\)</span>, 
+where <span class="math">\(\rho_P(e_i)\)</span> is the support function of <span class="math">\(P\)</span> evaluated at the i-th canonical vector <span class="math">\(e_i\)</span>.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">P</span></code> - an object of class Polyhedron. It can also be given as <code class="docutils literal"><span class="pre">[A,</span> <span class="pre">b]</span></code> with A and b matrices, assuming <span class="math">\(Ax &lt;= b\)</span>.</li>
