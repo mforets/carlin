@@ -3,3 +3,4 @@
 /.travis_ci_gh_pages_deploy_key
 /.travis_ci_gh_pages_deploy_key.pub
 /gh-pages
+*.ipynb_checkpoints*
