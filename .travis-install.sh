@@ -14,5 +14,6 @@ MAKE="make -j4"
 export MAKE
 # Install packages
 #SageMath/sage -i lrslib
+SageMath/sage -pip install --upgrade -v git+https://github.com/mforets/polyhedron_tools.git
 # To initialize matplotlib font manager
 SageMath/sage -python -c 'import matplotlib.pyplot'
