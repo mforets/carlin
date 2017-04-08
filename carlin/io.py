@@ -62,7 +62,7 @@ def load_model(model_filename):
     TO-DO:
 
     - Accept file that is not polynomial and try to convert it to polynomial form. 
-    See ``automatic_recastic.ipynb`` notebook.
+    (See ``automatic_recastic.ipynb`` notebook).
 
     """
     from sage.structure.sage_object import load
@@ -78,8 +78,7 @@ def load_model(model_filename):
 def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
     r""" Transform an input model of a polynomial vector field into standard form as a sum of Kronecker products.
     
-    
-    The model can be given either as an external file (model_filename), or as the tuple ``(f, n, k)``.
+    The model can be given either as an external file (``model_filename``), or as the tuple ``(f, n, k)``.
 
     INPUTS:
 

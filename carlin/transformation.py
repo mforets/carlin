@@ -42,7 +42,7 @@ import scipy.sparse.linalg
 from carlin.io import get_Fj_from_model
 
 # Toolbox for operations on polytopes
-from carlin.polyhedron_toolbox import polyhedron_to_Hrep, chebyshev_center, radius
+from polyhedron_tools.misc import polyhedron_to_Hrep, chebyshev_center, radius
 
 # Sage objects: Rings, Polynomials, Linear algebra
 from sage.rings.all import RR, QQ
