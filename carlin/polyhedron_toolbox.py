@@ -3,15 +3,20 @@ Numerical computations with polytopes, with a focus on computational geometry.
 
 Features:
 
-- use `(A, b)` notation for polytope construction
-- a bunch of commonly used functions, which do not require the double description of the polytope
-- calculation of support functions
-
+- simpler matrix-vector `(A, b)` polytope constructor
+- support functions computation through the MIP interface
+- a bunch of commonly used functions, which do not require the double description 
+of the polytope, including:
+   - Chebyshev center
+   - Radius
+   - Random polygons
+   - Opposite polyhedron
+   
 AUTHOR:
 
 - Marcelo Forets (Oct 2016 at VERIMAG - UGA)
 
-Last modified: 2017-04-06
+Last modified: 2017-04-08
 """
 
 #************************************************************************
@@ -24,18 +29,26 @@ Last modified: 2017-04-06
 #                  http://www.gnu.org/licenses/
 #************************************************************************
 
-# Sage objects
+# SciPy dependencies
+import numpy as np
+import random
+
+# Sage rings
 from sage.rings.rational_field import QQ
 from sage.rings.real_double import RDF
 
+# Sage constructors
 from sage.geometry.polyhedron.constructor import Polyhedron
 from sage.matrix.constructor import matrix, vector
 from sage.modules.free_module_element import zero_vector
 
+# Misc methods
+from sage.geometry.polyhedron.misc import _make_listlist
+
 def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     r"""Extract half-space representation of polytope. 
     
-    By default, returns matrices ``[A, b]`` representing `P` as `Ax <= b`. 
+    By default, returns matrices ``[A, b]`` representing `P` as `Ax \leq b`. 
     If ``separate_equality_constraints = True``, returns matrices ``[A, b, Aeq, beq]``, 
     with separated inequality and equality constraints.
 
@@ -180,7 +193,7 @@ def polyhedron_to_Hrep(P, separate_equality_constraints = False):
     return [matrix(RDF, A), vector(RDF, b), matrix(RDF, Aeq), vector(RDF, beq)]
         
 def polyhedron_from_Hrep(A, b, base_ring=QQ):
-    r"""Builds a polytope given the H-representation, in the form `Ax <= b`
+    r"""Builds a polytope given the H-representation, in the form `Ax \leq b`
 
     INPUT:
 
@@ -310,7 +323,7 @@ def chebyshev_center(P=None, A=None, b=None):
 
     INPUT:
 
-    * ``A, b`` - Matrix and vector representing the polyhedron, as `Ax <= b`.
+    * ``A, b`` - Matrix and vector representing the polyhedron, as `Ax \leq b`.
 
     * ``P`` - Polyhedron object.
 
@@ -360,12 +373,12 @@ def radius(P):
     r"""Maximum norm of any element in a polyhedron, with respect to the supremum norm.
 
     It is defined as `\max\limits_{x in P} \Vert x \Vert_\inf`. It can be computed with support functions as 
-    `\max\limits_{i=1,\ldots,n} \max \{|\rho_P(e_i)|, |\rho_P(-e_i)|}`, 
+    `\max\limits_{i=1,\ldots,n} \max \{|\rho_P(e_i)|, |\rho_P(-e_i)|\}`, 
     where `\rho_P(e_i)` is the support function of `P` evaluated at the i-th canonical vector `e_i`.
 
     INPUT:
 
-    * ``P`` - an object of class Polyhedron. It can also be given as ``[A, b]`` with A and b matrices, assuming `Ax <= b`.
+    * ``P`` - an object of class Polyhedron. It can also be given as ``[A, b]`` with A and b matrices, assuming `Ax \leq b`.
 
     OUTPUT:
 
@@ -379,7 +392,7 @@ def radius(P):
     - The difference with mult-methods is that they check also for the type of the arguments.
 
     """
-    from carlin.polyhedron_toolbox import supp_fun_polyhedron
+    from carlin.polyhedron_toolbox import support_function
     
     if (type(P) == list):
 
@@ -392,26 +405,26 @@ def radius(P):
             # generate canonical direction
             d = zero_vector(RDF,n)
             d[i] = 1
-            aux_sf = abs(supp_fun_polyhedron([A, b], d))
+            aux_sf = abs(support_function([A, b], d))
             if (aux_sf >= r):
                 r = aux_sf;
 
             # change sign
             d[i] = -1
-            aux_sf = abs(supp_fun_polyhedron([A, b], d))
+            aux_sf = abs(support_function([A, b], d))
             if (aux_sf >= r):
                 r = aux_sf;
         snorm = r
         return snorm    
         
-def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK'):
+def support_function(P, d, verbose = 0, return_xopt = False, solver = 'GLPK'):
     r"""Compute support function of a convex polytope.
 
     It is defined as `max_{x in P} \langle x, d \rangle` , where `d` is an input vector.
 
     INPUT:
 
-    * ``P`` - an object of class Polyhedron. It can also be given as ``[A, b]`` meaning `Ax <= b`.
+    * ``P`` - an object of class Polyhedron. It can also be given as ``[A, b]`` meaning `Ax \leq b`.
 
     * ``d`` - a vector (or list) where the support function is evaluated.
 
@@ -427,15 +440,11 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
 
     EXAMPLES::
 
-        sage: from carlin.polyhedron_toolbox import BoxInfty, supp_fun_polyhedron
+        sage: from carlin.polyhedron_toolbox import BoxInfty, support_function
         sage: P = BoxInfty([1,2,3], 1); P
         A 3-dimensional polyhedron in QQ^3 defined as the convex hull of 8 vertices
-        sage: supp_fun_polyhedron(P, [1,1,1], return_xopt=True)
+        sage: support_function(P, [1,1,1], return_xopt=True)
         (9.0, {0: 2.0, 1: 3.0, 2: 4.0})
-    
-    TO-DO:
-
-    - Test with more solvers (GLPK, Gurobi, ...)
 
     NOTES:
 
@@ -502,6 +511,32 @@ def supp_fun_polyhedron(P, d, verbose = 0, return_xopt = False, solver = 'GLPK')
     else:
         return oval     
         
+def support_function_ellipsoid(Q, d):
+    r"""Compute support function of an ellipsoid.
+
+    The ellipsoid is defined as `\max_{x in Q} \langle x, d \rangle`, where 
+    `d` is a given vector. The ellipsoid is defined as the set 
+    `\{ x \in \mathbb{R}^n : x^T Q x \leq 1\}`.
+
+    INPUT:
+
+    * ``Q`` - a square matrix.
+
+    * ``d`` - a vector (or list) where the support function is evaluated.
+
+    OUTPUT:
+
+    The value of the support function at `d`.
+    """
+    from sage.functions.other import sqrt
+    if (Q.is_singular()):
+        raise ValueError("The coefficient matrix of the ellipsoid is not invertible.")
+    
+    if (type(d) == list):
+        d = vector(d)
+    
+    return sqrt(d.inner_product((~Q)*d))
+                
 def BoxInfty(lengths=None, center=None, radius=None, base_ring=QQ, return_HSpaceRep=False):
     r"""Generate a box (hyper-rectangle) in the supremum norm.
 
@@ -515,13 +550,13 @@ def BoxInfty(lengths=None, center=None, radius=None, base_ring=QQ, return_HSpace
 
         * by center and radius:
 
-            * ``center" - a vector (or a list) containing the coordinates of the center of the ball.
+            * ``center`` - a vector (or a list) containing the coordinates of the center of the ball.
 
             * ``radius`` - a number representing the radius of the ball.
 
         * by lengths:
 
-            * ``lenghts`` - a list of tuples containing the length of each side with respect to the coordinate axes, in the form [(min_x1, max_x1), ..., (min_xn, max_xn)]
+            * ``lenghts`` - a list of tuples containing the length of each side with respect to the coordinate axes, in the form [(min_x1, max_x1), ..., (min_xn, max_xn)].
 
     * ``base_ring`` - (default: QQ) base ring passed to the Polyhedron constructor. Valid choices are:
 
@@ -529,11 +564,11 @@ def BoxInfty(lengths=None, center=None, radius=None, base_ring=QQ, return_HSpace
 
         * ``'RDF'``: real double field
 
-    * ``return_HSpaceRep`` - (default: False) If True, it does not construct the Polyhedron P, and returns instead the pairs ``[A, b]`` corresponding to P in half-space representation, and is understood that `Ax <= b`.
+    * ``return_HSpaceRep`` - (default: False) If True, it does not construct the Polyhedron P, and returns instead the pairs ``[A, b]`` corresponding to P in half-space representation, and is understood that `Ax \leq b`.
 
     OUTPUT:
 
-    * ``P`` - a Polyhedron object. If the flag ``return_HSpaceRep`` is true, it is returned as ``[A, b]`` with `A` and `b` matrices, and is understood that `Ax <= b`.
+    * ``P`` - a Polyhedron object. If the flag ``return_HSpaceRep`` is true, it is returned as ``[A, b]`` with `A` and `b` matrices, and is understood that `Ax \leq b`.
 
     EXAMPLES::
 
@@ -618,4 +653,73 @@ def BoxInfty(lengths=None, center=None, radius=None, base_ring=QQ, return_HSpace
         P = polyhedron_from_Hrep(A, b, base_ring)
         return P
     else:
-        return [A, b]           
+        return [A, b]   
+    
+def random_polygon_2d(num_vertices, **kwargs):
+    r"""Generate a random polygon (2d) obtained by uniform sampling over the unit circle.
+
+    INPUT:
+
+    * ``num_vertices`` - the number of vertices of the generated polyhedron.
+
+    * ``base_ring`` - (default: ``QQ``). The ring passed to the constructor of Polyhedron. 
+    alid options are ``QQ`` and ``RDF``.
+
+    * ``scale`` - (default: 1). The scale factor; each vertex is chosen randomly from the unit circle, 
+    and then multiplied by scale.
+
+    OUTPUT:
+
+    A random polygon (object of type Polyhedron), whose vertices belong to a circle
+    of radius ``scale``.
+
+    NOTES:
+
+    - If ``RDF`` is chosen as ``base_ring``, sometimes there are exceptions related 
+    to numerical errors, and show up as ``'FrozenSet'`` exceptions. This occurs 
+    particularly frequently for a large number of vertices (more than 30).
+    """
+    from sage.functions.log import exp
+    from sage.symbolic.constants import pi
+    from sage.symbolic.all import I
+        
+    base_ring = kwargs['base_ring'] if 'base_ring' in kwargs else QQ
+
+    scale = kwargs['scale'] if 'scale' in kwargs else 1
+
+    angles = [random.uniform(0, 2*pi.n(digits=5)) for i in range(num_vertices)]
+    vert = [[scale*exp(I*angles[i]).real(), scale*exp(I*angles[i]).imag()] for i in range(num_vertices)]
+
+    return Polyhedron(vertices = vert, base_ring=base_ring)
+    
+def opposite_polyhedron(P, base_ring=None):
+    r"""Generate the polyhedron whose vertices are oppositve to a given one.
+
+    The opposite polyhedron `-P` is defined as the polyhedron such that `x \in -P` if and only if `-x \in P`. 
+
+    INPUT:
+
+    * ``P`` - an object of class Polyhedron.
+
+    * ``base_ring`` - (default: that of P). The ``base_ring`` passed to construct `-P`.
+
+    OUTPUT:
+
+    A polyhedron whose vertices are opposite to those of `P`.
+
+    EXAMPLES::
+
+        sage: P = BallInfty([1,1], 0.5)
+        sage: minusP = opposite_polyhedron(P)
+        sage: P.plot(aspect_ratio=1) + minusP.plot()    # not tested (plot)
+
+    TO-DO:
+
+    The possibility to receive P in matrix form `(A, b)`.
+    """
+    if base_ring is None:
+        base_ring = P.base_ring()
+
+    return Polyhedron(vertices = [-1*vector(v) for v in P.vertices_list()], base_ring = base_ring)
+    
+    
