@@ -10,6 +10,8 @@ Features:
 AUTHOR:
 
 - Marcelo Forets (Oct 2016 at VERIMAG - UGA)
+
+Last modified: 2017-04-06
 """
 
 #************************************************************************
