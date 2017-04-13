@@ -10,15 +10,23 @@ This work is licensed under a `Creative Commons Attribution-Share Alike
 __ https://creativecommons.org/licenses/by-sa/3.0/
 
 Installation
-============
+==============
 
 .. toctree::
    :maxdepth: 1
 
    installation
 
+Tutorial
+==============
+
+.. toctree::
+  :maxdepth: 1
+
+  introduction
+         
 Examples
-========
+===========
 
 .. toctree::
    :maxdepth: 1
@@ -26,7 +34,7 @@ Examples
    examples
     
 Methods
-=======
+==========
         
 .. toctree::
   :maxdepth: 1
@@ -35,7 +43,7 @@ Methods
 
 
 Indices and Tables
-==================
+====================
 
 * :ref:`genindex`
 * :ref:`modindex`

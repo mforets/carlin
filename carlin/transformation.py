@@ -5,8 +5,8 @@ Features:
 
 - reduction of a polynomial vector field to a quadratic field in higher dimensions
 - truncation 
-- calculation of the truncation error by the method of a priori estimates
-- calculation of the truncation error by the method of generating functions
+- computation of the truncation error by the method of backwards integration
+- computation of the truncation error by the method of power series
 
 AUTHOR:
 
@@ -61,22 +61,21 @@ from sage.functions.log import log, exp
 def transfer_matrices(N, F, n, k):
     r""" Higher order transfer matrices `A^{i}_{i+j-1}`.
 
-    INPUTS:
+    INPUT:
 
-    - ``N`` : order of truncation.
+    - ``N`` -- order of truncation 
 
-    - ``F`` : sequence of matrices `F_j` (list).
+    - ``F`` -- sequence of matrices `F_j` (list)
 
-    - ``n`` : the dimension of the state-space.
+    - ``n`` -- the dimension of the state-space
 
-    - ``k`` : the order of the polynomial vector field. It is equal to ``len(F)``.
+    - ``k`` -- the order of the polynomial vector field. It is equal to ``len(F)``
 
 
-    OUTPUTS:
+    OUTPUT:
 
-    - ``A`` : the transfer matrices `A^{i}_{i+j-1}` that correspond
-              to `i = 1, \ldots, N`. It is given as a list of lists.
-              Each inner list has dimension `k`.
+    - ``A`` -- the transfer matrices `A^{i}_{i+j-1}` that correspond to `i = 1, \ldots, N`. 
+               It is given as a list of lists. Each inner list has dimension `k`.
     """
 
     A = []
@@ -97,17 +96,17 @@ def transfer_matrices(N, F, n, k):
 def truncated_matrix(N, *args, **kwargs):
     r""" Finite order Carleman linearization. 
 
-    INPUTS:
+    INPUT:
 
-    - ``N`` : order of truncation.
+    - ``N`` -- order of truncation
 
-    - ``input_format`` : sequence of matrices `F_j` (list).
+    - ``input_format`` -- sequence of matrices `F_j` (list)
 
-    - ``F`` : the dimension of the state-space.
+    - ``F`` -- the dimension of the state-space
 
-    - ``input_format`` : the order of the polynomial vector field, equal to ``len(F)``.
+    - ``input_format`` -- the order of the polynomial vector field, equal to ``len(F)``
 
-    OUTPUTS:
+    OUTPUT:
 
     - ``A`` : the transfer matrices `A^{i}_{i+j-1}` that correspond to
               `i = 1, \ldots, N`. It is given as a list of lists.
@@ -356,9 +355,7 @@ def kron_prod(x,y):
 
 
 def kron_power(x, i):
-    r""" Receives a nx1 vector and computes its Kronecker power `x^[i]`. 
-    
-    Assuming that `i >= 1`.
+    r""" Receives a `nx1` vector and computes its Kronecker power `x^{[i]}`. 
     """
     if (i > 2):
         return kron_prod(x, kron_power(x,i-1))
@@ -409,23 +406,21 @@ def get_index_from_key(key, j, n):
 def log_norm(A, p='inf'):
     r"""Compute the logarithmic norm of a matrix.
 
-    INPUTS:
+    INPUT:
 
-    * ``A`` - A rectangular (Sage dense) matrix of order `n`. The coefficients can be either real or complex.
+    - ``A`` -- a rectangular (Sage dense) matrix of order `n`. The coefficients can be either real or complex
 
-    * ``p`` - (default: ``'inf'``). The vector norm; possible choices are ``1``, ``2``, or ``'inf'``.
+    - ``p`` -- (default: ``'inf'``). The vector norm; possible choices are ``1``, ``2``, or ``'inf'``
 
     OUTPUT:
 
-    * ``lognorm`` - The log-norm of A in the p-norm.
+    - ``lognorm`` -- the log-norm of A in the p-norm
 
     TO-DO:
 
-    - Add support for a Numpy array for all values of p. (added - not tested).
+    - support for an arbitrary p >= 1 vector norm.
 
-    - Add support for an arbitrary p >= 1 vector norm. (how?)
-
-    - Check assumed shape. (not sure if I want this)
+    - consistency assumed shape
     """
     
     # parse the input matrix
@@ -461,15 +456,16 @@ def log_norm(A, p='inf'):
         raise ValueError('Value of p not understood or not implemented.')
 
 def characteristics(F, n, k):
-    r""" Information about the norms of the matrices in F.
+    r"""Information about the norms of the matrices in F.
 
-    INPUTS:
+    INPUT:
 
-    - ``F`` : list of matrices in a Numpy sparse format. The method toarray should be available.
+    - ``F`` : list of matrices in some Numpy sparse format, for which the ``toarray``
+      is available.
 
     TO-DO:
 
-    - Accept an optional params which allows to specifie a norm.
+    - Accept an optional params which allows to specifiy a norm.
     """
 
     import scipy as sp
