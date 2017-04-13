@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Context &mdash; Carleman linearization of ordinary differential equations 0.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/MathJax.js?config=TeX-AMS_HTML-full,../mathjax_sage.js"></script>
+    <link rel="top" title="Carleman linearization of ordinary differential equations 0.0.2 documentation" href="index.html" />
+    <link rel="next" title="Examples folder" href="examples.html" />
+    <link rel="prev" title="How to install through Sage’s pip" href="installation.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Examples folder"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="How to install through Sage’s pip"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="context">
+<h1>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h1>
+<p>Carleman linearization is an established method in mathematical nonlinear control.
+It consists in embedding a nonlinear system of differential equations <span class="math">\(x'(t)=f(x(t))+u(t)g(x(t))\)</span> of finite dimension
+into a system of bilinear differential equations <span class="math">\(y'(t)=Ay(t)+u(t)By(t)\)</span> of <em>infinite dimension</em>.
+By truncating the obtained bilinear system at finite orders, one obtains a systematic way of creating arbitrary-order approximation
+of the solutions of the nonlinear system.</p>
+</div>
+<div class="section" id="polynomial-ode-s">
+<h1>Polynomial ODE&#8217;s<a class="headerlink" href="#polynomial-ode-s" title="Permalink to this headline">¶</a></h1>
+<p>An important subclass of nonlinear systems are polynomial differential equations.
+Indeed, many systems can be rewritten as polynomial vector fields by introducing
+more variables and, in fact, any polynomial system can be reduced to a second-order
+polynomial one. Consider the initial-value problem (IVP)</p>
+<div class="math">
+\[\begin{split}\begin{equation}
+\left\{
+\begin{aligned}
+x'(t) &amp;= F_1 x + F_2 x^{[2]} + \ldots +  F_k x^{[k]}, \\
+ x(0) &amp;= x_0 \in \R^n,\qquad t \in I.
+\end{aligned}
+\right.
+\label{eq:S_ode}
+\end{equation}\end{split}\]</div>
+<p>We assume that the matrix-valued functions <span class="math">\(F_j \in \R^{n \times n^j}\)</span> are independent of <span class="math">\(t\)</span>.
+Here</p>
+<div class="math">
+\[\begin{equation*}
+x^{[i]} :=  \underset{\text{i times}}{\underbrace{x\otimes \cdots \otimes x}}
+\end{equation*}\]</div>
+<p>denotes the <span class="math">\(i\)</span>-th <em>Kronecker power</em> of <span class="math">\(x \in \R^n\)</span>, a convenient notation to express
+all possible products of elements of a vector up to a given order.</p>
+</div>
+<div class="section" id="carleman-embedding">
+<h1>Carleman embedding<a class="headerlink" href="#carleman-embedding" title="Permalink to this headline">¶</a></h1>
+<p>It can be shown that for all <span class="math">\(i \in \N\)</span>, <span class="math">\(y_i := x^{[i]}\)</span> satisfies the infinite-dimensional IVP</p>
+<div class="math">
+\[\begin{split}\begin{equation}
+\left\{
+\begin{aligned}
+y'(t) &amp;= \A y(t), \\
+y_i(0) &amp;= (x(0))^{[i]} = x_0^{[i]},\qquad \forall i \in \N,
+\end{aligned}
+\right.
+\label{eq:InfSysMatrix}
+\end{equation}\end{split}\]</div>
+<p>where <span class="math">\(y := (y_1,y_2,\ldots)^\transp\)</span> and <span class="math">\(\A\)</span> is the infinite-dimensional block upper-triangular matrix</p>
+<div class="math">
+\[\begin{split}\begin{equation*}
+\A := \begin{pmatrix}
+A_1^1 &amp; A_2^1 &amp; A_3^1 &amp; \ldots &amp; A_{k}^1 &amp; 0 &amp; 0 &amp; \ldots \\
+0&amp; A_2^2 &amp; A_3^2 &amp; \ldots &amp; A_{k}^2 &amp; A_{k+1}^2&amp;0 &amp; \ldots \\
+0 &amp; 0 &amp; A_3^3 &amp; \ldots  &amp; A_{k}^3 &amp; A_{k+1}^3  &amp; A_{k+2}^3 &amp; \ldots \\
+\vdots &amp;  \vdots &amp;  \vdots &amp;    &amp; \vdots &amp;\vdots &amp; \vdots &amp;\\
+\end{pmatrix}. \label{eq:Adefi}
+\end{equation*}\end{split}\]</div>
+<p>This particular structure can be exploited both from a theoretical and from a practical point of view.
+Finally, we use</p>
+<div class="math">
+\[\begin{equation*}
+x(t) := y_1(t),\qquad \hat{x}(t) := \hat{y}_1(t)
+\end{equation*}\]</div>
+<p>to denote the solution of the exact and truncated systems respectively, projected into <span class="math">\(\R^n\)</span>.
+The associated <em>error</em> is</p>
+<div class="math">
+\[\begin{equation*}
+\varepsilon(t) := x(t) - \hat{x}(t).
+\end{equation*}\]</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Context</a></li>
+<li><a class="reference internal" href="#polynomial-ode-s">Polynomial ODE&#8217;s</a></li>
+<li><a class="reference internal" href="#carleman-embedding">Carleman embedding</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">How to install through Sage&#8217;s pip</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="examples.html"
+                        title="next chapter">Examples folder</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/introduction.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="examples.html" title="Examples folder"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="How to install through Sage’s pip"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2017, Marcelo Forets.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.
+    </div>
+  </body>
+</html>
