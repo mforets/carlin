@@ -56,8 +56,8 @@
 <ul class="simple">
 <li>reduction of a polynomial vector field to a quadratic field in higher dimensions</li>
 <li>truncation</li>
-<li>calculation of the truncation error by the method of a priori estimates</li>
-<li>calculation of the truncation error by the method of generating functions</li>
+<li>computation of the truncation error by the method of backwards integration</li>
+<li>computation of the truncation error by the method of power series</li>
 </ul>
 <p>AUTHOR:</p>
 <ul class="simple">
@@ -69,13 +69,14 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <dt id="carlin.transformation.characteristics">
 <code class="descclassname">carlin.transformation.</code><code class="descname">characteristics</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.characteristics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Information about the norms of the matrices in F.</p>
-<p>INPUTS:</p>
+<p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">F</span></code> : list of matrices in a Numpy sparse format. The method toarray should be available.</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> : list of matrices in some Numpy sparse format, for which the <code class="docutils literal"><span class="pre">toarray</span></code>
+is available.</li>
 </ul>
 <p>TO-DO:</p>
 <ul class="simple">
-<li>Accept an optional params which allows to specifie a norm.</li>
+<li>Accept an optional params which allows to specifiy a norm.</li>
 </ul>
 </dd></dl>
 
@@ -106,8 +107,7 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <dl class="function">
 <dt id="carlin.transformation.kron_power">
 <code class="descclassname">carlin.transformation.</code><code class="descname">kron_power</code><span class="sig-paren">(</span><em>x</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_power" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receives a nx1 vector and computes its Kronecker power <span class="math">\(x^[i]\)</span>.</p>
-<p>Assuming that <span class="math">\(i &gt;= 1\)</span>.</p>
+<dd><p>Receives a <span class="math">\(nx1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -127,20 +127,19 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <dt id="carlin.transformation.log_norm">
 <code class="descclassname">carlin.transformation.</code><code class="descname">log_norm</code><span class="sig-paren">(</span><em>A</em>, <em>p='inf'</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.log_norm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the logarithmic norm of a matrix.</p>
-<p>INPUTS:</p>
+<p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">A</span></code> - A rectangular (Sage dense) matrix of order <span class="math">\(n\)</span>. The coefficients can be either real or complex.</li>
-<li><code class="docutils literal"><span class="pre">p</span></code> - (default: <code class="docutils literal"><span class="pre">'inf'</span></code>). The vector norm; possible choices are <code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">2</span></code>, or <code class="docutils literal"><span class="pre">'inf'</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">A</span></code> &#8211; a rectangular (Sage dense) matrix of order <span class="math">\(n\)</span>. The coefficients can be either real or complex</li>
+<li><code class="docutils literal"><span class="pre">p</span></code> &#8211; (default: <code class="docutils literal"><span class="pre">'inf'</span></code>). The vector norm; possible choices are <code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">2</span></code>, or <code class="docutils literal"><span class="pre">'inf'</span></code></li>
 </ul>
 <p>OUTPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">lognorm</span></code> - The log-norm of A in the p-norm.</li>
+<li><code class="docutils literal"><span class="pre">lognorm</span></code> &#8211; the log-norm of A in the p-norm</li>
 </ul>
 <p>TO-DO:</p>
 <ul class="simple">
-<li>Add support for a Numpy array for all values of p. (added - not tested).</li>
-<li>Add support for an arbitrary p &gt;= 1 vector norm. (how?)</li>
-<li>Check assumed shape. (not sure if I want this)</li>
+<li>support for an arbitrary p &gt;= 1 vector norm.</li>
+<li>consistency assumed shape</li>
 </ul>
 </dd></dl>
 
@@ -153,19 +152,18 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <dt id="carlin.transformation.transfer_matrices">
 <code class="descclassname">carlin.transformation.</code><code class="descname">transfer_matrices</code><span class="sig-paren">(</span><em>N</em>, <em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.transfer_matrices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Higher order transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span>.</p>
-<p>INPUTS:</p>
+<p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">N</span></code> : order of truncation.</li>
-<li><code class="docutils literal"><span class="pre">F</span></code> : sequence of matrices <span class="math">\(F_j\)</span> (list).</li>
-<li><code class="docutils literal"><span class="pre">n</span></code> : the dimension of the state-space.</li>
-<li><code class="docutils literal"><span class="pre">k</span></code> : the order of the polynomial vector field. It is equal to <code class="docutils literal"><span class="pre">len(F)</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; order of truncation</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; sequence of matrices <span class="math">\(F_j\)</span> (list)</li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; the dimension of the state-space</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; the order of the polynomial vector field. It is equal to <code class="docutils literal"><span class="pre">len(F)</span></code></li>
 </ul>
-<p>OUTPUTS:</p>
+<p>OUTPUT:</p>
 <ul>
 <li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">A</span></code></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond</span><dd><p class="first last">to <span class="math">\(i = 1, \ldots, N\)</span>. It is given as a list of lists.
-Each inner list has dimension <span class="math">\(k\)</span>.</p>
+<dt><code class="docutils literal"><span class="pre">A</span></code> &#8211; the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to <span class="math">\(i = 1, \ldots, N\)</span>. </dt>
+<dd><p class="first last">It is given as a list of lists. Each inner list has dimension <span class="math">\(k\)</span>.</p>
 </dd>
 </dl>
 </li>
@@ -176,14 +174,14 @@ Each inner list has dimension <span class="math">\(k\)</span>.</p>
 <dt id="carlin.transformation.truncated_matrix">
 <code class="descclassname">carlin.transformation.</code><code class="descname">truncated_matrix</code><span class="sig-paren">(</span><em>N</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.truncated_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finite order Carleman linearization.</p>
-<p>INPUTS:</p>
+<p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">N</span></code> : order of truncation.</li>
-<li><code class="docutils literal"><span class="pre">input_format</span></code> : sequence of matrices <span class="math">\(F_j\)</span> (list).</li>
-<li><code class="docutils literal"><span class="pre">F</span></code> : the dimension of the state-space.</li>
-<li><code class="docutils literal"><span class="pre">input_format</span></code> : the order of the polynomial vector field, equal to <code class="docutils literal"><span class="pre">len(F)</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; order of truncation</li>
+<li><code class="docutils literal"><span class="pre">input_format</span></code> &#8211; sequence of matrices <span class="math">\(F_j\)</span> (list)</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; the dimension of the state-space</li>
+<li><code class="docutils literal"><span class="pre">input_format</span></code> &#8211; the order of the polynomial vector field, equal to <code class="docutils literal"><span class="pre">len(F)</span></code></li>
 </ul>
-<p>OUTPUTS:</p>
+<p>OUTPUT:</p>
 <ul>
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">A</span></code></dt>
@@ -258,8 +256,9 @@ However, now that case is handled separately.</li>
 </dd></dl>
 
 </div>
-<div class="section" id="polyhedron-toolbox">
-<h1>Polyhedron Toolbox<a class="headerlink" href="#polyhedron-toolbox" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="polyhedron-tools">
+<h1>Polyhedron Tools<a class="headerlink" href="#polyhedron-tools" title="Permalink to this headline">¶</a></h1>
+<p>See <a class="reference external" href="https://github.com/mforets/polyhedron_tools">polyhedron_tools</a></p>
 </div>
 
 
@@ -272,7 +271,7 @@ However, now that case is handled separately.</li>
   <ul>
 <li><a class="reference internal" href="#">Available Transformations</a></li>
 <li><a class="reference internal" href="#module-carlin.io">Handling Input/Output</a></li>
-<li><a class="reference internal" href="#polyhedron-toolbox">Polyhedron Toolbox</a></li>
+<li><a class="reference internal" href="#polyhedron-tools">Polyhedron Tools</a></li>
 </ul>
 
   <h4>Previous topic</h4>

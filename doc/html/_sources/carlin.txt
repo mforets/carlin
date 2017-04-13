@@ -18,11 +18,7 @@ Handling Input/Output
    :undoc-members:
    :show-inheritance:
    
-Polyhedron Toolbox
+Polyhedron Tools
 ~~~~~~~~~~~~~~~~~~~~~~~
  
-.. automodule:: carlin.polyhedron_toolbox
-  :members:
-  :undoc-members:
-  :show-inheritance:
-      
+See `polyhedron_tools <https://github.com/mforets/polyhedron_tools>`_
