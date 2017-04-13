@@ -30,4 +30,9 @@ These commands shall be executed inside the ``/docs`` directory.
 Examples
 ~~~~~~~~
 
-Browse the Jupyter notebooks available in the ``/examples`` folder in this repository. These can be displayed in a window embedded in github, but it is recommended to use the external nbviewer (there is a link at the top right of that window).
+
+`Browse the Jupyter notebooks <http://nbviewer.jupyter.org/github/mforets/carlin/tree/master/examples/>`_ which are available in the ``/examples`` folder in this repository. 
+
+These can be displayed in a window embedded in github, but it is recommended to use the 
+external `nbviewer <http://nbviewer.jupyter.org/github/mforets/>`_.
+
