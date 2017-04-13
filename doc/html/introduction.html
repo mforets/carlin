@@ -56,9 +56,18 @@
   <div class="section" id="context">
 <h1>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h1>
 <p>Carleman linearization is an established method in mathematical nonlinear control.
-It consists in embedding a nonlinear system of differential equations <span class="math">\(x'(t)=f(x(t))+u(t)g(x(t))\)</span> of finite dimension
-into a system of bilinear differential equations <span class="math">\(y'(t)=Ay(t)+u(t)By(t)\)</span> of <em>infinite dimension</em>.
-By truncating the obtained bilinear system at finite orders, one obtains a systematic way of creating arbitrary-order approximation
+It consists in embedding a nonlinear system of differential equations</p>
+<div class="math">
+\[$$
+x'(t)=f(x(t))+u(t)g(x(t))
+$$\]</div>
+<p>of finite dimension into a system of bilinear differential equations</p>
+<div class="math">
+\[$$
+y'(t)=Ay(t)+u(t)By(t)
+$$\]</div>
+<p>of <em>infinite dimension</em>. By truncating the obtained bilinear system at
+finite orders, one obtains a systematic way of creating arbitrary-order approximation
 of the solutions of the nonlinear system.</p>
 </div>
 <div class="section" id="polynomial-ode-s">
@@ -72,37 +81,37 @@ polynomial one. Consider the initial-value problem (IVP)</p>
 \left\{
 \begin{aligned}
 x'(t) &amp;= F_1 x + F_2 x^{[2]} + \ldots +  F_k x^{[k]}, \\
- x(0) &amp;= x_0 \in \R^n,\qquad t \in I.
+ x(0) &amp;= x_0 \in \mathbb{R}^n,\qquad t \in I.
 \end{aligned}
 \right.
 \label{eq:S_ode}
 \end{equation}\end{split}\]</div>
-<p>We assume that the matrix-valued functions <span class="math">\(F_j \in \R^{n \times n^j}\)</span> are independent of <span class="math">\(t\)</span>.
+<p>We assume that the matrix-valued functions <span class="math">\(F_j \in \mathbb{R}^{n \times n^j}\)</span> are independent of <span class="math">\(t\)</span>.
 Here</p>
 <div class="math">
 \[\begin{equation*}
 x^{[i]} :=  \underset{\text{i times}}{\underbrace{x\otimes \cdots \otimes x}}
 \end{equation*}\]</div>
-<p>denotes the <span class="math">\(i\)</span>-th <em>Kronecker power</em> of <span class="math">\(x \in \R^n\)</span>, a convenient notation to express
+<p>denotes the <span class="math">\(i\)</span>-th <em>Kronecker power</em> of <span class="math">\(x \in \mathbb{R}^n\)</span>, a convenient notation to express
 all possible products of elements of a vector up to a given order.</p>
 </div>
 <div class="section" id="carleman-embedding">
 <h1>Carleman embedding<a class="headerlink" href="#carleman-embedding" title="Permalink to this headline">¶</a></h1>
-<p>It can be shown that for all <span class="math">\(i \in \N\)</span>, <span class="math">\(y_i := x^{[i]}\)</span> satisfies the infinite-dimensional IVP</p>
+<p>It can be shown that for all <span class="math">\(i \in \mathbb{N}\)</span>, <span class="math">\(y_i := x^{[i]}\)</span> satisfies the infinite-dimensional IVP</p>
 <div class="math">
 \[\begin{split}\begin{equation}
 \left\{
 \begin{aligned}
-y'(t) &amp;= \A y(t), \\
-y_i(0) &amp;= (x(0))^{[i]} = x_0^{[i]},\qquad \forall i \in \N,
+y'(t) &amp;= \mathcal{A} y(t), \\
+y_i(0) &amp;= (x(0))^{[i]} = x_0^{[i]},\qquad \forall i \in \mathbb{N},
 \end{aligned}
 \right.
 \label{eq:InfSysMatrix}
 \end{equation}\end{split}\]</div>
-<p>where <span class="math">\(y := (y_1,y_2,\ldots)^\transp\)</span> and <span class="math">\(\A\)</span> is the infinite-dimensional block upper-triangular matrix</p>
+<p>where <span class="math">\(y := (y_1,y_2,\ldots)^\transp\)</span> and <span class="math">\(\mathcal{A}\)</span> is the infinite-dimensional block upper-triangular matrix</p>
 <div class="math">
 \[\begin{split}\begin{equation*}
-\A := \begin{pmatrix}
+\mathcal{A} := \begin{pmatrix}
 A_1^1 &amp; A_2^1 &amp; A_3^1 &amp; \ldots &amp; A_{k}^1 &amp; 0 &amp; 0 &amp; \ldots \\
 0&amp; A_2^2 &amp; A_3^2 &amp; \ldots &amp; A_{k}^2 &amp; A_{k+1}^2&amp;0 &amp; \ldots \\
 0 &amp; 0 &amp; A_3^3 &amp; \ldots  &amp; A_{k}^3 &amp; A_{k+1}^3  &amp; A_{k+2}^3 &amp; \ldots \\
@@ -115,7 +124,7 @@ Finally, we use</p>
 \[\begin{equation*}
 x(t) := y_1(t),\qquad \hat{x}(t) := \hat{y}_1(t)
 \end{equation*}\]</div>
-<p>to denote the solution of the exact and truncated systems respectively, projected into <span class="math">\(\R^n\)</span>.
+<p>to denote the solution of the exact and truncated systems respectively, projected into <span class="math">\(\mathbb{R}^n\)</span>.
 The associated <em>error</em> is</p>
 <div class="math">
 \[\begin{equation*}
