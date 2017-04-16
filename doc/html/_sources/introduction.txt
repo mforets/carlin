@@ -8,17 +8,17 @@ It consists in embedding a nonlinear system of differential equations
 
 .. MATH::
 
-    $$
+    \begin{equation*}
     x'(t)=f(x(t))+u(t)g(x(t))
-    $$
+    \end{equation*}
 
 of finite dimension into a system of bilinear differential equations 
 
 .. MATH::
 
-    $$
+    \begin{equation}
     y'(t)=Ay(t)+u(t)By(t)
-    $$
+    \end{equation}
 
 of *infinite dimension*. By truncating the obtained bilinear system at 
 finite orders, one obtains a systematic way of creating arbitrary-order approximation 
@@ -73,7 +73,7 @@ It can be shown that for all `i \in \mathbb{N}`, `y_i := x^{[i]}` satisfies the 
     \label{eq:InfSysMatrix}
     \end{equation}
     
-where `y := (y_1,y_2,\ldots)^\transp` and `\mathcal{A}` is the infinite-dimensional block upper-triangular matrix
+where `y := (y_1,y_2,\ldots)^\mathrm{T}` and `\mathcal{A}` is the infinite-dimensional block upper-triangular matrix
 
 .. MATH::
 

@@ -58,14 +58,14 @@
 <p>Carleman linearization is an established method in mathematical nonlinear control.
 It consists in embedding a nonlinear system of differential equations</p>
 <div class="math">
-\[$$
+\[\begin{equation*}
 x'(t)=f(x(t))+u(t)g(x(t))
-$$\]</div>
+\end{equation*}\]</div>
 <p>of finite dimension into a system of bilinear differential equations</p>
 <div class="math">
-\[$$
+\[\begin{equation}
 y'(t)=Ay(t)+u(t)By(t)
-$$\]</div>
+\end{equation}\]</div>
 <p>of <em>infinite dimension</em>. By truncating the obtained bilinear system at
 finite orders, one obtains a systematic way of creating arbitrary-order approximation
 of the solutions of the nonlinear system.</p>
@@ -108,7 +108,7 @@ y_i(0) &amp;= (x(0))^{[i]} = x_0^{[i]},\qquad \forall i \in \mathbb{N},
 \right.
 \label{eq:InfSysMatrix}
 \end{equation}\end{split}\]</div>
-<p>where <span class="math">\(y := (y_1,y_2,\ldots)^\transp\)</span> and <span class="math">\(\mathcal{A}\)</span> is the infinite-dimensional block upper-triangular matrix</p>
+<p>where <span class="math">\(y := (y_1,y_2,\ldots)^\mathrm{T}\)</span> and <span class="math">\(\mathcal{A}\)</span> is the infinite-dimensional block upper-triangular matrix</p>
 <div class="math">
 \[\begin{split}\begin{equation*}
 \mathcal{A} := \begin{pmatrix}
