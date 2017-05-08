@@ -67,54 +67,95 @@
 Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
 <dl class="function">
 <dt id="carlin.transformation.characteristics">
-<code class="descclassname">carlin.transformation.</code><code class="descname">characteristics</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.characteristics" title="Permalink to this definition">¶</a></dt>
-<dd><p>Information about the norms of the matrices in F.</p>
+<code class="descclassname">carlin.transformation.</code><code class="descname">characteristics</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em>, <em>ord=inf</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.characteristics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information about the norms of the matrices in <span class="math">\(F\)</span>.</p>
 <p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">F</span></code> : list of matrices in some Numpy sparse format, for which the <code class="docutils literal"><span class="pre">toarray</span></code>
-is available.</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list of matrices in some Numpy sparse format, for which the</li>
 </ul>
-<p>TO-DO:</p>
-<ul class="simple">
-<li>Accept an optional params which allows to specifiy a norm.</li>
-</ul>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">toarray</span></code> method is available</div></blockquote>
 </dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.error_function">
 <code class="descclassname">carlin.transformation.</code><code class="descname">error_function</code><span class="sig-paren">(</span><em>model_filename</em>, <em>N</em>, <em>x0</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.error_function" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Compute the error function of a linearized and truncated model,
+with given initial condition.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.get_index_from_key">
 <code class="descclassname">carlin.transformation.</code><code class="descname">get_index_from_key</code><span class="sig-paren">(</span><em>key</em>, <em>j</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.get_index_from_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>NOTES:</p>
+<dd><p>Return first occurrence of given key over a Kronecker power.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">key</span></code> &#8211; list or tuple, key corresponding to the exponent vector in the</li>
+</ul>
+<blockquote>
+<div>Kronecker power</div></blockquote>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">j</span></code> &#8211; integer, order of the Kronecker power</li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, number of dimensions</li>
+</ul>
+<p>NOTES:</p>
 <ul class="simple">
 <li>We assume <span class="math">\(n &gt;= 2\)</span>. Notice that if <span class="math">\(n=1\)</span>, we would return always that <code class="docutils literal"><span class="pre">first_occurence</span> <span class="pre">=</span> <span class="pre">0</span></code>.</li>
 </ul>
-<p>TO-DO:</p>
-<ul class="simple">
-<li>Include some bounds check?</li>
-<li>Case j = sum(key) = 0. kron_power(x, 0) = 1</li>
-</ul>
+<p>EXAMPLES:</p>
+<p>Take <span class="math">\(x^[2]\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute retrive the first ocurrence of
+the given key:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_index_from_key</span>
+<span class="gp">sage: </span><span class="n">get_index_from_key</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.get_key_from_index">
 <code class="descclassname">carlin.transformation.</code><code class="descname">get_key_from_index</code><span class="sig-paren">(</span><em>i</em>, <em>j</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.get_key_from_index" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return multi-index of Kronecker power given an index and the order.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">i</span></code> &#8211; integer, index in the canonial Kronecker power enumeration</li>
+<li><code class="docutils literal"><span class="pre">j</span></code> &#8211; integer, order of the Kronecker power</li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, number of dimensions</li>
+</ul>
+<p>EXAMPLES:</p>
+<p>Take <span class="math">\(x^[2]\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute the exponent vector of the element
+in position <span class="math">\(1\)</span>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_key_from_index</span>
+<span class="gp">sage: </span><span class="n">get_key_from_index</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">[1, 1]</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.kron_power">
 <code class="descclassname">carlin.transformation.</code><code class="descname">kron_power</code><span class="sig-paren">(</span><em>x</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_power" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receives a <span class="math">\(nx1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span>.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">x</span></code> &#8211; list or vector</li>
+<li><code class="docutils literal"><span class="pre">i</span></code> &#8211; integer</li>
+</ul>
+<p>OUTPUT:</p>
+<p>A list corresponding to the <span class="math">\(i\)</span>-th Kronecker power of <span class="math">\(x\)</span>, namely <span class="math">\(x^{[i]}\)</span>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.kron_prod">
 <code class="descclassname">carlin.transformation.</code><code class="descname">kron_prod</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_prod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the Kronecker product of two vectors x and y.</p>
-<p>A list is returned. The method len should be available.</p>
+<dd><p>Compute the Kronecker product of x and y.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">x</span></code> &#8211; vector or list</li>
+<li><code class="docutils literal"><span class="pre">y</span></code> &#8211; vector or list</li>
+</ul>
+<p>OUTPUT:</p>
+<p>A list is returned, corresponding to the Kronecker product <span class="math">\(x\otimes y\)</span>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -134,19 +175,28 @@ is available.</li>
 </ul>
 <p>OUTPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">lognorm</span></code> &#8211; the log-norm of A in the p-norm</li>
+<li><code class="docutils literal"><span class="pre">lognorm</span></code> &#8211; the log-norm of <span class="math">\(A\)</span> in the <span class="math">\(p\)</span>-norm</li>
 </ul>
-<p>TO-DO:</p>
-<ul class="simple">
-<li>support for an arbitrary p &gt;= 1 vector norm.</li>
-<li>consistency assumed shape</li>
-</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.transformation.plot_error_function">
+<code class="descclassname">carlin.transformation.</code><code class="descname">plot_error_function</code><span class="sig-paren">(</span><em>model_filename</em>, <em>N</em>, <em>x0</em>, <em>Tfrac=0.8</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.plot_error_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the error of the truncated as a functin of time, up to a fraction 
+of the convegence radius.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.quadratic_reduction">
 <code class="descclassname">carlin.transformation.</code><code class="descname">quadratic_reduction</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.quadratic_reduction" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Reduce a <span class="math">\(k\)</span>-th order system of polynomial ODE&#8217;s into a quadratic one.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list of matrices defining the system of polynomial ODE&#8217;s</li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, system&#8217;s dimension</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; integer, order of the polynomial ODE</li>
+</ul>
+</dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.transfer_matrices">
@@ -214,23 +264,23 @@ Each inner list has dimension <span class="math">\(k\)</span>.</p>
 <dl class="function">
 <dt id="carlin.io.get_Fj_from_model">
 <code class="descclassname">carlin.io.</code><code class="descname">get_Fj_from_model</code><span class="sig-paren">(</span><em>model_filename=None</em>, <em>f=None</em>, <em>n=None</em>, <em>k=None</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.get_Fj_from_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform an input model of a polynomial vector field into standard form as a sum of Kronecker products.</p>
-<p>The model can be given either as an external file (<code class="docutils literal"><span class="pre">model_filename</span></code>), or as the tuple <code class="docutils literal"><span class="pre">(f,</span> <span class="pre">n,</span> <span class="pre">k)</span></code>.</p>
-<p>INPUTS:</p>
+<dd><p>Transform an input model of a polynomial vector field into standard
+form as a sum of Kronecker products.</p>
+<p>The model can be given either as an external file (<code class="docutils literal"><span class="pre">model_filename</span></code>), or
+as the tuple <code class="docutils literal"><span class="pre">(f,</span> <span class="pre">n,</span> <span class="pre">k)</span></code>.</p>
+<p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">model_filename</span></code> : string containing the filename</li>
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string containing the filename</li>
 </ul>
-<p>OUTPUTS:</p>
+<p>OUTPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">F</span></code> : F is a list of sparse matrices <span class="math">\(F_1, ..., F_k\)</span>. These are formatted in dok (dictionary-of-keys) form.</li>
-<li><code class="docutils literal"><span class="pre">n</span></code> : dimension of the state-space of the system</li>
-<li><code class="docutils literal"><span class="pre">k</span></code> : degree of the system</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; F is a list of sparse matrices <span class="math">\(F_1, ..., F_k\)</span>.</li>
 </ul>
-<p>NOTES:</p>
+<blockquote>
+<div>These are formatted in dok (dictionary-of-keys) form.</div></blockquote>
 <ul class="simple">
-<li>There was a problem with sum(1) with Sage&#8217;s sum, that happens for the scalar case
-(n=1). In that case we can use: from scipy import sum
-However, now that case is handled separately.</li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; dimension of the state-space of the system</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; degree of the system</li>
 </ul>
 </dd></dl>
 
@@ -238,21 +288,20 @@ However, now that case is handled separately.</li>
 <dt id="carlin.io.load_model">
 <code class="descclassname">carlin.io.</code><code class="descname">load_model</code><span class="sig-paren">(</span><em>model_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.load_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read an input ODE system.</p>
-<p>INPUTS:</p>
+<p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">model_filename</span></code> : string with the model filename</li>
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string with the model filename</li>
 </ul>
-<p>OUTPUTS:</p>
+<p>OUTPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">f</span></code> : polynomial vector field. Each component belongs to the polynomial ring <span class="math">\(\mathbb{Q}[x_1,\ldots,x_n]\)</span></li>
-<li><code class="docutils literal"><span class="pre">n</span></code> : dimension of f</li>
-<li><code class="docutils literal"><span class="pre">k</span></code> : degree of f</li>
+<li><code class="docutils literal"><span class="pre">f</span></code> &#8211; list of multivariate polynomials which describes the system of ODE&#8217;s,</li>
 </ul>
-<p>TO-DO:</p>
+<blockquote>
+<div>each component in the polynomial ring <span class="math">\(\mathbb{Q}[x_1,\ldots,x_n]\)</span></div></blockquote>
 <ul class="simple">
-<li>Accept file that is not polynomial and try to convert it to polynomial form.</li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, dimension of f</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; integer, degree of f</li>
 </ul>
-<p>(See <code class="docutils literal"><span class="pre">automatic_recastic.ipynb</span></code> notebook).</p>
 </dd></dl>
 
 </div>
