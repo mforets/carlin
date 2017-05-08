@@ -422,7 +422,7 @@ def get_key_from_index(i, j, n):
     in position `1`::
 
         sage: from carlin.transformation import get_key_from_index
-        sage: get_index_from_key(1, 2, 2)
+        sage: get_key_from_index(1, 2, 2)
         [1, 1]
     """
     x = polygens(QQ, ['x'+str(1+k) for k in range(n)])
