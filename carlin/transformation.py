@@ -29,15 +29,16 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).
 # Dependencies
 #===============================================
 
-# Working numerical libraries
+# Working numerical libraries: NumPy
 import numpy as np
+from numpy.linalg import norm
+
+# Working numerical libraries: SciPy
 import scipy as sp
 from scipy import inf
 from scipy.io import savemat
-import scipy.sparse as sp
 from scipy.sparse import kron, eye
 import scipy.sparse.linalg
-from numpy.linalg import norm
 
 # Carleman input/output libraries
 from carlin.io import get_Fj_from_model
@@ -211,8 +212,6 @@ def error_function(model_filename, N, x0):
     """Compute the error function of a linearized and truncated model,
     with given initial condition.
     """
-    import scipy as sp
-    from scipy import inf
     from numpy.linalg import norm
     from sage.symbolic.ring import SR
     
@@ -238,6 +237,17 @@ def error_function(model_filename, N, x0):
     error = norm_x0_hat*exp(norm_F1_tilde*t)/(1+beta0-beta0*exp(norm_F1_tilde*t))*(beta0*(exp(norm_F1_tilde*t)-1))**N
 
     return [Ts, error]
+
+def plot_error_function(model_filename, N, x0, Tfrac=0.8):
+    """Plot the error of the truncated as a functin of time, up to a fraction 
+    of the convegence radius.
+    """
+    [Ts, eps] = error_function(model_filename, N, x0)
+    P = Graphics()
+    P = plot(eps, 0, Ts*Tfrac, axes_labels = ["$t$", r"$\mathcal{E}(t)$"])
+    P += line([[Ts, 0], [Ts, eps(t=Ts * Tfrac)]], linestyle='dotted', color='black')
+    
+    return P
 
 #===============================================
 # Functions to export Carleman linearization

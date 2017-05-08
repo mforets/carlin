@@ -25,17 +25,16 @@ AUTHOR:
 # Dependencies
 #=============
 
+# Working numerical libraries: NumPy
 import numpy as np
 
-import scipy
+# Working numerical libraries: SciPy
+import scipy as sp
 from scipy import inf
-import scipy.sparse as sp
 import scipy.sparse.linalg
 
-# this is a dependency for load
-from sage.rings.integer import Integer   
-
 # Sage objects: Rings and Polynomials
+from sage.rings.integer import Integer
 from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
@@ -53,17 +52,12 @@ def load_model(model_filename):
 
     OUTPUT:
 
-    - ``f`` -- polynomial vector field. Each component belongs to the polynomial
-     ring `\mathbb{Q}[x_1,\ldots,x_n]`
+    - ``f`` -- list of multivariate polynomials which describes the system of ODE's,
+     each component in the polynomial ring `\mathbb{Q}[x_1,\ldots,x_n]`
 
-    - ``n`` -- dimension of f
+    - ``n`` -- integer, dimension of f
 
-    - ``k`` -- degree of f
-
-    TO-DO:
-
-    - Accept file that is not polynomial and try to convert it to polynomial form. 
-    (See ``automatic_recastic.ipynb`` notebook).
+    - ``k`` -- integer, degree of f
     """
     from sage.structure.sage_object import load
     
@@ -73,7 +67,6 @@ def load_model(model_filename):
     k = max( [fi.degree() for fi in f] )
 
     return [f, n, k]
-
 
 def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
     r""" Transform an input model of a polynomial vector field into standard
@@ -86,7 +79,7 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
 
     - ``model_filename`` -- string containing the filename
 
-    OUTPUTS:
+    OUTPUT:
 
     - ``F`` -- F is a list of sparse matrices `F_1, ..., F_k`.
      These are formatted in dok (dictionary-of-keys) form.
@@ -95,7 +88,6 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
 
     - ``k`` -- degree of the system
     """
-
     if model_filename is not None and f is None:
         got_model_by_filename = True
     elif model_filename is not None and f is not None and n is not None and k is None:
