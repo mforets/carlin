@@ -31,12 +31,13 @@ Systems, Saarbrucken, Germany, where this package was written (Apr 2016).
 
 # Working numerical libraries
 import numpy as np
-import scipy
+import scipy as sp
 from scipy import inf
 from scipy.io import savemat
 import scipy.sparse as sp
 from scipy.sparse import kron, eye
 import scipy.sparse.linalg
+from numpy.linalg import norm
 
 # Carleman input/output libraries
 from carlin.io import get_Fj_from_model
@@ -71,13 +72,11 @@ def transfer_matrices(N, F, n, k):
 
     - ``k`` -- the order of the polynomial vector field. It is equal to ``len(F)``
 
-
     OUTPUT:
 
     - ``A`` -- the transfer matrices `A^{i}_{i+j-1}` that correspond to `i = 1, \ldots, N`. 
                It is given as a list of lists. Each inner list has dimension `k`.
     """
-
     A = []
 
     # first row is trivial
@@ -130,8 +129,7 @@ def truncated_matrix(N, *args, **kwargs):
             k = args[2]
             A = transfer_matrices(N, F, n, k)
         else:
-            raise ValueError('Input format not understood.')
-
+            raise ValueError('input format not understood')
 
     BN_list = []
 
@@ -156,7 +154,16 @@ def truncated_matrix(N, *args, **kwargs):
 
 
 def quadratic_reduction(F, n, k):
+    """Reduce a `k`-th order system of polynomial ODE's into a quadratic one.
 
+    INPUT:
+
+    - ``F`` -- list of matrices defining the system of polynomial ODE's
+
+    - ``n`` -- integer, system's dimension
+
+    - ``k`` -- integer, order of the polynomial ODE
+    """
     from scipy.sparse import bmat, lil_matrix
 
     A = transfer_matrices(k-1, F, n, k)
@@ -194,13 +201,16 @@ def quadratic_reduction(F, n, k):
     F_tilde = [F1_tilde, F2_tilde]
 
     kquad = 2
-    #nquad should be: (n^k-n)/(n-1)
+
+    #nquad is expected to be : (n^k-n)/(n-1)
     nquad = F1_tilde.shape[0]
 
     return [F_tilde, nquad, kquad]
 
 def error_function(model_filename, N, x0):
-
+    """Compute the error function of a linearized and truncated model,
+    with given initial condition.
+    """
     import scipy as sp
     from scipy import inf
     from numpy.linalg import norm
@@ -339,23 +349,39 @@ def linearize(model_filename, target_filename, N, x0, **kwargs):
     savemat(target_filename, dic)
     print 'done'
 
-
     return
 
 #===============================================
 # Auxiliary mathematical functions
 #===============================================
 
-def kron_prod(x,y):
-    r""" Compute the Kronecker product of two vectors x and y.
-    
-    A list is returned. The method len should be available.
-    """
-    return [x[i]*y[j]  for i in range(len(x)) for j in range(len(y))]
+def kron_prod(x, y):
+    r""" Compute the Kronecker product of x and y.
 
+    INPUT:
+
+    - ``x`` -- vector or list 
+
+    - ``y`` -- vector or list
+
+    OUTPUT:
+
+    A list is returned, corresponding to the Kronecker product `x\otimes y`.
+    """
+    return [x[i]*y[j] for i in range(len(x)) for j in range(len(y))]
 
 def kron_power(x, i):
-    r""" Receives a `nx1` vector and computes its Kronecker power `x^{[i]}`. 
+    r""" Receives a `nx1` vector and computes its Kronecker power `x^{[i]}`.
+
+    INPUT:
+
+    - ``x`` -- list or vector
+
+    - ``i`` -- integer
+
+    OUTPUT:
+
+    A list corresponding to the `i`-th Kronecker power of `x`, namely `x^{[i]}`.
     """
     if (i > 2):
         return kron_prod(x, kron_power(x,i-1))
@@ -363,35 +389,62 @@ def kron_power(x, i):
         return kron_prod(x,x)
     elif (i == 1):
         return x
-    #elif (i==0):
+#   elif (i==0):
 #        return 1
     else:
-        raise ValueError('Index i should be an integer >= 1')
+        raise ValueError('index i should be an integer >= 1')
 
 
 def get_key_from_index(i, j, n):
-    
+    r"""Return multi-index of Kronecker power given an index and the order.
+
+    INPUT:
+
+    - ``i`` -- integer, index in the canonial Kronecker power enumeration
+
+    - ``j`` -- integer, order of the Kronecker power
+
+    - ``n`` -- integer, number of dimensions
+
+    EXAMPLES:
+
+    Take `x^[2]` for `x=(x_1, x_2)` and compute the exponent vector of the element
+    in position `1`::
+
+        sage: from carlin.transformation import get_key_from_index
+        sage: get_index_from_key(1, 2, 2)
+        [1, 1]
+    """
     x = polygens(QQ, ['x'+str(1+k) for k in range(n)])
     x_power_j = kron_power(x, j)
     d = x_power_j[i].dict()
-
     return list(d.items()[0][0])
 
-
 def get_index_from_key(key, j, n):
-    r"""
+    r"""Return first occurrence of given key over a Kronecker power.
+
+    INPUT:
+
+    - ``key`` -- list or tuple, key corresponding to the exponent vector in the
+     Kronecker power
+
+    - ``j`` -- integer, order of the Kronecker power
+
+    - ``n`` -- integer, number of dimensions
 
     NOTES:
 
     - We assume `n >= 2`. Notice that if `n=1`, we would return always that ``first_occurence = 0``.
 
-    TO-DO:
+    EXAMPLES:
 
-    - Include some bounds check?
+    Take `x^[2]` for `x=(x_1, x_2)` and compute retrive the first ocurrence of
+    the given key::
 
-    - Case j = sum(key) = 0. kron_power(x, 0) = 1
+        sage: from carlin.transformation import get_index_from_key
+        sage: get_index_from_key([1, 1], 2, 2)
+        1
     """
-    
     x = polygens(QQ, ['x'+str(1+k) for k in range(n)])
     x_power_j = kron_power(x, j)
 
@@ -401,7 +454,6 @@ def get_index_from_key(key, j, n):
             break
 
     return first_occurence
-
 
 def log_norm(A, p='inf'):
     r"""Compute the logarithmic norm of a matrix.
@@ -414,15 +466,9 @@ def log_norm(A, p='inf'):
 
     OUTPUT:
 
-    - ``lognorm`` -- the log-norm of A in the p-norm
-
-    TO-DO:
-
-    - support for an arbitrary p >= 1 vector norm.
-
-    - consistency assumed shape
+    - ``lognorm`` -- the log-norm of `A` in the `p`-norm
     """
-    
+
     # parse the input matrix
     if 'scipy.sparse' in str(type(A)):
         # cast into numpy array (or ndarray)
@@ -453,30 +499,24 @@ def log_norm(A, p='inf'):
             return real_part(z) if imag_part(z) == 0 else z
 
     else:
-        raise ValueError('Value of p not understood or not implemented.')
+        raise NotImplementedError('value of p not understood or not implemented')
 
-def characteristics(F, n, k):
-    r"""Information about the norms of the matrices in F.
+def characteristics(F, n, k, ord=inf):
+    r"""Information about the norms of the matrices in `F`.
 
     INPUT:
 
-    - ``F`` : list of matrices in some Numpy sparse format, for which the ``toarray``
-      is available.
-
-    TO-DO:
-
-    - Accept an optional params which allows to specifiy a norm.
+    - ``F`` -- list of matrices in some Numpy sparse format, for which the 
+     ``toarray`` method is available
     """
-
-    import scipy as sp
-    from scipy import inf
-    from numpy.linalg import norm
-
     c = dict()
 
-    c['norm_Fi_inf'] = [norm(F[i].toarray(), ord=inf) for i in range(k)]
+    c['norm_Fi_inf'] = [norm(F[i].toarray(), ord=ord) for i in range(k)]
 
-    c['log_norm_F1_inf'] = log_norm(F[0], p='inf')
+    if ord == inf:
+        c['log_norm_F1_inf'] = log_norm(F[0], p='inf')
+    else:
+        raise NotImplementedError("log norm error should be supremum (='inf')")
 
     if k > 1:
         if c['norm_Fi_inf'][0] != 0:
@@ -485,4 +525,3 @@ def characteristics(F, n, k):
             c['beta0_const'] = 'inf'
 
     return c
-    

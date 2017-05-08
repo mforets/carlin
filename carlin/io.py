@@ -47,23 +47,23 @@ from sage.rings.polynomial.polynomial_ring import polygens
 def load_model(model_filename):
     r""" Read an input ODE system.
 
-    INPUTS:
+    INPUT:
 
-    - ``model_filename`` : string with the model filename
+    - ``model_filename`` -- string with the model filename
 
-    OUTPUTS:
+    OUTPUT:
 
-    - ``f`` : polynomial vector field. Each component belongs to the polynomial ring `\mathbb{Q}[x_1,\ldots,x_n]`
+    - ``f`` -- polynomial vector field. Each component belongs to the polynomial
+     ring `\mathbb{Q}[x_1,\ldots,x_n]`
 
-    - ``n`` : dimension of f
+    - ``n`` -- dimension of f
 
-    - ``k`` : degree of f
+    - ``k`` -- degree of f
 
     TO-DO:
 
     - Accept file that is not polynomial and try to convert it to polynomial form. 
     (See ``automatic_recastic.ipynb`` notebook).
-
     """
     from sage.structure.sage_object import load
     
@@ -76,27 +76,24 @@ def load_model(model_filename):
 
 
 def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
-    r""" Transform an input model of a polynomial vector field into standard form as a sum of Kronecker products.
+    r""" Transform an input model of a polynomial vector field into standard
+    form as a sum of Kronecker products.
     
-    The model can be given either as an external file (``model_filename``), or as the tuple ``(f, n, k)``.
+    The model can be given either as an external file (``model_filename``), or
+    as the tuple ``(f, n, k)``.
 
-    INPUTS:
+    INPUT:
 
-    - ``model_filename`` : string containing the filename
+    - ``model_filename`` -- string containing the filename
 
     OUTPUTS:
 
-    - ``F`` : F is a list of sparse matrices `F_1, ..., F_k`. These are formatted in dok (dictionary-of-keys) form.
+    - ``F`` -- F is a list of sparse matrices `F_1, ..., F_k`.
+     These are formatted in dok (dictionary-of-keys) form.
 
-    - ``n`` : dimension of the state-space of the system
+    - ``n`` -- dimension of the state-space of the system
 
-    - ``k`` : degree of the system
-
-    NOTES:
-
-    - There was a problem with sum(1) with Sage's sum, that happens for the scalar case
-      (n=1). In that case we can use: from scipy import sum
-      However, now that case is handled separately.
+    - ``k`` -- degree of the system
     """
 
     if model_filename is not None and f is None:
@@ -126,8 +123,9 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
                 column = get_index_from_key(list(key), j, n)
                 F[j-1].update({tuple([row,column]): dictionary_f_i.get(key)})
 
-    elif (n==1): #the scalar case is treated separately
-
+    elif (n==1):
+        #the scalar case is treated separately. the problem arises from using
+        #sum(1) (note it doesn't break if one uses from scipy import sum)
         for i, dictionary_f_i in enumerate(dictionary_f):
             for key in dictionary_f_i.iterkeys():
                 row = i;
@@ -136,11 +134,11 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
                 F[j-1].update({tuple([row,column]): dictionary_f_i.get(key)})
 
     return F, n, k
-    
+
 #===============================================
 # Functions to export a model
 #===============================================
-    
+
 def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 
     from scipy.io import savemat
@@ -166,5 +164,4 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 
     savemat(mat_model_filename, d)
 
-    return    
-    
+    return
