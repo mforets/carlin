@@ -242,6 +242,8 @@ def plot_error_function(model_filename, N, x0, Tfrac=0.8):
     """Plot the error of the truncated as a functin of time, up to a fraction 
     of the convegence radius.
     """
+    from sage.plot.graphics import Graphics
+
     [Ts, eps] = error_function(model_filename, N, x0)
     P = Graphics()
     P = plot(eps, 0, Ts*Tfrac, axes_labels = ["$t$", r"$\mathcal{E}(t)$"])
