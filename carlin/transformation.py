@@ -244,6 +244,7 @@ def plot_error_function(model_filename, N, x0, Tfrac=0.8):
     """
     from sage.plot.graphics import Graphics
     from sage.plot.plot import plot
+    from sage.plot.line import line
 
     [Ts, eps] = error_function(model_filename, N, x0)
     P = Graphics()
