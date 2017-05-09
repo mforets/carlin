@@ -32,6 +32,7 @@ import numpy as np
 import scipy as sp
 from scipy import inf
 import scipy.sparse.linalg
+from scipy.sparse import dok_matrix
 
 # Sage objects: Rings and Polynomials
 from sage.rings.integer import Integer
@@ -100,7 +101,7 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
         [f, n, k] = load_model(model_filename)
 
     # create the collection of sparse matrices Fj
-    F = [sp.dok_matrix((n, n**i), dtype=np.float64) for i in range(1, k+1)]
+    F = [dok_matrix((n, n**i), dtype=np.float64) for i in range(1, k+1)]
 
     # read the powers appearing in each monomial
     dictionary_f = [fi.dict() for fi in f];
