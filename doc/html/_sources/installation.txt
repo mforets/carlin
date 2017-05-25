@@ -25,4 +25,4 @@ Unit testing
 
 To run the unit tests, you can use Sage's test framework on the relevant folder::
 
-    sage -bt carlin/*.py
+    sage -t carlin/*.py
