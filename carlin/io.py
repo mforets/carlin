@@ -158,3 +158,31 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
     savemat(mat_model_filename, d)
 
     return
+
+#===============================================
+# Functions to solve ODE's
+#===============================================
+
+def solve_linearized_ode(AN, x0, N, tini, T, NPOINTS):
+    """
+    Solve Carleman linearized 1st order ODE using dense matrix-vector multiplications.
+    """
+    def initial_state_kron(x0, N):
+        from carlin.transformation import kron_power
+
+        y0 = kron_power(x0, 1)
+        for i in [2..N]:
+            y0 += kron_power(x0, i)
+        return vector(y0)
+
+    # transform to x0, x0^[2], ..., x0^[N]
+    y0 = initial_state_kron(x0, N)
+
+    # time domain
+    from numpy import linspace
+    t_dom = linspace(tini, T, num=NPOINTS)
+
+    # compute solution
+    sol = [exp(AN*ti)*y0 for ti in t_dom]
+
+    return sol
