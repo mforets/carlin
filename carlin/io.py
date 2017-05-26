@@ -39,6 +39,7 @@ from sage.rings.integer import Integer
 from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
+from sage.modules.free_module_element import vector
 
 #==========================
 # Functions to load a model
