@@ -163,7 +163,7 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 # Functions to solve ODE's
 #===============================================
 
-def solve_linearized_ode(AN, x0, N, tini, T, NPOINTS):
+def solve_linearized_ode(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=400):
     """
     Solve Carleman linearized 1st order ODE using dense matrix-vector multiplications.
     """
@@ -171,7 +171,7 @@ def solve_linearized_ode(AN, x0, N, tini, T, NPOINTS):
         from carlin.transformation import kron_power
 
         y0 = kron_power(x0, 1)
-        for i in [2..N]:
+        for i in range(2, N+1):
             y0 += kron_power(x0, i)
         return vector(y0)
 
@@ -183,6 +183,7 @@ def solve_linearized_ode(AN, x0, N, tini, T, NPOINTS):
     t_dom = linspace(tini, T, num=NPOINTS)
 
     # compute solution
+    from sage.functions.log import exp
     sol = [exp(AN*ti)*y0 for ti in t_dom]
 
     return sol
