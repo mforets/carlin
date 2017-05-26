@@ -17,7 +17,6 @@ Handling Input/Output
    :undoc-members:
    :show-inheritance:
 
-
 Library of polynomial ODE's
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -25,7 +24,7 @@ Library of polynomial ODE's
   :members:
   :undoc-members:
   :show-inheritance:
-      
+
 Polyhedron Tools
 ~~~~~~~~~~~~~~~~~~~
  
