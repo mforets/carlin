@@ -247,7 +247,7 @@ def solve_ode_exp(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=100):
     # compute solution
     if "sage.matrix" in str(type(AN)):
         #t_dom = [tini + (T-tini)/(NPOINTS-1)*i for i in range(NPOINTS)]
-        t_donm = np.linspace(tini, T, num=NPOINTS)
+        t_dom = np.linspace(tini, T, num=NPOINTS)
         sol = [AN.exp() * np.exp(ti) * y0 for ti in t_dom]
 
     elif "scipy.sparse" in str(type(AN)):
