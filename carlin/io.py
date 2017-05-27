@@ -31,7 +31,6 @@ Solve polynomial ODEs
     :delim: |
 
     :func:`~solve_ode_exp`  | Solve Carleman linearized 1st order ODE using matrix exponentiation
-    :func:`~solve_ode_`  | Solve Carleman linearized 1st order ODE using a DE solver
 
 AUTHOR:
 
