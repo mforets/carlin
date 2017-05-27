@@ -8,9 +8,10 @@ The following functions are available:
     :widths: 30, 70
     :delim: |
 
-    :func:`~vanderpol`            | `Van der Pol oscillator <https://en.wikipedia.org/wiki/Van_der_Pol_oscillator>`_
-    :func:`~scalar_cubic`         | A scalar ODE with a cubic term
-    :func:`~scalar_quadratic`     | A scalar ODE with a quadratic term
+    :func:`~vanderpol`                                 | `Van der Pol oscillator <https://en.wikipedia.org/wiki/Van_der_Pol_oscillator>`_
+    :func:`~scalar_cubic`                              | A scalar ODE with a cubic term
+    :func:`~scalar_quadratic`                          | A scalar ODE with a quadratic term
+    :func:`~arrowsmith_and_place_fig_3_5e_page_79`     | Nonlinear two-dimensional system with an hyperbolic fixed point
 
 AUTHOR:
 
@@ -70,7 +71,7 @@ def vanderpol(mu=1, omega=1):
     k = 3
     return f, n, k
 
-def scalar_cubic(a, b):
+def scalar_cubic(a=1, b=1):
     r"""
     A scalar ODE with a cubic term.
     
@@ -101,10 +102,10 @@ def scalar_cubic(a, b):
     # define the vector of symbolic variables
     x = polygens(QQ, ['x'+str(0)])
     f = [None] * 1
-    f[0] = - a * x[0] + b * x[0]**3
+    f[0] = -a * x[0] + b * x[0]**3
     return f, 1, 3
 
-def scalar_quadratic(a, b):
+def scalar_quadratic(a=1, b=1):
     r"""
     A scalar ODE with a quadratic term.
 
@@ -118,22 +119,109 @@ def scalar_quadratic(a, b):
 
     EXAMPLES::
 
-        sage: from carlin.library import scalar_cubic
+        sage: from carlin.library import scalar_quadratic
         sage: scalar_quadratic()
-        ([x0^3 - x0], 1, 3)
+        ([x0^2 + x0], 1, 2)
 
     Compute the Carleman embedding truncated at order `N=4`::
 
         sage: from carlin.transformation import get_Fj_from_model, truncated_matrix 
-        sage: Fj = get_Fj_from_model(*scalar_cubic())
+        sage: Fj = get_Fj_from_model(*scalar_quadratic())
         sage: matrix(truncated_matrix(4, *Fj, input_format="Fj_matrices").toarray())
-        [-1.0  0.0  1.0  0.0]
-        [ 0.0 -2.0  0.0  2.0]
-        [ 0.0  0.0 -3.0  0.0]
-        [ 0.0  0.0  0.0 -4.0]
+        [1.0 1.0 0.0 0.0]
+        [0.0 2.0 2.0 0.0]
+        [0.0 0.0 3.0 3.0]
+        [0.0 0.0 0.0 4.0]
     """
     # define the vector of symbolic variables
     x = polygens(QQ, ['x'+str(0)])
     f = [None] * 1
     f[0] =  a * x[0] + b * x[0]**2
     return f, 1, 2
+
+def arrowsmith_and_place_fig_3_5e_page_79():
+    r"""
+    Nonlinear two-dimensional system with an hyperbolic fixed point.
+
+    It is defined as:
+
+    .. MATH::
+
+        \begin{aligned}
+         x' &= x^2+(x+y)/2 \\
+         y' &= (-x+3*y)/2
+        \end{aligned}
+
+    Taken from p. 79 of the book by Arrowsmith and Place, Dynamical Systems:
+    Differential Equations, maps and chaotic behaviour.
+    """
+    # dimension of state-space 
+    n=2
+
+    # vector of variables
+    x = polygens(QQ, ['x'+str(i) for i in range(n)])
+
+    # ODE and order
+    f = [x[0]^2+(x[0]+x[1])/2, (-x[0] +3*x[1])/2]    
+    k = 2
+    return f, n, k
+
+def biomodel_2():
+    r"""
+    This is a nine-dimensional polynomial ODE used as benchmark model in
+    `the Flow star tool <https://ths.rwth-aachen.de/research/projects/hypro/biological-model-ii/>`_.
+
+    The model is adapted from E. Klipp, R. Herwig, A. Kowald, C. Wierling, H. Lehrach.
+    Systems Biology in Practice: Concepts, Implementation and Application. Wiley-Blackwell, 2005.
+    """
+    # dimension of state-space
+    n = 9
+
+    # vector of variables
+    x = polygens(QQ, ['x'+str(i) for i in range(n)])
+
+    f = [None]*n
+    f[0] = 3*x[2] - x[0]*x[5]
+    f[1] = x[3] - x[1]*x[5]
+    f[2] = x[0]*x[5] - 3*x[2]
+    f[3] = x[1]*x[5] - x[3]
+    f[4] = 3*x[2] + 5*x[0] - x[4]
+    f[5] = 5*x[4] + 3*x[2] + x[3] - x[5]*(x[0]+x[1]+2*x[7]+1)
+    f[6] = 5*x[3] + x[1] - 0.5*x[6]
+    f[7] = 5*x[6] - 2*x[5]*x[7] + x[8] - 0.2*x[7];
+    f[8] = 2*x[5]*x[7] - x[8]
+
+    k = 2
+    return f, n, k
+
+def chen_seven_dim(u=0):
+    r"""
+    This is a seven-dimensional nonlinear system of quadratic order.
+
+    It appears as ``'example_nonlinear_reach_04_sevenDim_nonConvexRepr.m'`` in 
+    the tool CORA 2016, in the examples for continuous nonlinear systems.
+
+    .. NOTE:
+
+    There is an independent term, `u`, in the fourth equation with value `2.0` that has
+    been neglected here for convenience (hence we take `u=0` by default).
+    """
+    # dimension of state-space
+    n = 7
+
+    # vector of variables
+    x = polygens(QQ, ['x'+str(i) for i in range(n)])
+
+    f = [None]*n
+
+    f[0] = 1.4*x[2]-0.9*x[0]
+    f[1] = 2.5*x[4]-1.5*x[1]
+    f[2] = 0.6*x[6]-0.8*x[2]*x[1]
+    f[3] = -1.3*x[3]*x[2] + u
+    f[4] = 0.7*x[0]-1.0*x[3]*x[4]
+    f[5] = 0.3*x[0]-3.1*x[5]
+    f[6] = 1.8*x[5]-1.5*x[6]*x[1]
+
+    k = 2
+    return f, n, k
+    
