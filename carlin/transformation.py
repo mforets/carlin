@@ -110,7 +110,7 @@ def transfer_matrices(N, F, n, k):
 
     - ``N`` -- order of truncation 
 
-    - ``F`` -- sequence of matrices `F_j` (list)
+    - ``F`` -- list, sequence of matrices `F_j`
 
     - ``n`` -- the dimension of the state-space
 
@@ -151,9 +151,8 @@ def truncated_matrix(N, *args, **kwargs):
 
     OUTPUT:
 
-    - ``A`` : the transfer matrices `A^{i}_{i+j-1}` that correspond to
-              `i = 1, \ldots, N`. It is given as a list of lists.
-              Each inner list has dimension `k`.
+    The transfer matrices `A^{i}_{i+j-1}` that correspond to `i = 1, \ldots, N`.
+    It is given as a list of lists, and each inner list has dimension `k`.
     """
     from scipy.sparse import bmat
 
@@ -474,7 +473,7 @@ def kron_prod(x, y):
     return [x[i]*y[j] for i in range(len(x)) for j in range(len(y))]
 
 def kron_power(x, i):
-    r""" Receives a `nx1` vector and computes its Kronecker power `x^{[i]}`.
+    r""" Receives a `n\times 1` vector and computes its Kronecker power `x^{[i]}`.
 
     INPUT:
 
@@ -624,7 +623,7 @@ def characteristics(F, n, k, ord=inf):
 
     OUTPUT:
 
-    Dictionary `c` containing `norm_Fi_inf`, `log_norm_F1_inf` and `beta0_const`.
+    Dictionary ``c`` containing ``norm_Fi_inf``, ``log_norm_F1_inf`` and ``beta0_const``.
     """
     c = dict()
 
