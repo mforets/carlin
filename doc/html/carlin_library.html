@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Library of polynomial ODE’s &mdash; Carleman linearization of ordinary differential equations 0.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/MathJax.js?config=TeX-AMS_HTML-full,../mathjax_sage.js"></script>
+    <link rel="top" title="Carleman linearization of ordinary differential equations 0.0.2 documentation" href="index.html" />
+    <link rel="next" title="Polyhedron Tools" href="carlin_polyhedron_tools.html" />
+    <link rel="prev" title="Handling Input/Output" href="carlin_io.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="carlin_polyhedron_tools.html" title="Polyhedron Tools"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="carlin_io.html" title="Handling Input/Output"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-carlin.library">
+<span id="library-of-polynomial-ode-s"></span><h1>Library of polynomial ODE&#8217;s<a class="headerlink" href="#module-carlin.library" title="Permalink to this headline">¶</a></h1>
+<p>Library of commonly used or famous polynomial ODE systems.</p>
+<p>AUTHOR:</p>
+<ul class="simple">
+<li>Marcelo Forets (May 2017)</li>
+</ul>
+<dl class="function">
+<dt id="carlin.library.vanderpol">
+<code class="descclassname">carlin.library.</code><code class="descname">vanderpol</code><span class="sig-paren">(</span><em>mu</em>, <em>omega</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.vanderpol" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Van der Pol oscillator is a non-conservative system with non-linear damping.</p>
+<p>It is defined as:</p>
+<div class="math">
+\[\begin{split}\begin{aligned}
+x' &amp;= y \\
+y' &amp;= -\omega^2  x - (x^2 - 1) \mu y
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math">\(\omega\)</span> is the natural frequency and <span class="math">\(\mu\)</span> is the damping parameter.
+For additional information see the <a class="reference external" href="https://en.wikipedia.org/wiki/Van_der_Pol_oscillator">Wikipedia article Van_der_Pol_oscillator</a>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">vanderpol</span>
+<span class="gp">sage: </span><span class="n">vanderpol</span><span class="p">(</span><span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">),</span> <span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;omega&#39;</span><span class="p">))</span>
+<span class="go">([x1, -omega^2*x0 - (x0^2 - 1)*mu*x1], 2, 3)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="carlin_io.html"
+                        title="previous chapter">Handling Input/Output</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="carlin_polyhedron_tools.html"
+                        title="next chapter">Polyhedron Tools</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/carlin_library.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="carlin_polyhedron_tools.html" title="Polyhedron Tools"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="carlin_io.html" title="Handling Input/Output"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2017, Marcelo Forets.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.
+    </div>
+  </body>
+</html>

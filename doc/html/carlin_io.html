@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Handling Input/Output &mdash; Carleman linearization of ordinary differential equations 0.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/MathJax.js?config=TeX-AMS_HTML-full,../mathjax_sage.js"></script>
+    <link rel="top" title="Carleman linearization of ordinary differential equations 0.0.2 documentation" href="index.html" />
+    <link rel="next" title="Library of polynomial ODE’s" href="carlin_library.html" />
+    <link rel="prev" title="Available Transformations" href="carlin_transformation.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="carlin_library.html" title="Library of polynomial ODE’s"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="carlin_transformation.html" title="Available Transformations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-carlin.io">
+<span id="handling-input-output"></span><h1>Handling Input/Output<a class="headerlink" href="#module-carlin.io" title="Permalink to this headline">¶</a></h1>
+<p>Carleman linearization input/output functions.</p>
+<div class="section" id="load-and-export-polynomial-odes">
+<h2>Load and export polynomial ODEs<a class="headerlink" href="#load-and-export-polynomial-odes" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.io.export_model_to_mat" title="carlin.io.export_model_to_mat"><code class="xref py py-func docutils literal"><span class="pre">export_model_to_mat()</span></code></a></td>
+<td>Export model to a MAT file as the sequence of sparse <span class="math">\(F_j\)</span> matrices</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.io.load_model" title="carlin.io.load_model"><code class="xref py py-func docutils literal"><span class="pre">load_model()</span></code></a></td>
+<td>Read an ODE system from a text file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="transformation-functions">
+<h2>Transformation functions<a class="headerlink" href="#transformation-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.io.get_Fj_from_model" title="carlin.io.get_Fj_from_model"><code class="xref py py-func docutils literal"><span class="pre">get_Fj_from_model()</span></code></a></td>
+<td>Transform a model into standard form as a sum of Kronecker products</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="solve-polynomial-odes">
+<h2>Solve polynomial ODEs<a class="headerlink" href="#solve-polynomial-odes" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.io.solve_linearized_ode" title="carlin.io.solve_linearized_ode"><code class="xref py py-func docutils literal"><span class="pre">solve_linearized_ode()</span></code></a></td>
+<td>Solve Carleman linearized 1st order ODE using dense matrices</td>
+</tr>
+</tbody>
+</table>
+<p>AUTHOR:</p>
+<ul class="simple">
+<li>Marcelo Forets (Dec 2016 at VERIMAG - UGA)</li>
+</ul>
+<dl class="function">
+<dt id="carlin.io.export_model_to_mat">
+<code class="descclassname">carlin.io.</code><code class="descname">export_model_to_mat</code><span class="sig-paren">(</span><em>model_filename</em>, <em>F=None</em>, <em>n=None</em>, <em>k=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.export_model_to_mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export ODE model to a Matlab <code class="docutils literal"><span class="pre">.mat</span></code> format.</p>
+<p>INPUT:</p>
+<p>The model can be given either as a model in text file, or as the tuple <span class="math">\((F, n, k)\)</span>.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string with the model filename. If <span class="math">\((F, n, k)\)</span> is not provided,
+then such model should be reachable from the current path</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list of sparse matrices <span class="math">\(F_1, \ldots, F_k\)</span></li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; dimension of state-space</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; order of the system</li>
+</ul>
+<p>OUTPUT:</p>
+<p>List containing the solution of the 1st order ODE <span class="math">\(x'(t) = A_N x(t)\)</span>, with initial 
+condition <span class="math">\(x(0) = x_0\)</span>. The output filename is <code class="docutils literal"><span class="pre">model_filename</span></code>,
+replacing the <code class="docutils literal"><span class="pre">.sage</span></code> extension with the <code class="docutils literal"><span class="pre">.mat</span></code> extension.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.io.get_Fj_from_model">
+<code class="descclassname">carlin.io.</code><code class="descname">get_Fj_from_model</code><span class="sig-paren">(</span><em>model_filename=None</em>, <em>f=None</em>, <em>n=None</em>, <em>k=None</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.get_Fj_from_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform an input model of a polynomial vector field into standard
+form as a sum of Kronecker products.</p>
+<p>The model can be given either as an external file (<code class="docutils literal"><span class="pre">model_filename</span></code>), or
+as the data <span class="math">\(f\)</span>, <span class="math">\(n\)</span> and <span class="math">\(k\)</span>.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string containing the filename</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list of sparse matrices <span class="math">\(F_1, \ldots, F_k\)</span>.
+These are formatted in dictionary-of-keys (dok) form.</li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; dimension of the state-space of the system</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; degree of the system</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.io.load_model">
+<code class="descclassname">carlin.io.</code><code class="descname">load_model</code><span class="sig-paren">(</span><em>model_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read an input ODE system.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string with the model filename</li>
+</ul>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">f</span></code> &#8211; list of multivariate polynomials which describes the system of ODEs,
+each component in the polynomial ring <span class="math">\(\mathbb{Q}[x_1,\ldots,x_n]\)</span></li>
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, dimension of f</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; integer, degree of f</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.io.solve_linearized_ode">
+<code class="descclassname">carlin.io.</code><code class="descname">solve_linearized_ode</code><span class="sig-paren">(</span><em>AN=None</em>, <em>x0=None</em>, <em>N=2</em>, <em>tini=0</em>, <em>T=1</em>, <em>NPOINTS=400</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.solve_linearized_ode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve Carleman linearized 1st order ODE using dense matrix-vector multiplications.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">AN</span></code> &#8211; matrix in (Sage dense)</li>
+<li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; vector, initial point</li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; (optional, default: 2) order of the truncation</li>
+<li><code class="docutils literal"><span class="pre">tini</span></code> &#8211; (optional, default: 0) initial time</li>
+<li><code class="docutils literal"><span class="pre">T</span></code> &#8211; (optional, default: 1) final time</li>
+<li><code class="docutils literal"><span class="pre">NPOINTS</span></code> &#8211; (optional, default: 400) number of points computed</li>
+</ul>
+<p>OUTPUT:</p>
+<p>List containing the solution of the 1st order ODE <span class="math">\(x'(t) = A_N x(t)\)</span>, with initial 
+condition <span class="math">\(x(0) = x_0\)</span>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Handling Input/Output</a><ul>
+<li><a class="reference internal" href="#load-and-export-polynomial-odes">Load and export polynomial ODEs</a></li>
+<li><a class="reference internal" href="#transformation-functions">Transformation functions</a></li>
+<li><a class="reference internal" href="#solve-polynomial-odes">Solve polynomial ODEs</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="carlin_transformation.html"
+                        title="previous chapter">Available Transformations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="carlin_library.html"
+                        title="next chapter">Library of polynomial ODE&#8217;s</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/carlin_io.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="carlin_library.html" title="Library of polynomial ODE’s"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="carlin_transformation.html" title="Available Transformations"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Carleman linearization of ordinary differential equations 0.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2017, Marcelo Forets.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.4.
+    </div>
+  </body>
+</html>
