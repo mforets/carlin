@@ -22,7 +22,7 @@ from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
 
 def vanderpol(mu, omega):
-    """
+    r"""
     The Van der Pol oscillator is a non-conservative system with non-linear damping.
     
     It is defined as:
@@ -35,7 +35,7 @@ def vanderpol(mu, omega):
         \end{aligned}
 
     where `\omega` is the natural frequency and `\mu` is the damping parameter.
-    For additional information see the :wiki:`Van_der_Pol_oscillator`.
+    For additional information see the :wikipedia:`Van_der_Pol_oscillator`.
 
     EXAMPLES::
 

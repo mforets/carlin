@@ -1,10 +1,36 @@
 r"""
 Carleman linearization input/output functions.
 
-Features:
+Load and export polynomial ODEs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- functions to load model polynomial ODE's
-- auxiliary mathematical functions
+.. csv-table::
+    :class: contentstable
+    :widths: 30, 70
+    :delim: |
+
+    :func:`~export_model_to_mat`   | Export model to a MAT file as the sequence of sparse `F_j` matrices
+    :func:`~load_model`            | Read an ODE system from a text file
+
+Transformation functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+    :class: contentstable
+    :widths: 30, 70
+    :delim: |
+
+    :func:`~get_Fj_from_model`     | Transform a model into standard form as a sum of Kronecker products
+
+Solve polynomial ODEs
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+    :class: contentstable
+    :widths: 30, 70
+    :delim: |
+
+    :func:`~solve_linearized_ode`  | Solve Carleman linearized 1st order ODE using dense matrices
 
 AUTHOR:
 
@@ -46,7 +72,8 @@ from sage.modules.free_module_element import vector
 #==========================
 
 def load_model(model_filename):
-    r""" Read an input ODE system.
+    r"""
+    Read an input ODE system.
 
     INPUT:
 
@@ -54,8 +81,8 @@ def load_model(model_filename):
 
     OUTPUT:
 
-    - ``f`` -- list of multivariate polynomials which describes the system of ODE's,
-     each component in the polynomial ring `\mathbb{Q}[x_1,\ldots,x_n]`
+    - ``f`` -- list of multivariate polynomials which describes the system of ODEs,
+      each component in the polynomial ring `\mathbb{Q}[x_1,\ldots,x_n]`
 
     - ``n`` -- integer, dimension of f
 
@@ -71,11 +98,12 @@ def load_model(model_filename):
     return [f, n, k]
 
 def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
-    r""" Transform an input model of a polynomial vector field into standard
+    r"""
+    Transform an input model of a polynomial vector field into standard
     form as a sum of Kronecker products.
-    
+
     The model can be given either as an external file (``model_filename``), or
-    as the tuple ``(f, n, k)``.
+    as the data `f`, `n` and `k`.
 
     INPUT:
 
@@ -83,8 +111,8 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
 
     OUTPUT:
 
-    - ``F`` -- F is a list of sparse matrices `F_1, ..., F_k`.
-     These are formatted in dok (dictionary-of-keys) form.
+    - ``F`` -- list of sparse matrices `F_1, \ldots, F_k`.
+      These are formatted in dictionary-of-keys (dok) form.
 
     - ``n`` -- dimension of the state-space of the system
 
@@ -96,7 +124,7 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
         k = n; n = f; f = model_filename;
         got_model_by_filename = False
     else:
-        raise ValueError("Either the model name or the vector field (f, n, k) should be specified.")
+        raise ValueError("either the model name or the vector field (f, n, k) should be specified")
 
     if got_model_by_filename:
         [f, n, k] = load_model(model_filename)
@@ -134,7 +162,28 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
 #===============================================
 
 def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
+    r"""
+    Export ODE model to a Matlab ``.mat`` format.
 
+    INPUT:
+
+    The model can be given either as a model in text file, or as the tuple `(F, n, k)`.
+
+    - ``model_filename`` -- string with the model filename. If `(F, n, k)` is not provided,
+      then such model should be reachable from the current path
+
+    - ``F`` -- list of sparse matrices `F_1, \ldots, F_k`
+
+    - ``n`` -- dimension of state-space
+
+    - ``k`` -- order of the system
+
+    OUTPUT:
+
+    List containing the solution of the 1st order ODE `x'(t) = A_N x(t)`, with initial 
+    condition `x(0) = x_0`. The output filename is ``model_filename``,
+    replacing the ``.sage`` extension with the ``.mat`` extension.
+    """
     from scipy.io import savemat
 
     if '.sage' in model_filename:
@@ -144,20 +193,10 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
     else:
         raise ValueError("Expected .sage or .mat file format in model filename.")
 
-
-    got_Fj = False if F is None else True
-
-    if not got_Fj:
+    if F is None:
         [F, n, k] = get_Fj_from_model(model_filename)
 
-    d = dict()
-
-    d['F'] = F
-    d['n'] = n
-    d['k'] = k
-
-    savemat(mat_model_filename, d)
-
+    savemat(mat_model_filename, {'F': F, 'n': n, 'k': k})
     return
 
 #===============================================
@@ -165,8 +204,27 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 #===============================================
 
 def solve_linearized_ode(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=400):
-    """
+    r"""
     Solve Carleman linearized 1st order ODE using dense matrix-vector multiplications.
+
+    INPUT:
+
+    - ``AN`` -- matrix in (Sage dense)
+
+    - ``x0`` -- vector, initial point
+
+    - ``N`` -- (optional, default: 2) order of the truncation
+
+    - ``tini`` -- (optional, default: 0) initial time
+
+    - ``T`` -- (optional, default: 1) final time
+
+    - ``NPOINTS`` -- (optional, default: 400) number of points computed
+
+    OUTPUT:
+
+    List containing the solution of the 1st order ODE `x'(t) = A_N x(t)`, with initial 
+    condition `x(0) = x_0`.
     """
     def initial_state_kron(x0, N):
         from carlin.transformation import kron_power

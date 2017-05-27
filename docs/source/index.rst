@@ -37,10 +37,12 @@ Methods
 ==========
         
 .. toctree::
-  :maxdepth: 1
+  :maxdepth: 2
 
-  carlin
-
+  carlin_transformation
+  carlin_io
+  carlin_library
+  carlin_polyhedron_tools
 
 Indices and Tables
 ====================
