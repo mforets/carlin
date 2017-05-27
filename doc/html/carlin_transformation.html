@@ -158,7 +158,7 @@ Systems, Saarbrucken, Germany, where part of this package was written (Apr 2016)
 for <span class="math">\(p=\infty\)</span></li>
 </ul>
 <p>OUTPUT:</p>
-<p>Dictionary <span class="math">\(c\)</span> containing <span class="math">\(norm_Fi_inf\)</span>, <span class="math">\(log_norm_F1_inf\)</span> and <span class="math">\(beta0_const\)</span>.</p>
+<p>Dictionary <code class="docutils literal"><span class="pre">c</span></code> containing <code class="docutils literal"><span class="pre">norm_Fi_inf</span></code>, <code class="docutils literal"><span class="pre">log_norm_F1_inf</span></code> and <code class="docutils literal"><span class="pre">beta0_const</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -221,7 +221,7 @@ in position <span class="math">\(1\)</span>:</p>
 <dl class="function">
 <dt id="carlin.transformation.kron_power">
 <code class="descclassname">carlin.transformation.</code><code class="descname">kron_power</code><span class="sig-paren">(</span><em>x</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_power" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receives a <span class="math">\(nx1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span>.</p>
+<dd><p>Receives a <span class="math">\(n\times 1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span>.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">x</span></code> &#8211; list or vector</li>
@@ -315,7 +315,7 @@ dimension and order respectively.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">N</span></code> &#8211; order of truncation</li>
-<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; sequence of matrices <span class="math">\(F_j\)</span> (list)</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list, sequence of matrices <span class="math">\(F_j\)</span></li>
 <li><code class="docutils literal"><span class="pre">n</span></code> &#8211; the dimension of the state-space</li>
 <li><code class="docutils literal"><span class="pre">k</span></code> &#8211; the order of the polynomial vector field. It is equal to <code class="docutils literal"><span class="pre">len(F)</span></code></li>
 </ul>
@@ -343,15 +343,8 @@ for <span class="math">\((A, n, k)\)</span> and <code class="docutils literal"><
 should be given as separate arguments.</li>
 </ul>
 <p>OUTPUT:</p>
-<ul>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">A</span></code></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to</span><dd><p class="first last"><span class="math">\(i = 1, \ldots, N\)</span>. It is given as a list of lists.
-Each inner list has dimension <span class="math">\(k\)</span>.</p>
-</dd>
-</dl>
-</li>
-</ul>
+<p>The transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to <span class="math">\(i = 1, \ldots, N\)</span>.
+It is given as a list of lists, and each inner list has dimension <span class="math">\(k\)</span>.</p>
 </dd></dl>
 
 </div>

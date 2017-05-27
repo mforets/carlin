@@ -150,7 +150,7 @@ Systems, Saarbrucken, Germany, where part of this package was written (Apr 2016)
 for <span class="math">\(p=\infty\)</span></li>
 </ul>
 <p>OUTPUT:</p>
-<p>Dictionary <span class="math">\(c\)</span> containing <span class="math">\(norm_Fi_inf\)</span>, <span class="math">\(log_norm_F1_inf\)</span> and <span class="math">\(beta0_const\)</span>.</p>
+<p>Dictionary <code class="docutils literal"><span class="pre">c</span></code> containing <code class="docutils literal"><span class="pre">norm_Fi_inf</span></code>, <code class="docutils literal"><span class="pre">log_norm_F1_inf</span></code> and <code class="docutils literal"><span class="pre">beta0_const</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -213,7 +213,7 @@ in position <span class="math">\(1\)</span>:</p>
 <dl class="function">
 <dt id="carlin.transformation.kron_power">
 <code class="descclassname">carlin.transformation.</code><code class="descname">kron_power</code><span class="sig-paren">(</span><em>x</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_power" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receives a <span class="math">\(nx1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span>.</p>
+<dd><p>Receives a <span class="math">\(n\times 1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span>.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">x</span></code> &#8211; list or vector</li>
@@ -307,7 +307,7 @@ dimension and order respectively.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">N</span></code> &#8211; order of truncation</li>
-<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; sequence of matrices <span class="math">\(F_j\)</span> (list)</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list, sequence of matrices <span class="math">\(F_j\)</span></li>
 <li><code class="docutils literal"><span class="pre">n</span></code> &#8211; the dimension of the state-space</li>
 <li><code class="docutils literal"><span class="pre">k</span></code> &#8211; the order of the polynomial vector field. It is equal to <code class="docutils literal"><span class="pre">len(F)</span></code></li>
 </ul>
@@ -335,15 +335,8 @@ for <span class="math">\((A, n, k)\)</span> and <code class="docutils literal"><
 should be given as separate arguments.</li>
 </ul>
 <p>OUTPUT:</p>
-<ul>
-<li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">A</span></code></dt>
- <span class="classifier-delimiter">:</span> <span class="classifier">the transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to</span><dd><p class="first last"><span class="math">\(i = 1, \ldots, N\)</span>. It is given as a list of lists.
-Each inner list has dimension <span class="math">\(k\)</span>.</p>
-</dd>
-</dl>
-</li>
-</ul>
+<p>The transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to <span class="math">\(i = 1, \ldots, N\)</span>.
+It is given as a list of lists, and each inner list has dimension <span class="math">\(k\)</span>.</p>
 </dd></dl>
 
 </div>
@@ -478,13 +471,119 @@ condition <span class="math">\(x(0) = x_0\)</span>.</p>
 <div class="section" id="module-carlin.library">
 <span id="library-of-polynomial-ode-s"></span><h1>Library of polynomial ODE&#8217;s<a class="headerlink" href="#module-carlin.library" title="Permalink to this headline">¶</a></h1>
 <p>Library of commonly used or famous polynomial ODE systems.</p>
+<p>The following functions are available:</p>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="carlin_library.html#carlin.library.vanderpol" title="carlin.library.vanderpol"><code class="xref py py-func docutils literal"><span class="pre">vanderpol()</span></code></a></td>
+<td><a class="reference external" href="https://en.wikipedia.org/wiki/Van_der_Pol_oscillator">Van der Pol oscillator</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="carlin_library.html#carlin.library.scalar_cubic" title="carlin.library.scalar_cubic"><code class="xref py py-func docutils literal"><span class="pre">scalar_cubic()</span></code></a></td>
+<td>A scalar ODE with a cubic term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="carlin_library.html#carlin.library.scalar_quadratic" title="carlin.library.scalar_quadratic"><code class="xref py py-func docutils literal"><span class="pre">scalar_quadratic()</span></code></a></td>
+<td>A scalar ODE with a quadratic term</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="carlin_library.html#carlin.library.arrowsmith_and_place_fig_3_5e_page_79" title="carlin.library.arrowsmith_and_place_fig_3_5e_page_79"><code class="xref py py-func docutils literal"><span class="pre">arrowsmith_and_place_fig_3_5e_page_79()</span></code></a></td>
+<td>Nonlinear two-dimensional system with an hyperbolic fixed point</td>
+</tr>
+</tbody>
+</table>
 <p>AUTHOR:</p>
 <ul class="simple">
 <li>Marcelo Forets (May 2017)</li>
 </ul>
 <dl class="function">
+<dt id="carlin.library.arrowsmith_and_place_fig_3_5e_page_79">
+<code class="descclassname">carlin.library.</code><code class="descname">arrowsmith_and_place_fig_3_5e_page_79</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.arrowsmith_and_place_fig_3_5e_page_79" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nonlinear two-dimensional system with an hyperbolic fixed point.</p>
+<p>It is defined as:</p>
+<div class="math">
+\[\begin{split}\begin{aligned}
+ x' &amp;= x^2+(x+y)/2 \\
+ y' &amp;= (-x+3*y)/2
+\end{aligned}\end{split}\]</div>
+<p>Taken from p. 79 of the book by Arrowsmith and Place, Dynamical Systems:
+Differential Equations, maps and chaotic behaviour.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.library.biomodel_2">
+<code class="descclassname">carlin.library.</code><code class="descname">biomodel_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.biomodel_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a nine-dimensional polynomial ODE used as benchmark model in
+<a class="reference external" href="https://ths.rwth-aachen.de/research/projects/hypro/biological-model-ii/">the Flow star tool</a>.</p>
+<p>The model is adapted from E. Klipp, R. Herwig, A. Kowald, C. Wierling, H. Lehrach.
+Systems Biology in Practice: Concepts, Implementation and Application. Wiley-Blackwell, 2005.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.library.chen_seven_dim">
+<code class="descclassname">carlin.library.</code><code class="descname">chen_seven_dim</code><span class="sig-paren">(</span><em>u=0</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.chen_seven_dim" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a seven-dimensional nonlinear system of quadratic order.</p>
+<p>It appears as <code class="docutils literal"><span class="pre">'example_nonlinear_reach_04_sevenDim_nonConvexRepr.m'</span></code> in 
+the tool CORA 2016, in the examples for continuous nonlinear systems.</p>
+<p>There is an independent term, <span class="math">\(u\)</span>, in the fourth equation with value <span class="math">\(2.0\)</span> that has
+been neglected here for convenience (hence we take <span class="math">\(u=0\)</span> by default).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.library.scalar_cubic">
+<code class="descclassname">carlin.library.</code><code class="descname">scalar_cubic</code><span class="sig-paren">(</span><em>a=1</em>, <em>b=1</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.scalar_cubic" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scalar ODE with a cubic term.</p>
+<p>It is defined as:</p>
+<div class="math">
+\[x'(t) = -ax(t) + bx(t)^3\]</div>
+<p>where <span class="math">\(a\)</span> and <span class="math">\(b\)</span> are paremeters of the ODE.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">scalar_cubic</span>
+<span class="gp">sage: </span><span class="n">scalar_cubic</span><span class="p">()</span>
+<span class="go">([x0^3 - x0], 1, 3)</span>
+</pre></div>
+</div>
+<p>Compute the Carleman embedding truncated at order <span class="math">\(N=4\)</span>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_Fj_from_model</span><span class="p">,</span> <span class="n">truncated_matrix</span> 
+<span class="gp">sage: </span><span class="n">Fj</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="o">*</span><span class="n">scalar_cubic</span><span class="p">())</span>
+<span class="gp">sage: </span><span class="n">matrix</span><span class="p">(</span><span class="n">truncated_matrix</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">*</span><span class="n">Fj</span><span class="p">,</span> <span class="n">input_format</span><span class="o">=</span><span class="s2">&quot;Fj_matrices&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="go">[-1.0  0.0  1.0  0.0]</span>
+<span class="go">[ 0.0 -2.0  0.0  2.0]</span>
+<span class="go">[ 0.0  0.0 -3.0  0.0]</span>
+<span class="go">[ 0.0  0.0  0.0 -4.0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="carlin.library.scalar_quadratic">
+<code class="descclassname">carlin.library.</code><code class="descname">scalar_quadratic</code><span class="sig-paren">(</span><em>a=1</em>, <em>b=1</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.scalar_quadratic" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scalar ODE with a quadratic term.</p>
+<p>It is defined as:</p>
+<div class="math">
+\[x'(t) = ax(t) + bx(t)^2\]</div>
+<p>where <span class="math">\(a\)</span> and <span class="math">\(b\)</span> are paremeters of the ODE.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">scalar_quadratic</span>
+<span class="gp">sage: </span><span class="n">scalar_quadratic</span><span class="p">()</span>
+<span class="go">([x0^2 + x0], 1, 2)</span>
+</pre></div>
+</div>
+<p>Compute the Carleman embedding truncated at order <span class="math">\(N=4\)</span>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_Fj_from_model</span><span class="p">,</span> <span class="n">truncated_matrix</span> 
+<span class="gp">sage: </span><span class="n">Fj</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="o">*</span><span class="n">scalar_quadratic</span><span class="p">())</span>
+<span class="gp">sage: </span><span class="n">matrix</span><span class="p">(</span><span class="n">truncated_matrix</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">*</span><span class="n">Fj</span><span class="p">,</span> <span class="n">input_format</span><span class="o">=</span><span class="s2">&quot;Fj_matrices&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="go">[1.0 1.0 0.0 0.0]</span>
+<span class="go">[0.0 2.0 2.0 0.0]</span>
+<span class="go">[0.0 0.0 3.0 3.0]</span>
+<span class="go">[0.0 0.0 0.0 4.0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="carlin.library.vanderpol">
-<code class="descclassname">carlin.library.</code><code class="descname">vanderpol</code><span class="sig-paren">(</span><em>mu</em>, <em>omega</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.vanderpol" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">carlin.library.</code><code class="descname">vanderpol</code><span class="sig-paren">(</span><em>mu=1</em>, <em>omega=1</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.vanderpol" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Van der Pol oscillator is a non-conservative system with non-linear damping.</p>
 <p>It is defined as:</p>
 <div class="math">
