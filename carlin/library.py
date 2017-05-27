@@ -8,10 +8,12 @@ The following functions are available:
     :widths: 30, 70
     :delim: |
 
-    :func:`~vanderpol`                                 | `Van der Pol oscillator <https://en.wikipedia.org/wiki/Van_der_Pol_oscillator>`_
-    :func:`~scalar_cubic`                              | A scalar ODE with a cubic term
-    :func:`~scalar_quadratic`                          | A scalar ODE with a quadratic term
     :func:`~arrowsmith_and_place_fig_3_5e_page_79`     | Nonlinear two-dimensional system with an hyperbolic fixed point
+    :func:`~biomodel_2`                                | Nine-dimensional polynomial ODE form a biological model
+    :func:`~chen_seven_dim`                            | Seven-dimensional nonlinear system of quadratic order
+    :func:`~scalar_cubic`                              | Scalar ODE with a cubic term
+    :func:`~scalar_quadratic`                          | Scalar ODE with a quadratic term
+    :func:`~vanderpol`                                 | `Van der Pol oscillator <https://en.wikipedia.org/wiki/Van_der_Pol_oscillator>`_
 
 AUTHOR:
 
@@ -149,7 +151,7 @@ def arrowsmith_and_place_fig_3_5e_page_79():
 
         \begin{aligned}
          x' &= x^2+(x+y)/2 \\
-         y' &= (-x+3*y)/2
+         y' &= (-x+3y)/2
         \end{aligned}
 
     Taken from p. 79 of the book by Arrowsmith and Place, Dynamical Systems:
