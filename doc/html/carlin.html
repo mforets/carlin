@@ -467,6 +467,34 @@ condition <span class="math">\(x(0) = x_0\)</span>. The solution is computed the
 <p>NOTES:</p>
 <p>For high-dimensional systems prefer using <code class="docutils literal"><span class="pre">AN</span></code> in sparse format. In this case,
 the matrix exponential is computed using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html">scipy.sparse.linalg.expm_multiply</a>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_Fj_from_model</span><span class="p">,</span> <span class="n">truncated_matrix</span>
+<span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">scalar_quadratic</span>
+<span class="gp">sage: </span><span class="n">Fjnk</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="o">*</span><span class="n">scalar_quadratic</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Consider a fourth order truncation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">AN_sparse</span> <span class="o">=</span> <span class="n">truncated_matrix</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">*</span><span class="n">Fjnk</span><span class="p">,</span> <span class="n">input_format</span><span class="o">=</span><span class="s2">&quot;Fj_matrices&quot;</span><span class="p">)</span>
+<span class="gp">sage: </span><span class="n">AN_sparse</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="go">array([[ 1.,  1.,  0.,  0.],</span>
+<span class="go">       [ 0.,  2.,  2.,  0.],</span>
+<span class="go">       [ 0.,  0.,  3.,  3.],</span>
+<span class="go">       [ 0.,  0.,  0.,  4.]])</span>
+</pre></div>
+</div>
+<p>We can solve the linear ODE using the sparse matrix <code class="docutils literal"><span class="pre">AN_sparse</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.io</span> <span class="kn">import</span> <span class="n">solve_ode_exp</span>
+<span class="gp">sage: </span><span class="n">ans</span> <span class="o">=</span> <span class="n">solve_ode_exp</span><span class="p">(</span><span class="n">AN_sparse</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tini</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> \
+<span class="go">            T=1, NPOINTS=20)</span>
+</pre></div>
+</div>
+<p>It can also be solved using Sage matrices (although the speed is often
+smaller in this case, because it works with dense matrices):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">AN_dense</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">AN_sparse</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="gp">sage: </span><span class="n">ans</span> <span class="o">=</span> <span class="n">solve_ode_exp</span><span class="p">(</span><span class="n">AN_dense</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tini</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> \
+<span class="go">            T=1, NPOINTS=20)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
