@@ -30,7 +30,8 @@ Solve polynomial ODEs
     :widths: 30, 70
     :delim: |
 
-    :func:`~solve_linearized_ode`  | Solve Carleman linearized 1st order ODE using dense matrices
+    :func:`~solve_ode_exp`  | Solve Carleman linearized 1st order ODE using matrix exponentiation
+    :func:`~solve_ode_`  | Solve Carleman linearized 1st order ODE using a DE solver
 
 AUTHOR:
 
@@ -203,13 +204,13 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 # Functions to solve ODE's
 #===============================================
 
-def solve_linearized_ode(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=400):
+def solve_ode_exp(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=100):
     r"""
-    Solve Carleman linearized 1st order ODE using dense matrix-vector multiplications.
+    Solve Carleman linearized 1st order ODE using matrix exponential calculus.
 
     INPUT:
 
-    - ``AN`` -- matrix in (Sage dense)
+    - ``AN`` -- matrix, it can be Sage dense or NumPy sparse in COO format
 
     - ``x0`` -- vector, initial point
 
@@ -219,29 +220,43 @@ def solve_linearized_ode(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=400):
 
     - ``T`` -- (optional, default: 1) final time
 
-    - ``NPOINTS`` -- (optional, default: 400) number of points computed
+    - ``NPOINTS`` -- (optional, default: 100) number of points computed
 
     OUTPUT:
 
     List containing the solution of the 1st order ODE `x'(t) = A_N x(t)`, with initial 
-    condition `x(0) = x_0`.
+    condition `x(0) = x_0`. The solution is computed the matrix exponential `e^{A_N t_i}` directly.
+
+    NOTES:
+
+    For high-dimensional systems prefer using ``AN`` in sparse format. In this case,
+    the matrix exponential is computed using `scipy.sparse.linalg.expm_multiply 
+    <https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html>`_.
     """
+    import numpy as np
     def initial_state_kron(x0, N):
         from carlin.transformation import kron_power
 
         y0 = kron_power(x0, 1)
         for i in range(2, N+1):
-            y0 += kron_power(x0, i)
+            y0 = y0 + kron_power(x0, i)
         return vector(y0)
 
     # transform to x0, x0^[2], ..., x0^[N]
     y0 = initial_state_kron(x0, N)
 
-    # time domain
-    from numpy import linspace
-    t_dom = linspace(tini, T, num=NPOINTS)
-
     # compute solution
-    sol = [(ti*AN).exp() * y0 for ti in t_dom]
+    if "sage.matrix" in str(type(AN)):
+        #t_dom = [tini + (T-tini)/(NPOINTS-1)*i for i in range(NPOINTS)]
+        t_donm = np.linspace(tini, T, num=NPOINTS)
+        sol = [AN.exp() * np.exp(ti) * y0 for ti in t_dom]
+
+    elif "scipy.sparse" in str(type(AN)):
+        from scipy.sparse.linalg import expm_multiply
+        sol = expm_multiply(AN, np.array(y0), start=tini, stop=T, \
+                            num=NPOINTS, endpoint=True)
+
+    else:
+        raise ValueError("invalid matrix type")
 
     return sol
