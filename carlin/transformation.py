@@ -1,19 +1,61 @@
 r"""
 Carleman linearization of polynomial differential equations in SageMath.
 
-Features:
+Reduction methods
+~~~~~~~~~~~~~~~~~~~~
 
-- reduction of a polynomial vector field to a quadratic field in higher dimensions
-- truncation 
-- computation of the truncation error by the method of backwards integration
-- computation of the truncation error by the method of power series
+.. csv-table::
+    :class: contentstable
+    :widths: 30, 70
+    :delim: |
+
+    :func:`~quadratic_reduction`          | Reduce from any order in standard form to quadratic order
+    :func:`~transfer_matrices`            | Compute the higher order transfer matrices `A^{i}_{i+j-1}`
+
+Linearization
+~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+    :class: contentstable
+    :widths: 30, 70
+    :delim: |
+
+    :func:`~linearize`            | Compute Carleman linearization and export to a MAT file
+    :func:`~truncated_matrix`     | Finite order `N` Carleman linearization
+
+
+Kronecker power and linear algebra
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+    :class: contentstable
+    :widths: 30, 70
+    :delim: |
+
+    :func:`~get_index_from_key`   | Return first occurrence of given key over a Kronecker power
+    :func:`~get_key_from_index`   | Return multi-index of Kronecker power given an index and the order
+    :func:`~kron_prod`            | Compute the Kronecker product of x and y
+    :func:`~kron_power`           | Receives a `n\times 1` vector and computes its Kronecker power `x^{[i]}`
+    :func:`~log_norm`             | Compute the logarithmic norm of a matrix
+
+Error computation
+~~~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+    :class: contentstable
+    :widths: 30, 70
+    :delim: |
+
+    :func:`~characteristics`      | Information about the norms of the matrices in `F`
+    :func:`~error_function`       | Compute the error function of a truncated ODE
+    :func:`~plot_error_function`  | Plot the estimated error of the linearized ODE as a function of time
 
 AUTHOR:
 
 - Marcelo Forets (Dec 2016 at VERIMAG - France)
 
 MF acknowledges the hospitality at Max-Planck Institute for Software
-Systems, Saarbrucken, Germany, where this package was written (Apr 2016).
+Systems, Saarbrucken, Germany, where part of this package was written (Apr 2016).
 """
 #************************************************************************
 #       Copyright (C) 2016 Marcelo Forets <mforets@nonlinearnotes.com>
@@ -61,7 +103,8 @@ from sage.functions.log import log, exp
 #===============================================
 
 def transfer_matrices(N, F, n, k):
-    r""" Higher order transfer matrices `A^{i}_{i+j-1}`.
+    r"""
+    Higher order transfer matrices `A^{i}_{i+j-1}`.
 
     INPUT:
 
@@ -94,17 +137,17 @@ def transfer_matrices(N, F, n, k):
     return A
 
 def truncated_matrix(N, *args, **kwargs):
-    r""" Finite order Carleman linearization. 
+    r"""
+    Finite order Carleman linearization.
 
     INPUT:
 
     - ``N`` -- order of truncation
 
-    - ``input_format`` -- sequence of matrices `F_j` (list)
-
-    - ``F`` -- the dimension of the state-space
-
-    - ``input_format`` -- the order of the polynomial vector field, equal to ``len(F)``
+    - ``input_format`` -- if it is not present, then it is assumed to be
+      ``'model_filename'`` (file in text format); other options are ``'transfer_matrices'``
+      for `(A, n, k)` and ``'Fj_matrices'`` for `(F, n, k)`. In the latter cases, these 
+      should be given as separate arguments.
 
     OUTPUT:
 
@@ -114,7 +157,7 @@ def truncated_matrix(N, *args, **kwargs):
     """
     from scipy.sparse import bmat
 
-    if 'input_format' not in kwargs.keys():
+    if kwargs['input_format'] == 'model_filename' or 'input_format' not in kwargs.keys():
         # assuming 'model_filename'
         model_filename = args[0]
         [F, n, k] = get_Fj_from_model(model_filename)
@@ -130,7 +173,7 @@ def truncated_matrix(N, *args, **kwargs):
             k = args[2]
             A = transfer_matrices(N, F, n, k)
         else:
-            raise ValueError('input format not understood')
+            raise ValueError('invalid input format')
 
     BN_list = []
 
@@ -153,9 +196,9 @@ def truncated_matrix(N, *args, **kwargs):
 
     return BN
 
-
 def quadratic_reduction(F, n, k):
-    """Reduce a `k`-th order system of polynomial ODE's into a quadratic one.
+    r"""
+    Reduce a `k`-th order system of polynomial ODE's into a quadratic one.
 
     INPUT:
 
@@ -164,6 +207,11 @@ def quadratic_reduction(F, n, k):
     - ``n`` -- integer, system's dimension
 
     - ``k`` -- integer, order of the polynomial ODE
+
+    OUTPUT:
+
+    The list ``[F_tilde, nquad, kquad]`` corresponding to the reduced list of `F_j`'s,
+    dimension and order respectively.
     """
     from scipy.sparse import bmat, lil_matrix
 
@@ -209,8 +257,16 @@ def quadratic_reduction(F, n, k):
     return [F_tilde, nquad, kquad]
 
 def error_function(model_filename, N, x0):
-    """Compute the error function of a linearized and truncated model,
-    with given initial condition.
+    """
+    Compute the error function of a truncated ODE.
+    
+    INPUT:
+
+    - ``model_filename`` -- string containing the model in text format
+
+    - ``N`` -- truncation order
+
+    - ``x0`` -- initial point, a list
     """
     from numpy.linalg import norm
     from sage.symbolic.ring import SR
@@ -239,8 +295,23 @@ def error_function(model_filename, N, x0):
     return [Ts, error]
 
 def plot_error_function(model_filename, N, x0, Tfrac=0.8):
-    """Plot the error of the truncated as a functin of time, up to a fraction 
-    of the convegence radius.
+    """
+    Plot the estimated error of the linearized ODE as a function of time.
+
+    INPUT:
+
+    - ``model_filename`` -- string containing the model in text format
+
+    - ``N`` -- truncation order
+
+    - ``x0`` -- initial point, a list
+
+    - ``Tfrac`` -- (optional, default: `0.8`): fraction of the convergence radius,
+      to specify the plotting range in the time axis
+
+    NOTE:
+
+    This function calls ``error_function`` for the error computations.
     """
     from sage.plot.graphics import Graphics
     from sage.plot.plot import plot
@@ -250,7 +321,7 @@ def plot_error_function(model_filename, N, x0, Tfrac=0.8):
     P = Graphics()
     P = plot(eps, 0, Ts*Tfrac, axes_labels = ["$t$", r"$\mathcal{E}(t)$"])
     P += line([[Ts, 0], [Ts, eps(t=Ts * Tfrac)]], linestyle='dotted', color='black')
-    
+
     return P
 
 #===============================================
@@ -258,7 +329,25 @@ def plot_error_function(model_filename, N, x0, Tfrac=0.8):
 #===============================================
 
 def linearize(model_filename, target_filename, N, x0, **kwargs):
-    r""" Compute Carleman linearization and export to a MAT file.
+    r"""
+    Compute Carleman linearization and export to a MAT file.
+
+    INPUT:
+
+    - ``model_filename`` -- string containing the model in text format
+    
+    - ``target_filename`` -- string with the name of the output file in MAT format
+    
+    - ``N`` -- truncation order
+    
+    - ``x0`` -- initial point, can be either a list or a polyhedron; see the code for 
+      further details
+    
+    NOTES:
+    
+    This function is self-contained; it transforms to canonical quadratic form, then
+    computes Carleman linearization together with the error estimates and exports the resulting
+    matrix `A_N` and characteristics to a MAT file.
     """
     
     dic = dict()
@@ -408,9 +497,9 @@ def kron_power(x, i):
     else:
         raise ValueError('index i should be an integer >= 1')
 
-
 def get_key_from_index(i, j, n):
-    r"""Return multi-index of Kronecker power given an index and the order.
+    r"""
+    Return multi-index of Kronecker power given an index and the order.
 
     INPUT:
 
@@ -422,7 +511,7 @@ def get_key_from_index(i, j, n):
 
     EXAMPLES:
 
-    Take `x^[2]` for `x=(x_1, x_2)` and compute the exponent vector of the element
+    Take `x^{[2]}` for `x=(x_1, x_2)` and compute the exponent vector of the element
     in position `1`::
 
         sage: from carlin.transformation import get_key_from_index
@@ -435,12 +524,13 @@ def get_key_from_index(i, j, n):
     return list(d.items()[0][0])
 
 def get_index_from_key(key, j, n):
-    r"""Return first occurrence of given key over a Kronecker power.
+    r"""
+    Return first occurrence of given key over a Kronecker power.
 
     INPUT:
 
     - ``key`` -- list or tuple, key corresponding to the exponent vector in the
-     Kronecker power
+      Kronecker power
 
     - ``j`` -- integer, order of the Kronecker power
 
@@ -448,11 +538,11 @@ def get_index_from_key(key, j, n):
 
     NOTES:
 
-    - We assume `n >= 2`. Notice that if `n=1`, we would return always that ``first_occurence = 0``.
+    - We assume `n \geq 2`. Notice that if `n=1`, we would return always that ``first_occurence = 0``.
 
     EXAMPLES:
 
-    Take `x^[2]` for `x=(x_1, x_2)` and compute retrive the first ocurrence of
+    Take `x^{[2]}` for `x=(x_1, x_2)` and compute retrive the first ocurrence of
     the given key::
 
         sage: from carlin.transformation import get_index_from_key
@@ -470,7 +560,8 @@ def get_index_from_key(key, j, n):
     return first_occurence
 
 def log_norm(A, p='inf'):
-    r"""Compute the logarithmic norm of a matrix.
+    r"""
+    Compute the logarithmic norm of a matrix.
 
     INPUT:
 
@@ -516,12 +607,24 @@ def log_norm(A, p='inf'):
         raise NotImplementedError('value of p not understood or not implemented')
 
 def characteristics(F, n, k, ord=inf):
-    r"""Information about the norms of the matrices in `F`.
+    r"""
+    Information about the norms of the matrices in `F`.
 
     INPUT:
 
-    - ``F`` -- list of matrices in some Numpy sparse format, for which the 
+    - ``F`` -- list of matrices in some NumPy sparse format, for which the 
      ``toarray`` method is available
+
+    - ``n`` -- dimension on state-space
+
+    - ``k`` -- order of the system
+
+    - ``ord`` -- order of the `p`-th norm, for `1 \leq p < \infty`, and ``p='inf'``
+      for `p=\infty`
+
+    OUTPUT:
+
+    Dictionary `c` containing `norm_Fi_inf`, `log_norm_F1_inf` and `beta0_const`.
     """
     c = dict()
 
