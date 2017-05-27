@@ -242,7 +242,6 @@ def solve_linearized_ode(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=400):
     t_dom = linspace(tini, T, num=NPOINTS)
 
     # compute solution
-    from sage.functions.log import exp
-    sol = [exp(AN*ti)*y0 for ti in t_dom]
+    sol = [(ti*AN).exp() * y0 for ti in t_dom]
 
     return sol
