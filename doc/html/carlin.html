@@ -48,36 +48,121 @@
   <div class="section" id="module-carlin.transformation">
 <span id="available-transformations"></span><h1>Available Transformations<a class="headerlink" href="#module-carlin.transformation" title="Permalink to this headline">¶</a></h1>
 <p>Carleman linearization of polynomial differential equations in SageMath.</p>
-<p>Features:</p>
-<ul class="simple">
-<li>reduction of a polynomial vector field to a quadratic field in higher dimensions</li>
-<li>truncation</li>
-<li>computation of the truncation error by the method of backwards integration</li>
-<li>computation of the truncation error by the method of power series</li>
-</ul>
+<div class="section" id="reduction-methods">
+<h2>Reduction methods<a class="headerlink" href="#reduction-methods" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.transformation.quadratic_reduction" title="carlin.transformation.quadratic_reduction"><code class="xref py py-func docutils literal"><span class="pre">quadratic_reduction()</span></code></a></td>
+<td>Reduce from any order in standard form to quadratic order</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.transformation.transfer_matrices" title="carlin.transformation.transfer_matrices"><code class="xref py py-func docutils literal"><span class="pre">transfer_matrices()</span></code></a></td>
+<td>Compute the higher order transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="linearization">
+<h2>Linearization<a class="headerlink" href="#linearization" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.transformation.linearize" title="carlin.transformation.linearize"><code class="xref py py-func docutils literal"><span class="pre">linearize()</span></code></a></td>
+<td>Compute Carleman linearization and export to a MAT file</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.transformation.truncated_matrix" title="carlin.transformation.truncated_matrix"><code class="xref py py-func docutils literal"><span class="pre">truncated_matrix()</span></code></a></td>
+<td>Finite order <span class="math">\(N\)</span> Carleman linearization</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="kronecker-power-and-linear-algebra">
+<h2>Kronecker power and linear algebra<a class="headerlink" href="#kronecker-power-and-linear-algebra" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.transformation.get_index_from_key" title="carlin.transformation.get_index_from_key"><code class="xref py py-func docutils literal"><span class="pre">get_index_from_key()</span></code></a></td>
+<td>Return first occurrence of given key over a Kronecker power</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.transformation.get_key_from_index" title="carlin.transformation.get_key_from_index"><code class="xref py py-func docutils literal"><span class="pre">get_key_from_index()</span></code></a></td>
+<td>Return multi-index of Kronecker power given an index and the order</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.transformation.kron_prod" title="carlin.transformation.kron_prod"><code class="xref py py-func docutils literal"><span class="pre">kron_prod()</span></code></a></td>
+<td>Compute the Kronecker product of x and y</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.transformation.kron_power" title="carlin.transformation.kron_power"><code class="xref py py-func docutils literal"><span class="pre">kron_power()</span></code></a></td>
+<td>Receives a <span class="math">\(n\times 1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.transformation.log_norm" title="carlin.transformation.log_norm"><code class="xref py py-func docutils literal"><span class="pre">log_norm()</span></code></a></td>
+<td>Compute the logarithmic norm of a matrix</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="error-computation">
+<h2>Error computation<a class="headerlink" href="#error-computation" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="contentstable docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.transformation.characteristics" title="carlin.transformation.characteristics"><code class="xref py py-func docutils literal"><span class="pre">characteristics()</span></code></a></td>
+<td>Information about the norms of the matrices in <span class="math">\(F\)</span></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.transformation.error_function" title="carlin.transformation.error_function"><code class="xref py py-func docutils literal"><span class="pre">error_function()</span></code></a></td>
+<td>Compute the error function of a truncated ODE</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.transformation.plot_error_function" title="carlin.transformation.plot_error_function"><code class="xref py py-func docutils literal"><span class="pre">plot_error_function()</span></code></a></td>
+<td>Plot the estimated error of the linearized ODE as a function of time</td>
+</tr>
+</tbody>
+</table>
 <p>AUTHOR:</p>
 <ul class="simple">
 <li>Marcelo Forets (Dec 2016 at VERIMAG - France)</li>
 </ul>
 <p>MF acknowledges the hospitality at Max-Planck Institute for Software
-Systems, Saarbrucken, Germany, where this package was written (Apr 2016).</p>
+Systems, Saarbrucken, Germany, where part of this package was written (Apr 2016).</p>
 <dl class="function">
 <dt id="carlin.transformation.characteristics">
 <code class="descclassname">carlin.transformation.</code><code class="descname">characteristics</code><span class="sig-paren">(</span><em>F</em>, <em>n</em>, <em>k</em>, <em>ord=inf</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.characteristics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Information about the norms of the matrices in <span class="math">\(F\)</span>.</p>
 <p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list of matrices in some Numpy sparse format, for which the</li>
+<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; list of matrices in some NumPy sparse format, for which the</li>
 </ul>
 <blockquote>
 <div><code class="docutils literal"><span class="pre">toarray</span></code> method is available</div></blockquote>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; dimension on state-space</li>
+<li><code class="docutils literal"><span class="pre">k</span></code> &#8211; order of the system</li>
+<li><code class="docutils literal"><span class="pre">ord</span></code> &#8211; order of the <span class="math">\(p\)</span>-th norm, for <span class="math">\(1 \leq p &lt; \infty\)</span>, and <code class="docutils literal"><span class="pre">p='inf'</span></code>
+for <span class="math">\(p=\infty\)</span></li>
+</ul>
+<p>OUTPUT:</p>
+<p>Dictionary <span class="math">\(c\)</span> containing <span class="math">\(norm_Fi_inf\)</span>, <span class="math">\(log_norm_F1_inf\)</span> and <span class="math">\(beta0_const\)</span>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="carlin.transformation.error_function">
 <code class="descclassname">carlin.transformation.</code><code class="descname">error_function</code><span class="sig-paren">(</span><em>model_filename</em>, <em>N</em>, <em>x0</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.error_function" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the error function of a linearized and truncated model,
-with given initial condition.</p>
+<dd><p>Compute the error function of a truncated ODE.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string containing the model in text format</li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; truncation order</li>
+<li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; initial point, a list</li>
+</ul>
 </dd></dl>
 
 <dl class="function">
@@ -86,20 +171,17 @@ with given initial condition.</p>
 <dd><p>Return first occurrence of given key over a Kronecker power.</p>
 <p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">key</span></code> &#8211; list or tuple, key corresponding to the exponent vector in the</li>
-</ul>
-<blockquote>
-<div>Kronecker power</div></blockquote>
-<ul class="simple">
+<li><code class="docutils literal"><span class="pre">key</span></code> &#8211; list or tuple, key corresponding to the exponent vector in the
+Kronecker power</li>
 <li><code class="docutils literal"><span class="pre">j</span></code> &#8211; integer, order of the Kronecker power</li>
 <li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, number of dimensions</li>
 </ul>
 <p>NOTES:</p>
 <ul class="simple">
-<li>We assume <span class="math">\(n &gt;= 2\)</span>. Notice that if <span class="math">\(n=1\)</span>, we would return always that <code class="docutils literal"><span class="pre">first_occurence</span> <span class="pre">=</span> <span class="pre">0</span></code>.</li>
+<li>We assume <span class="math">\(n \geq 2\)</span>. Notice that if <span class="math">\(n=1\)</span>, we would return always that <code class="docutils literal"><span class="pre">first_occurence</span> <span class="pre">=</span> <span class="pre">0</span></code>.</li>
 </ul>
 <p>EXAMPLES:</p>
-<p>Take <span class="math">\(x^[2]\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute retrive the first ocurrence of
+<p>Take <span class="math">\(x^{[2]}\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute retrive the first ocurrence of
 the given key:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_index_from_key</span>
 <span class="gp">sage: </span><span class="n">get_index_from_key</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -119,7 +201,7 @@ the given key:</p>
 <li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, number of dimensions</li>
 </ul>
 <p>EXAMPLES:</p>
-<p>Take <span class="math">\(x^[2]\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute the exponent vector of the element
+<p>Take <span class="math">\(x^{[2]}\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute the exponent vector of the element
 in position <span class="math">\(1\)</span>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_key_from_index</span>
 <span class="gp">sage: </span><span class="n">get_key_from_index</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -158,6 +240,18 @@ in position <span class="math">\(1\)</span>:</p>
 <dt id="carlin.transformation.linearize">
 <code class="descclassname">carlin.transformation.</code><code class="descname">linearize</code><span class="sig-paren">(</span><em>model_filename</em>, <em>target_filename</em>, <em>N</em>, <em>x0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.linearize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute Carleman linearization and export to a MAT file.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string containing the model in text format</li>
+<li><code class="docutils literal"><span class="pre">target_filename</span></code> &#8211; string with the name of the output file in MAT format</li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; truncation order</li>
+<li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; initial point, can be either a list or a polyhedron; see the code for 
+further details</li>
+</ul>
+<p>NOTES:</p>
+<p>This function is self-contained; it transforms to canonical quadratic form, then
+computes Carleman linearization together with the error estimates and exports the resulting
+matrix <span class="math">\(A_N\)</span> and characteristics to a MAT file.</p>
 </dd></dl>
 
 <dl class="function">
@@ -178,8 +272,17 @@ in position <span class="math">\(1\)</span>:</p>
 <dl class="function">
 <dt id="carlin.transformation.plot_error_function">
 <code class="descclassname">carlin.transformation.</code><code class="descname">plot_error_function</code><span class="sig-paren">(</span><em>model_filename</em>, <em>N</em>, <em>x0</em>, <em>Tfrac=0.8</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.plot_error_function" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot the error of the truncated as a functin of time, up to a fraction 
-of the convegence radius.</p>
+<dd><p>Plot the estimated error of the linearized ODE as a function of time.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">model_filename</span></code> &#8211; string containing the model in text format</li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; truncation order</li>
+<li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; initial point, a list</li>
+<li><code class="docutils literal"><span class="pre">Tfrac</span></code> &#8211; (optional, default: <span class="math">\(0.8\)</span>): fraction of the convergence radius,
+to specify the plotting range in the time axis</li>
+</ul>
+<p>NOTE:</p>
+<p>This function calls <code class="docutils literal"><span class="pre">error_function</span></code> for the error computations.</p>
 </dd></dl>
 
 <dl class="function">
@@ -192,6 +295,9 @@ of the convegence radius.</p>
 <li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, system&#8217;s dimension</li>
 <li><code class="docutils literal"><span class="pre">k</span></code> &#8211; integer, order of the polynomial ODE</li>
 </ul>
+<p>OUTPUT:</p>
+<p>The list <code class="docutils literal"><span class="pre">[F_tilde,</span> <span class="pre">nquad,</span> <span class="pre">kquad]</span></code> corresponding to the reduced list of <span class="math">\(F_j\)</span>&#8216;s,
+dimension and order respectively.</p>
 </dd></dl>
 
 <dl class="function">
@@ -223,9 +329,10 @@ of the convegence radius.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">N</span></code> &#8211; order of truncation</li>
-<li><code class="docutils literal"><span class="pre">input_format</span></code> &#8211; sequence of matrices <span class="math">\(F_j\)</span> (list)</li>
-<li><code class="docutils literal"><span class="pre">F</span></code> &#8211; the dimension of the state-space</li>
-<li><code class="docutils literal"><span class="pre">input_format</span></code> &#8211; the order of the polynomial vector field, equal to <code class="docutils literal"><span class="pre">len(F)</span></code></li>
+<li><code class="docutils literal"><span class="pre">input_format</span></code> &#8211; if it is not present, then it is assumed to be
+<code class="docutils literal"><span class="pre">'model_filename'</span></code> (file in text format); other options are <code class="docutils literal"><span class="pre">'transfer_matrices'</span></code>
+for <span class="math">\((A, n, k)\)</span> and <code class="docutils literal"><span class="pre">'Fj_matrices'</span></code> for <span class="math">\((F, n, k)\)</span>. In the latter cases, these 
+should be given as separate arguments.</li>
 </ul>
 <p>OUTPUT:</p>
 <ul>
@@ -239,6 +346,7 @@ Each inner list has dimension <span class="math">\(k\)</span>.</p>
 </ul>
 </dd></dl>
 
+</div>
 </div>
 <div class="section" id="module-carlin.io">
 <span id="handling-input-output"></span><h1>Handling Input/Output<a class="headerlink" href="#module-carlin.io" title="Permalink to this headline">¶</a></h1>
@@ -408,7 +516,13 @@ For additional information see the <a class="reference external" href="https://e
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Available Transformations</a></li>
+<li><a class="reference internal" href="#">Available Transformations</a><ul>
+<li><a class="reference internal" href="#reduction-methods">Reduction methods</a></li>
+<li><a class="reference internal" href="#linearization">Linearization</a></li>
+<li><a class="reference internal" href="#kronecker-power-and-linear-algebra">Kronecker power and linear algebra</a></li>
+<li><a class="reference internal" href="#error-computation">Error computation</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-carlin.io">Handling Input/Output</a><ul>
 <li><a class="reference internal" href="#load-and-export-polynomial-odes">Load and export polynomial ODEs</a></li>
 <li><a class="reference internal" href="#transformation-functions">Transformation functions</a></li>
