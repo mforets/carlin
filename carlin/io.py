@@ -231,6 +231,34 @@ def solve_ode_exp(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=100):
     For high-dimensional systems prefer using ``AN`` in sparse format. In this case,
     the matrix exponential is computed using `scipy.sparse.linalg.expm_multiply 
     <https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html>`_.
+
+    EXAMPLES::
+
+        sage: from carlin.transformation import get_Fj_from_model, truncated_matrix
+        sage: from carlin.library import scalar_quadratic
+        sage: Fjnk = get_Fj_from_model(*scalar_quadratic())
+    
+    Consider a fourth order truncation::
+
+        sage: AN_sparse = truncated_matrix(4, *Fjnk, input_format="Fj_matrices")
+        sage: AN_sparse.toarray()
+        array([[ 1.,  1.,  0.,  0.],
+               [ 0.,  2.,  2.,  0.],
+               [ 0.,  0.,  3.,  3.],
+               [ 0.,  0.,  0.,  4.]])
+
+    We can solve the linear ODE using the sparse matrix ``AN_sparse``::
+
+        sage: from carlin.io import solve_ode_exp
+        sage: ans = solve_ode_exp(AN_sparse, x0=[0.1], N=4, tini=0, \
+                    T=1, NPOINTS=20)
+
+    It can also be solved using Sage matrices (although the speed is often
+    smaller in this case, because it works with dense matrices)::
+    
+        sage: AN_dense = matrix(AN_sparse.toarray())
+        sage: ans = solve_ode_exp(AN_dense, x0=[0.1], N=4, tini=0, \
+                    T=1, NPOINTS=20)
     """
     import numpy as np
     def initial_state_kron(x0, N):
