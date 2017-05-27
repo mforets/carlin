@@ -1,4 +1,4 @@
-Library of polynomial ODE's
+Library of polynomial ODEs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. automodule:: carlin.library

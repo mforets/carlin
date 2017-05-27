@@ -383,8 +383,8 @@ It is given as a list of lists, and each inner list has dimension <span class="m
 <col width="70%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="carlin_io.html#carlin.io.solve_linearized_ode" title="carlin.io.solve_linearized_ode"><code class="xref py py-func docutils literal"><span class="pre">solve_linearized_ode()</span></code></a></td>
-<td>Solve Carleman linearized 1st order ODE using dense matrices</td>
+<tr class="row-odd"><td><a class="reference internal" href="carlin_io.html#carlin.io.solve_ode_exp" title="carlin.io.solve_ode_exp"><code class="xref py py-func docutils literal"><span class="pre">solve_ode_exp()</span></code></a></td>
+<td>Solve Carleman linearized 1st order ODE using matrix exponentiation</td>
 </tr>
 </tbody>
 </table>
@@ -449,21 +449,24 @@ each component in the polynomial ring <span class="math">\(\mathbb{Q}[x_1,\ldots
 </dd></dl>
 
 <dl class="function">
-<dt id="carlin.io.solve_linearized_ode">
-<code class="descclassname">carlin.io.</code><code class="descname">solve_linearized_ode</code><span class="sig-paren">(</span><em>AN=None</em>, <em>x0=None</em>, <em>N=2</em>, <em>tini=0</em>, <em>T=1</em>, <em>NPOINTS=400</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.solve_linearized_ode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solve Carleman linearized 1st order ODE using dense matrix-vector multiplications.</p>
+<dt id="carlin.io.solve_ode_exp">
+<code class="descclassname">carlin.io.</code><code class="descname">solve_ode_exp</code><span class="sig-paren">(</span><em>AN=None</em>, <em>x0=None</em>, <em>N=2</em>, <em>tini=0</em>, <em>T=1</em>, <em>NPOINTS=100</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.solve_ode_exp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve Carleman linearized 1st order ODE using matrix exponential calculus.</p>
 <p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">AN</span></code> &#8211; matrix in (Sage dense)</li>
+<li><code class="docutils literal"><span class="pre">AN</span></code> &#8211; matrix, it can be Sage dense or NumPy sparse in COO format</li>
 <li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; vector, initial point</li>
 <li><code class="docutils literal"><span class="pre">N</span></code> &#8211; (optional, default: 2) order of the truncation</li>
 <li><code class="docutils literal"><span class="pre">tini</span></code> &#8211; (optional, default: 0) initial time</li>
 <li><code class="docutils literal"><span class="pre">T</span></code> &#8211; (optional, default: 1) final time</li>
-<li><code class="docutils literal"><span class="pre">NPOINTS</span></code> &#8211; (optional, default: 400) number of points computed</li>
+<li><code class="docutils literal"><span class="pre">NPOINTS</span></code> &#8211; (optional, default: 100) number of points computed</li>
 </ul>
 <p>OUTPUT:</p>
 <p>List containing the solution of the 1st order ODE <span class="math">\(x'(t) = A_N x(t)\)</span>, with initial 
-condition <span class="math">\(x(0) = x_0\)</span>.</p>
+condition <span class="math">\(x(0) = x_0\)</span>. The solution is computed the matrix exponential <span class="math">\(e^{A_N t_i}\)</span> directly.</p>
+<p>NOTES:</p>
+<p>For high-dimensional systems prefer using <code class="docutils literal"><span class="pre">AN</span></code> in sparse format. In this case,
+the matrix exponential is computed using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html">scipy.sparse.linalg.expm_multiply</a>.</p>
 </dd></dl>
 
 </div>
@@ -478,17 +481,23 @@ condition <span class="math">\(x(0) = x_0\)</span>.</p>
 <col width="70%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="carlin_library.html#carlin.library.vanderpol" title="carlin.library.vanderpol"><code class="xref py py-func docutils literal"><span class="pre">vanderpol()</span></code></a></td>
-<td><a class="reference external" href="https://en.wikipedia.org/wiki/Van_der_Pol_oscillator">Van der Pol oscillator</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="carlin_library.html#carlin.library.arrowsmith_and_place_fig_3_5e_page_79" title="carlin.library.arrowsmith_and_place_fig_3_5e_page_79"><code class="xref py py-func docutils literal"><span class="pre">arrowsmith_and_place_fig_3_5e_page_79()</span></code></a></td>
+<td>Nonlinear two-dimensional system with an hyperbolic fixed point</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="carlin_library.html#carlin.library.biomodel_2" title="carlin.library.biomodel_2"><code class="xref py py-func docutils literal"><span class="pre">biomodel_2()</span></code></a></td>
+<td>Nine-dimensional polynomial ODE form a biological model</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="carlin_library.html#carlin.library.chen_seven_dim" title="carlin.library.chen_seven_dim"><code class="xref py py-func docutils literal"><span class="pre">chen_seven_dim()</span></code></a></td>
+<td>Seven-dimensional nonlinear system of quadratic order</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="carlin_library.html#carlin.library.scalar_cubic" title="carlin.library.scalar_cubic"><code class="xref py py-func docutils literal"><span class="pre">scalar_cubic()</span></code></a></td>
-<td>A scalar ODE with a cubic term</td>
+<td>Scalar ODE with a cubic term</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="carlin_library.html#carlin.library.scalar_quadratic" title="carlin.library.scalar_quadratic"><code class="xref py py-func docutils literal"><span class="pre">scalar_quadratic()</span></code></a></td>
-<td>A scalar ODE with a quadratic term</td>
+<td>Scalar ODE with a quadratic term</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="carlin_library.html#carlin.library.arrowsmith_and_place_fig_3_5e_page_79" title="carlin.library.arrowsmith_and_place_fig_3_5e_page_79"><code class="xref py py-func docutils literal"><span class="pre">arrowsmith_and_place_fig_3_5e_page_79()</span></code></a></td>
-<td>Nonlinear two-dimensional system with an hyperbolic fixed point</td>
+<tr class="row-even"><td><a class="reference internal" href="carlin_library.html#carlin.library.vanderpol" title="carlin.library.vanderpol"><code class="xref py py-func docutils literal"><span class="pre">vanderpol()</span></code></a></td>
+<td><a class="reference external" href="https://en.wikipedia.org/wiki/Van_der_Pol_oscillator">Van der Pol oscillator</a></td>
 </tr>
 </tbody>
 </table>
@@ -504,7 +513,7 @@ condition <span class="math">\(x(0) = x_0\)</span>.</p>
 <div class="math">
 \[\begin{split}\begin{aligned}
  x' &amp;= x^2+(x+y)/2 \\
- y' &amp;= (-x+3*y)/2
+ y' &amp;= (-x+3y)/2
 \end{aligned}\end{split}\]</div>
 <p>Taken from p. 79 of the book by Arrowsmith and Place, Dynamical Systems:
 Differential Equations, maps and chaotic behaviour.</p>

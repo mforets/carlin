@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Library of polynomial ODE’s &mdash; Carleman linearization of ordinary differential equations 0.0.5 documentation</title>
+    <title>Library of polynomial ODEs &mdash; Carleman linearization of ordinary differential equations 0.0.5 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -54,7 +54,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-carlin.library">
-<span id="library-of-polynomial-ode-s"></span><h1>Library of polynomial ODE&#8217;s<a class="headerlink" href="#module-carlin.library" title="Permalink to this headline">¶</a></h1>
+<span id="library-of-polynomial-odes"></span><h1>Library of polynomial ODEs<a class="headerlink" href="#module-carlin.library" title="Permalink to this headline">¶</a></h1>
 <p>Library of commonly used or famous polynomial ODE systems.</p>
 <p>The following functions are available:</p>
 <table border="1" class="contentstable docutils">
@@ -63,17 +63,23 @@
 <col width="70%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#carlin.library.vanderpol" title="carlin.library.vanderpol"><code class="xref py py-func docutils literal"><span class="pre">vanderpol()</span></code></a></td>
-<td><a class="reference external" href="https://en.wikipedia.org/wiki/Van_der_Pol_oscillator">Van der Pol oscillator</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.library.arrowsmith_and_place_fig_3_5e_page_79" title="carlin.library.arrowsmith_and_place_fig_3_5e_page_79"><code class="xref py py-func docutils literal"><span class="pre">arrowsmith_and_place_fig_3_5e_page_79()</span></code></a></td>
+<td>Nonlinear two-dimensional system with an hyperbolic fixed point</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.library.biomodel_2" title="carlin.library.biomodel_2"><code class="xref py py-func docutils literal"><span class="pre">biomodel_2()</span></code></a></td>
+<td>Nine-dimensional polynomial ODE form a biological model</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.library.chen_seven_dim" title="carlin.library.chen_seven_dim"><code class="xref py py-func docutils literal"><span class="pre">chen_seven_dim()</span></code></a></td>
+<td>Seven-dimensional nonlinear system of quadratic order</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#carlin.library.scalar_cubic" title="carlin.library.scalar_cubic"><code class="xref py py-func docutils literal"><span class="pre">scalar_cubic()</span></code></a></td>
-<td>A scalar ODE with a cubic term</td>
+<td>Scalar ODE with a cubic term</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#carlin.library.scalar_quadratic" title="carlin.library.scalar_quadratic"><code class="xref py py-func docutils literal"><span class="pre">scalar_quadratic()</span></code></a></td>
-<td>A scalar ODE with a quadratic term</td>
+<td>Scalar ODE with a quadratic term</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#carlin.library.arrowsmith_and_place_fig_3_5e_page_79" title="carlin.library.arrowsmith_and_place_fig_3_5e_page_79"><code class="xref py py-func docutils literal"><span class="pre">arrowsmith_and_place_fig_3_5e_page_79()</span></code></a></td>
-<td>Nonlinear two-dimensional system with an hyperbolic fixed point</td>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.library.vanderpol" title="carlin.library.vanderpol"><code class="xref py py-func docutils literal"><span class="pre">vanderpol()</span></code></a></td>
+<td><a class="reference external" href="https://en.wikipedia.org/wiki/Van_der_Pol_oscillator">Van der Pol oscillator</a></td>
 </tr>
 </tbody>
 </table>
@@ -89,7 +95,7 @@
 <div class="math">
 \[\begin{split}\begin{aligned}
  x' &amp;= x^2+(x+y)/2 \\
- y' &amp;= (-x+3*y)/2
+ y' &amp;= (-x+3y)/2
 \end{aligned}\end{split}\]</div>
 <p>Taken from p. 79 of the book by Arrowsmith and Place, Dynamical Systems:
 Differential Equations, maps and chaotic behaviour.</p>

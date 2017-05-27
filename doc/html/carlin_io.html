@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/MathJax.js?config=TeX-AMS_HTML-full,../mathjax_sage.js"></script>
     <link rel="top" title="Carleman linearization of ordinary differential equations 0.0.5 documentation" href="index.html" />
-    <link rel="next" title="Library of polynomial ODE’s" href="carlin_library.html" />
+    <link rel="next" title="Library of polynomial ODEs" href="carlin_library.html" />
     <link rel="prev" title="Available Transformations" href="carlin_transformation.html" /> 
   </head>
   <body role="document">
@@ -39,7 +39,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="carlin_library.html" title="Library of polynomial ODE’s"
+          <a href="carlin_library.html" title="Library of polynomial ODEs"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="carlin_transformation.html" title="Available Transformations"
@@ -95,8 +95,8 @@
 <col width="70%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#carlin.io.solve_linearized_ode" title="carlin.io.solve_linearized_ode"><code class="xref py py-func docutils literal"><span class="pre">solve_linearized_ode()</span></code></a></td>
-<td>Solve Carleman linearized 1st order ODE using dense matrices</td>
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.io.solve_ode_exp" title="carlin.io.solve_ode_exp"><code class="xref py py-func docutils literal"><span class="pre">solve_ode_exp()</span></code></a></td>
+<td>Solve Carleman linearized 1st order ODE using matrix exponentiation</td>
 </tr>
 </tbody>
 </table>
@@ -161,21 +161,24 @@ each component in the polynomial ring <span class="math">\(\mathbb{Q}[x_1,\ldots
 </dd></dl>
 
 <dl class="function">
-<dt id="carlin.io.solve_linearized_ode">
-<code class="descclassname">carlin.io.</code><code class="descname">solve_linearized_ode</code><span class="sig-paren">(</span><em>AN=None</em>, <em>x0=None</em>, <em>N=2</em>, <em>tini=0</em>, <em>T=1</em>, <em>NPOINTS=400</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.solve_linearized_ode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solve Carleman linearized 1st order ODE using dense matrix-vector multiplications.</p>
+<dt id="carlin.io.solve_ode_exp">
+<code class="descclassname">carlin.io.</code><code class="descname">solve_ode_exp</code><span class="sig-paren">(</span><em>AN=None</em>, <em>x0=None</em>, <em>N=2</em>, <em>tini=0</em>, <em>T=1</em>, <em>NPOINTS=100</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.solve_ode_exp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve Carleman linearized 1st order ODE using matrix exponential calculus.</p>
 <p>INPUT:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">AN</span></code> &#8211; matrix in (Sage dense)</li>
+<li><code class="docutils literal"><span class="pre">AN</span></code> &#8211; matrix, it can be Sage dense or NumPy sparse in COO format</li>
 <li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; vector, initial point</li>
 <li><code class="docutils literal"><span class="pre">N</span></code> &#8211; (optional, default: 2) order of the truncation</li>
 <li><code class="docutils literal"><span class="pre">tini</span></code> &#8211; (optional, default: 0) initial time</li>
 <li><code class="docutils literal"><span class="pre">T</span></code> &#8211; (optional, default: 1) final time</li>
-<li><code class="docutils literal"><span class="pre">NPOINTS</span></code> &#8211; (optional, default: 400) number of points computed</li>
+<li><code class="docutils literal"><span class="pre">NPOINTS</span></code> &#8211; (optional, default: 100) number of points computed</li>
 </ul>
 <p>OUTPUT:</p>
 <p>List containing the solution of the 1st order ODE <span class="math">\(x'(t) = A_N x(t)\)</span>, with initial 
-condition <span class="math">\(x(0) = x_0\)</span>.</p>
+condition <span class="math">\(x(0) = x_0\)</span>. The solution is computed the matrix exponential <span class="math">\(e^{A_N t_i}\)</span> directly.</p>
+<p>NOTES:</p>
+<p>For high-dimensional systems prefer using <code class="docutils literal"><span class="pre">AN</span></code> in sparse format. In this case,
+the matrix exponential is computed using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html">scipy.sparse.linalg.expm_multiply</a>.</p>
 </dd></dl>
 
 </div>
@@ -202,7 +205,7 @@ condition <span class="math">\(x(0) = x_0\)</span>.</p>
                         title="previous chapter">Available Transformations</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="carlin_library.html"
-                        title="next chapter">Library of polynomial ODE&#8217;s</a></p>
+                        title="next chapter">Library of polynomial ODEs</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -234,7 +237,7 @@ condition <span class="math">\(x(0) = x_0\)</span>.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="carlin_library.html" title="Library of polynomial ODE’s"
+          <a href="carlin_library.html" title="Library of polynomial ODEs"
              >next</a> |</li>
         <li class="right" >
           <a href="carlin_transformation.html" title="Available Transformations"
