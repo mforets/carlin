@@ -329,10 +329,10 @@ dimension and order respectively.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">N</span></code> &#8211; order of truncation</li>
-<li><code class="docutils literal"><span class="pre">input_format</span></code> &#8211; if it is not present, then it is assumed to be
-<code class="docutils literal"><span class="pre">'model_filename'</span></code> (file in text format); other options are <code class="docutils literal"><span class="pre">'transfer_matrices'</span></code>
-for <span class="math">\((A, n, k)\)</span> and <code class="docutils literal"><span class="pre">'Fj_matrices'</span></code> for <span class="math">\((F, n, k)\)</span>. In the latter cases, these 
-should be given as separate arguments.</li>
+<li><code class="docutils literal"><span class="pre">input_format</span></code> &#8211; (default: <code class="docutils literal"><span class="pre">'model_filename'</span></code>, file in text format),
+other options are <code class="docutils literal"><span class="pre">'transfer_matrices'</span></code> for <span class="math">\((A, n, k)\)</span>, and
+<code class="docutils literal"><span class="pre">'Fj_matrices'</span></code> for <span class="math">\((F, n, k)\)</span>. In the latter cases, these should be
+given as separate arguments.</li>
 </ul>
 <p>OUTPUT:</p>
 <p>The transfer matrices <span class="math">\(A^{i}_{i+j-1}\)</span> that correspond to <span class="math">\(i = 1, \ldots, N\)</span>.
