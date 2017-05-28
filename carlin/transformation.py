@@ -159,7 +159,7 @@ def truncated_matrix(N, *args, **kwargs):
         input_format = 'model_filename'
     else:
         input_format = kwargs['input_format']
-        
+
     if input_format == 'model_filename':
         model_filename = args[0]
         [F, n, k] = get_Fj_from_model(model_filename)
@@ -168,7 +168,7 @@ def truncated_matrix(N, *args, **kwargs):
         A = args[0]
         n = args[1]
         k = args[2]
-    elif 'input_format' == 'Fj_matrices':
+    elif input_format == 'Fj_matrices':
         F = args[0]
         n = args[1]
         k = args[2]
