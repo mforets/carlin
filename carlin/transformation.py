@@ -23,7 +23,6 @@ Linearization
     :func:`~linearize`            | Compute Carleman linearization and export to a MAT file
     :func:`~truncated_matrix`     | Finite order `N` Carleman linearization
 
-
 Kronecker power and linear algebra
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -136,7 +135,7 @@ def transfer_matrices(N, F, n, k):
 
     return A
 
-def truncated_matrix(N, *args, **kwargs):
+def truncated_matrix(N, *args, input_format='model_filename'):
     r"""
     Finite order Carleman linearization.
 
@@ -144,10 +143,10 @@ def truncated_matrix(N, *args, **kwargs):
 
     - ``N`` -- order of truncation
 
-    - ``input_format`` -- if it is not present, then it is assumed to be
-      ``'model_filename'`` (file in text format); other options are ``'transfer_matrices'``
-      for `(A, n, k)` and ``'Fj_matrices'`` for `(F, n, k)`. In the latter cases, these 
-      should be given as separate arguments.
+    - ``input_format`` -- (default: ``'model_filename'``, file in text format),
+      other options are ``'transfer_matrices'`` for `(A, n, k)`, and
+      ``'Fj_matrices'`` for `(F, n, k)`. In the latter cases, these should be
+      given as separate arguments.
 
     OUTPUT:
 
@@ -155,24 +154,22 @@ def truncated_matrix(N, *args, **kwargs):
     It is given as a list of lists, and each inner list has dimension `k`.
     """
     from scipy.sparse import bmat
-
-    if kwargs['input_format'] == 'model_filename' or 'input_format' not in kwargs.keys():
-        # assuming 'model_filename'
+    
+    if input_format == 'model_filename':'
         model_filename = args[0]
         [F, n, k] = get_Fj_from_model(model_filename)
         A = transfer_matrices(N, F, n, k)
+    elif input_format == 'transfer_matrices':
+        A = args[0]
+        n = args[1]
+        k = args[2]
+    elif 'input_format' == 'Fj_matrices':
+        F = args[0]
+        n = args[1]
+        k = args[2]
+        A = transfer_matrices(N, F, n, k)
     else:
-        if kwargs['input_format'] == 'transfer_matrices':
-            A = args[0]
-            n = args[1]
-            k = args[2]
-        elif kwargs['input_format'] == 'Fj_matrices':
-            F = args[0]
-            n = args[1]
-            k = args[2]
-            A = transfer_matrices(N, F, n, k)
-        else:
-            raise ValueError('invalid input format')
+        raise ValueError('invalid input format')
 
     BN_list = []
 
