@@ -135,7 +135,7 @@ def transfer_matrices(N, F, n, k):
 
     return A
 
-def truncated_matrix(N, *args, input_format='model_filename'):
+def truncated_matrix(N, *args, **kwargs):
     r"""
     Finite order Carleman linearization.
 
@@ -155,7 +155,12 @@ def truncated_matrix(N, *args, input_format='model_filename'):
     """
     from scipy.sparse import bmat
     
-    if input_format == 'model_filename':'
+    if 'input_format' not in kwargs:
+        input_format = 'model_filename'
+    else:
+        input_format = kwargs['input_format']
+        
+    if input_format == 'model_filename':
         model_filename = args[0]
         [F, n, k] = get_Fj_from_model(model_filename)
         A = transfer_matrices(N, F, n, k)
