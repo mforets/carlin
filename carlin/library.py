@@ -35,6 +35,8 @@ from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
 
+from polynomial_ode import PolynomialODE
+
 def vanderpol(mu=1, omega=1):
     r"""
     The Van der Pol oscillator is a non-conservative system with non-linear damping.
@@ -69,9 +71,8 @@ def vanderpol(mu=1, omega=1):
     f[0] = x[1]
     f[1] = - omega**2 * x[0] + mu * (1 - x[0]**2) * x[1]
 
-    # order of the ODE
-    k = 3
-    return f, n, k
+    # the order is k=3
+    return PolynomialODE(f, n, k=3)
 
 def scalar_cubic(a=1, b=1):
     r"""
@@ -105,7 +106,7 @@ def scalar_cubic(a=1, b=1):
     x = polygens(QQ, ['x'+str(0)])
     f = [None] * 1
     f[0] = -a * x[0] + b * x[0]**3
-    return f, 1, 3
+    return PolynomialODE(f, n=1, k=3)
 
 def scalar_quadratic(a=1, b=1):
     r"""
@@ -139,7 +140,7 @@ def scalar_quadratic(a=1, b=1):
     x = polygens(QQ, ['x'+str(0)])
     f = [None] * 1
     f[0] =  a * x[0] + b * x[0]**2
-    return f, 1, 2
+    return PolynomialODE(f, 1, 2)
 
 def arrowsmith_and_place_fig_3_5e_page_79():
     r"""
@@ -163,10 +164,10 @@ def arrowsmith_and_place_fig_3_5e_page_79():
     # vector of variables
     x = polygens(QQ, ['x'+str(i) for i in range(n)])
 
-    # ODE and order
+    # ODE and order k=2
     f = [x[0]^2+(x[0]+x[1])/2, (-x[0] +3*x[1])/2]    
-    k = 2
-    return f, n, k
+
+    return PolynomialODE(f, n, k=2)
 
 def biomodel_2():
     r"""
@@ -193,8 +194,7 @@ def biomodel_2():
     f[7] = 5*x[6] - 2*x[5]*x[7] + x[8] - 0.2*x[7];
     f[8] = 2*x[5]*x[7] - x[8]
 
-    k = 2
-    return f, n, k
+    return PolynomialODE(f, n, k=2)
 
 def chen_seven_dim(u=0):
     r"""
@@ -224,6 +224,4 @@ def chen_seven_dim(u=0):
     f[5] = 0.3*x[0]-3.1*x[5]
     f[6] = 1.8*x[5]-1.5*x[6]*x[1]
 
-    k = 2
-    return f, n, k
-    
+    return PolynomialODE(f, n, k=2)

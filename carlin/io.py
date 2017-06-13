@@ -295,7 +295,7 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
 
     INPUT:
 
-    - ``model`` -- tuple; model in the form `(f, n, k)`
+    - ``model`` -- PolynomialODE, defining the tuple `(f, n, k)`
 
     - ``N`` -- integer; truncation order
 
@@ -332,7 +332,7 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
     from carlin.io import solve_ode_exp, get_Fj_from_model
     from sage.plot.plot import list_plot
 
-    f, n, k = model
+    f, n, k = model.funcs(), model.dim(), model.degree()
     Fjnk = get_Fj_from_model(f, n, k)
     # this is a sparse matrix in coo format
     AN = truncated_matrix(N, *Fjnk, input_format='Fj_matrices')
