@@ -17,7 +17,15 @@ Handling Input/Output
    :undoc-members:
    :show-inheritance:
 
-Library of polynomial ODE's
+Polynomial ODE class
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: carlin.polynomial_ode
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+Library of polynomial ODEs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. automodule:: carlin.library
