@@ -333,9 +333,11 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
 
     f, n, k = model.funcs(), model.dim(), model.degree()
     Fjnk = get_Fj_from_model(f, n, k)
+
     # this is a sparse matrix in coo format
     AN = truncated_matrix(N, *Fjnk, input_format='Fj_matrices')
-    print(AN.shape)
+
+    # solve the linea ODE using SciPy's sparse matrix solver
     sol = solve_ode_exp(AN, x0, N, tini=tini, T=T, NPOINTS=NPOINTS)
     sol_x1 = [sol[i][xcoord] for i in range(NPOINTS)]
     sol_x2 = [sol[i][ycoord] for i in range(NPOINTS)]
