@@ -35,7 +35,7 @@ from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
 
-from polynomial_ode import PolynomialODE
+from carlin.polynomial_ode import PolynomialODE
 
 def vanderpol(mu=1, omega=1):
     r"""
