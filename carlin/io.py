@@ -287,3 +287,57 @@ def solve_ode_exp(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=100):
         raise ValueError("invalid matrix type")
 
     return sol
+
+def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs):
+    """
+    Solve and return graphics in phase space of a given model.
+
+    INPUT:
+
+    - ``model`` -- tuple; model in the form `(f, n, k)`
+
+    - ``N`` -- integer; truncation order
+
+    - ``x0`` -- vector; initial condition
+
+    - ``tini`` -- initial time of simulation
+
+    - ``T`` -- final time of simulation
+
+    - ``NPOINTS`` -- number of points sampled
+
+    - ``xcoord`` -- (default: `0`), x-coordinate in plot
+
+    - ``ycoord`` -- (default: `1`), y coordinate in plot
+
+    NOTES:
+
+    By default, returns a plot in the plane `(x_1, x_2)`. All other keyword arguments
+    passes are sent to the `list_plot` command (use to set line color, style, etc.)
+
+    EXAMPLES::
+
+        sage: from carlin.library import vanderpol
+        sage: G = plot_truncated(vanderpol(1, 1), 2, [0.1, 0], 0, 5, 100)
+        sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$'])
+
+    All other keyworded parameters are passed to the `list_plot` function. For example, specify color and 
+    maximum and minimum values for the axes::
+
+        sage: G = plot_truncated(vanderpol(1, 1), 2, [0.1, 0], 0, 5, 100, color='green', xmin=-1, xmax=1, ymin=-1, ymax=1)
+        sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$'])
+    """
+    from carlin.transformation import truncated_matrix, kron_power
+    from carlin.io import solve_ode_exp, get_Fj_from_model
+    
+    f, n, k = model
+    Fjnk = get_Fj_from_model(f, n, k)
+    AN = truncated_matrix(N, *Fjnk, input_format='Fj_matrices')
+    
+    sol = solve_ode_exp(AN, x0=x0, N=N, tini=tini, T=T, NPOINTS=NPOINTS)
+    sol_x1 = [sol[i][xcoord] for i in range(NPOINTS)]
+    sol_x2 = [sol[i][ycoord] for i in range(NPOINTS)]
+
+    G = Graphics()
+    G += list_plot(zip(sol_x1, sol_x2), plotjoined=True, **kwargs)
+    return G

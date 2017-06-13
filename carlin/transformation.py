@@ -143,10 +143,13 @@ def truncated_matrix(N, *args, **kwargs):
 
     - ``N`` -- order of truncation
 
-    - ``input_format`` -- (default: ``'model_filename'``, file in text format),
-      other options are ``'transfer_matrices'`` for `(A, n, k)`, and
-      ``'Fj_matrices'`` for `(F, n, k)`. In the latter cases, these should be
-      given as separate arguments.
+    - ``input_format`` -- valid options are:
+
+      - ``'model_filename'`` -- (default); file in text format
+
+      - ``'transfer_matrices'`` --  for `(A, n, k)`, which should be given separately
+
+      - ``'Fj_matrices'`` -- for `(F, n, k)`, which should be given separately
 
     OUTPUT:
 
@@ -614,7 +617,7 @@ def characteristics(F, n, k, ord=inf):
     INPUT:
 
     - ``F`` -- list of matrices in some NumPy sparse format, for which the 
-     ``toarray`` method is available
+      ``toarray`` method is available
 
     - ``n`` -- dimension on state-space
 
