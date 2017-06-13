@@ -82,6 +82,8 @@ class PolynomialODE(SageObject):
             sage: LPLOT = list_plot(x1x2, plotjoined=True)
         """
         from sage.calculus.ode import ode_solver
+        from sage.misc.functional import symbolic_sum
+
         S = ode_solver()
 
         if x0 is None:
@@ -91,10 +93,9 @@ class PolynomialODE(SageObject):
             f = []
             for i, fi in enumerate(self._funcs):
                 fid = fi.dict()
-                row_i = sum([fid[fiex] * prod([x[i]**ai for i, ai in enumerate(fiex)]) for fiex in fid.keys()])
+                row_i = symbolic_sum([fid[fiex] * prod([x[i]**ai for i, ai in enumerate(fiex)]) for fiex in fid.keys()])
                 f.append(row_i)
             return f
-
         S.function = funcs
 
         # jacobian is not provided (but possible)
@@ -103,7 +104,7 @@ class PolynomialODE(SageObject):
         # choose integration algorithm
         S.algorithm = "rk4"
         # solve
-        S.ode_solve(y_0 = x0, t_span = [tini, T], params=[0], num_points=NPOINTS)
+        S.ode_solve(y_0=x0, t_span=[tini, T], params=[0], num_points=NPOINTS)
         return S
 
     def plot_solution(self, x0=None, tini=0, T=1, NPOINTS=100, xcoord=0, ycoord=1, plotjoined=True, **kwargs):
