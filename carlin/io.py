@@ -30,7 +30,8 @@ Solve polynomial ODEs
     :widths: 30, 70
     :delim: |
 
-    :func:`~solve_ode_exp`  | Solve Carleman linearized 1st order ODE using matrix exponentiation
+    :func:`~solve_ode_exp`  | Solve Carleman linearized ODE.
+    :func:`~plot_truncated` | Solve and return the graphics in phase space. 
 
 AUTHOR:
 
@@ -329,15 +330,15 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
     """
     from carlin.transformation import truncated_matrix, kron_power
     from carlin.io import solve_ode_exp, get_Fj_from_model
-    
+    from sage.plot.plot import list_plot
+
     f, n, k = model
     Fjnk = get_Fj_from_model(f, n, k)
+    # this is a sparse matrix in coo format
     AN = truncated_matrix(N, *Fjnk, input_format='Fj_matrices')
-    
+
     sol = solve_ode_exp(AN, x0=x0, N=N, tini=tini, T=T, NPOINTS=NPOINTS)
     sol_x1 = [sol[i][xcoord] for i in range(NPOINTS)]
     sol_x2 = [sol[i][ycoord] for i in range(NPOINTS)]
 
-    G = Graphics()
-    G += list_plot(zip(sol_x1, sol_x2), plotjoined=True, **kwargs)
-    return G
+    return list_plot(zip(sol_x1, sol_x2), plotjoined=True, **kwargs)
