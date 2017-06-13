@@ -204,7 +204,7 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 # Functions to solve ODE's
 #===============================================
 
-def solve_ode_exp(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=100):
+def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
     r"""
     Solve Carleman linearized 1st order ODE using matrix exponential calculus.
 
@@ -214,7 +214,7 @@ def solve_ode_exp(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=100):
 
     - ``x0`` -- vector, initial point
 
-    - ``N`` -- (optional, default: 2) order of the truncation
+    - ``N`` -- integer, order of the truncation
 
     - ``tini`` -- (optional, default: 0) initial time
 
@@ -264,7 +264,6 @@ def solve_ode_exp(AN=None, x0=None, N=2, tini=0, T=1, NPOINTS=100):
     import numpy as np
     def initial_state_kron(x0, N):
         from carlin.transformation import kron_power
-
         y0 = kron_power(x0, 1)
         for i in range(2, N+1):
             y0 = y0 + kron_power(x0, i)
@@ -336,8 +335,8 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
     Fjnk = get_Fj_from_model(f, n, k)
     # this is a sparse matrix in coo format
     AN = truncated_matrix(N, *Fjnk, input_format='Fj_matrices')
-
-    sol = solve_ode_exp(AN, x0=x0, N=N, tini=tini, T=T, NPOINTS=NPOINTS)
+    print(AN.shape)
+    sol = solve_ode_exp(AN, x0, N, tini=tini, T=T, NPOINTS=NPOINTS)
     sol_x1 = [sol[i][xcoord] for i in range(NPOINTS)]
     sol_x2 = [sol[i][ycoord] for i in range(NPOINTS)]
 
