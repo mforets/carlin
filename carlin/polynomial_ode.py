@@ -16,6 +16,8 @@ AUTHOR:
 #                  http://www.gnu.org/licenses/
 #************************************************************************
 
+from sage.structure.sage_object import SageObject
+
 class PolynomialODE(SageObject):
     """
     This class represents a finite set of polynomial ODEs.
