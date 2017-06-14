@@ -82,14 +82,14 @@ def cubic_scalar(a=1, b=1):
 
     .. MATH::
 
-        x'(t) = -ax(t) + bx(t)^3
+        x'(t) = ax(t) + bx(t)^3
 
     where `a` and `b` are paremeters of the ODE.
 
     EXAMPLES::
 
         sage: from carlin.library import cubic_scalar
-        sage: C = cubic_scalar()
+        sage: C = cubic_scalar(-1, 1)
         sage: C.funcs()
         [x0^3 - x0]
 

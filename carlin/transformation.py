@@ -216,6 +216,41 @@ def quadratic_reduction(F, n, k):
 
     The list ``[F_tilde, nquad, kquad]`` corresponding to the reduced list of `F_j`'s,
     dimension and order respectively.
+
+    EXAMPLES:
+
+    Consider the following two-dimensional system::
+
+        sage: from carlin.library import quadratic_scalar
+        sage: P = quadratic_scalar(1, -1); P.funcs()
+        [-x0^2 + x0]
+        sage: from carlin.io import get_Fj_from_model
+        sage: (F, n, k) = get_Fj_from_model(P.funcs(), P.dim(), P.degree())
+        sage: (n, k)
+        (1, 2)
+        sage: [matrix(Fi.toarray()) for Fi in F]
+        [[1.0], [-1.0]]
+
+    Since it is already quadratic, the reduction does nothing::
+
+        sage: from carlin.transformation import quadratic_reduction
+        sage: (Fred, nred, kred) = quadratic_reduction(F, n, k)
+        sage: nred, kred
+        (1, 2)
+        sage: [matrix(Fi.toarray()) for Fi in F]
+        [[1.0], [-1.0]]
+
+    Now consider the more interesting case of a cubic system::
+
+        sage: from carlin.library import cubic_scalar
+        sage: P = cubic_scalar(1, -1); P.funcs()
+        [-x0^2 + x0]
+        sage: from carlin.io import get_Fj_from_model
+        sage: (F, n, k) = get_Fj_from_model(P.funcs(), P.dim(), P.degree())
+        sage: (n, k)
+        (1, 2)
+        sage: [matrix(Fi.toarray()) for Fi in F]
+        [[1.0], [-1.0]]
     """
     from scipy.sparse import bmat, lil_matrix
 
