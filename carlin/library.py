@@ -104,9 +104,9 @@ def cubic_scalar(a=1, b=1):
         [ 0.0  0.0  0.0 -4.0]
     """
     # define the vector of symbolic variables
-    x = polygens(QQ, ['x'+str(0)])
-    f = [None] * 1
-    f[0] = -a * x[0] + b * x[0]**3
+    x = polygens(QQ, ['x0'])
+    f = [None]*1
+    f[0] = a*x[0] + b*x[0]**3
     return PolynomialODE(f, n=1, k=3)
 
 def quadratic_scalar(a=1, b=1):
@@ -140,7 +140,7 @@ def quadratic_scalar(a=1, b=1):
         [0.0 0.0 0.0 4.0]
     """
     # define the vector of symbolic variables
-    x = polygens(QQ, ['x'+str(0)])
+    x = polygens(QQ, ['x0'])
     f = [None] * 1
     f[0] =  a * x[0] + b * x[0]**2
     return PolynomialODE(f, 1, 2)

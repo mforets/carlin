@@ -263,10 +263,10 @@ def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
     EXAMPLES::
 
         sage: from carlin.transformation import get_Fj_from_model, truncated_matrix
-        sage: from carlin.library import scalar_quadratic
-        sage: S = scalar_quadratic()
+        sage: from carlin.library import quadratic_scalar
+        sage: S = quadratic_scalar()
         sage: (f, n, k) = S.funcs(), S.dim(), S.degree()
-        sage: Fjnk = get_Fj_from_model(*(f, n, k))
+        sage: Fjnk = get_Fj_from_model(f, n, k)
     
     Consider a fourth order truncation::
 

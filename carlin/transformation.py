@@ -244,13 +244,22 @@ def quadratic_reduction(F, n, k):
 
         sage: from carlin.library import cubic_scalar
         sage: P = cubic_scalar(1, -1); P.funcs()
-        [-x0^2 + x0]
+        [-x0^3 + x0]
         sage: from carlin.io import get_Fj_from_model
         sage: (F, n, k) = get_Fj_from_model(P.funcs(), P.dim(), P.degree())
         sage: (n, k)
-        (1, 2)
+        (1, 3)
         sage: [matrix(Fi.toarray()) for Fi in F]
-        [[1.0], [-1.0]]
+        [[1.0], [0.0], [-1.0]]
+        sage: (Fred, nred, kred) = quadratic_reduction(F, n, k)
+        sage: nred, kred
+        (2, 2)
+        sage: matrix(Fred[0].toarray())
+        [-1.0  0.0]
+        [ 0.0 -2.0]
+        sage: matrix(Fred[1].toarray())
+        [ 0.0 -1.0  0.0  0.0]
+        [ 0.0  0.0  0.0 -2.0]
     """
     from scipy.sparse import bmat, lil_matrix
 
