@@ -70,7 +70,7 @@ class PolynomialODE(SageObject):
 
         - ``xcoord`` -- (default: `0`), x-coordinate in plot
 
-        - ``ycoord`` -- (default: `1`), y coordinate in plot        
+        - ``ycoord`` -- (default: `1`), y coordinate in plot
 
         EXAMPLES:
 
@@ -79,16 +79,16 @@ class PolynomialODE(SageObject):
             sage: from carlin.polynomial_ode import PolynomialODE
             sage: x = polygen(QQ, 'x')
             sage: P = PolynomialODE([-2*x+3], 1, 1)
-            sage: P.solve(x0=[0], tini=0, T=4)
-            
-        Let us compute and plot the osolution of the vanderpol ODE::
+            sage: Solution = P.solve(x0=[0], tini=0, T=4)
+            sage: type(Solution)
+            <class 'sage.calculus.ode.ode_solver'>
+
+        Let us compute the solution of the vanderpol ODE::
 
             sage: from carlin.library import vanderpol
             sage: S = vanderpol(1, 1).solve(x0=[0.5, 1.])
-            sage: x1x2 = [S.solution[i][1] for i in range(len(S.solution))]
-            sage: LPLOT = list_plot(x1x2, plotjoined=True)
-            
-        
+            sage: S.solution[1]
+            (0.01, [0.5100..., 1.0024...])
         """
         from sage.calculus.ode import ode_solver
         from sage.misc.misc_c import prod
@@ -145,7 +145,14 @@ class PolynomialODE(SageObject):
         - ``xcoord`` -- (default: `0`), x-coordinate in plot
 
         - ``ycoord`` -- (default: `1`), y coordinate in plot
+
+        EXAMPLES::
+
+            sage: from carlin.library import vanderpol
+            sage: S = vanderpol(1, 1)
+            sage: S.plot_solution(x0=[0.5, 1], T=20, NPOINTS=200)
+            Graphics object consisting of 1 graphics primitive
         """
         S = self.solve(x0=x0, tini=tini, T=T, NPOINTS=NPOINTS)
         sol_xy = [(S_ti[1][xcoord], S_ti[1][ycoord]) for S_ti in S.solution]
-        return list_plot(sol_xy, **kwargs)
+        return list_plot(sol_xy, plotjoined=plotjoined, **kwargs)
