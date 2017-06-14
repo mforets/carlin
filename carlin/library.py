@@ -11,8 +11,8 @@ The following functions are available:
     :func:`~arrowsmith_and_place_fig_3_5e_page_79`     | Nonlinear two-dimensional system with an hyperbolic fixed point
     :func:`~biomodel_2`                                | Nine-dimensional polynomial ODE form a biological model
     :func:`~chen_seven_dim`                            | Seven-dimensional nonlinear system of quadratic order
-    :func:`~scalar_cubic`                              | Scalar ODE with a cubic term
-    :func:`~scalar_quadratic`                          | Scalar ODE with a quadratic term
+    :func:`~cubic_scalar`                              | Scalar ODE with a cubic term
+    :func:`~quadratic_scalar`                          | Scalar ODE with a quadratic term
     :func:`~vanderpol`                                 | `Van der Pol oscillator <https://en.wikipedia.org/wiki/Van_der_Pol_oscillator>`_
 
 AUTHOR:
@@ -74,7 +74,7 @@ def vanderpol(mu=1, omega=1):
     # the order is k=3
     return PolynomialODE(f, n, k=3)
 
-def scalar_cubic(a=1, b=1):
+def cubic_scalar(a=1, b=1):
     r"""
     A scalar ODE with a cubic term.
     
@@ -88,8 +88,8 @@ def scalar_cubic(a=1, b=1):
 
     EXAMPLES::
 
-        sage: from carlin.library import scalar_cubic
-        sage: C = scalar_cubic()
+        sage: from carlin.library import cubic_scalar
+        sage: C = cubic_scalar()
         sage: C.funcs()
         [x0^3 - x0]
 
@@ -109,7 +109,7 @@ def scalar_cubic(a=1, b=1):
     f[0] = -a * x[0] + b * x[0]**3
     return PolynomialODE(f, n=1, k=3)
 
-def scalar_quadratic(a=1, b=1):
+def quadratic_scalar(a=1, b=1):
     r"""
     A scalar ODE with a quadratic term.
 
@@ -123,8 +123,8 @@ def scalar_quadratic(a=1, b=1):
 
     EXAMPLES::
 
-        sage: from carlin.library import scalar_quadratic
-        sage: Q = scalar_quadratic(); Q
+        sage: from carlin.library import quadratic_scalar
+        sage: Q = quadratic_scalar(); Q
         A Polynomial ODE in n = 1 variables
         sage: Q.funcs()
         [x0^2 + x0]
@@ -168,7 +168,7 @@ def arrowsmith_and_place_fig_3_5e_page_79():
     x = polygens(QQ, ['x'+str(i) for i in range(n)])
 
     # ODE and order k=2
-    f = [x[0]^2+(x[0]+x[1])/2, (-x[0] +3*x[1])/2]    
+    f = [x[0]**2+(x[0]+x[1])/2, (-x[0] +3*x[1])/2]    
 
     return PolynomialODE(f, n, k=2)
 

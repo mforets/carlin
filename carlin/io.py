@@ -118,6 +118,33 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
     - ``n`` -- dimension of the state-space of the system
 
     - ``k`` -- degree of the system
+
+    EXAMPLES:
+
+    Let's create a two-dimensional system of second order::
+
+        sage: x = polygens(QQ, ['x0', 'x1'])
+        sage: f = [-2*x[0] + x[1] + x[0]**2, x[0] + 3/2*x[0]*x[1]]
+        sage: from carlin.polynomial_ode import PolynomialODE
+        sage: T = PolynomialODE(f, 2, 2); T
+        A Polynomial ODE in n = 2 variables
+
+    There are two `F_j` matrices in sparse representation, which can be visualizeda
+    with the ``toarray`` method::
+
+        sage: from carlin.io import get_Fj_from_model
+        sage: F, _, _ = get_Fj_from_model(T.funcs(), T.dim(), T.degree())
+        sage: F
+        [<2x2 sparse matrix of type '<type 'numpy.float64'>'
+                with 3 stored elements in Dictionary Of Keys format>,
+         <2x4 sparse matrix of type '<type 'numpy.float64'>'
+                with 2 stored elements in Dictionary Of Keys format>]
+        sage: F[0].toarray()
+        array([[-2.,  1.],
+               [ 1.,  0.]])
+       sage: F[1].toarray()
+       array([[ 1. ,  0. ,  0. ,  0. ],
+              [ 0. ,  1.5,  0. ,  0. ]])
     """
     if model_filename is not None and f is None:
         got_model_by_filename = True
@@ -322,14 +349,15 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
         sage: from carlin.library import vanderpol
         sage: from carlin.io import plot_truncated
         sage: G = plot_truncated(vanderpol(1, 1), 2, [0.1, 0], 0, 5, 100)
-        sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$'])
+        sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$']) # not tested
         Graphics object consisting in 1 graphics primitive
 
     All other keyword arguments are passed to the ``list_plot`` function. For example, specify color and 
     maximum and minimum values for the axes::
 
         sage: G = plot_truncated(vanderpol(1, 1), 2, [0.1, 0], 0, 5, 100, color='green', xmin=-1, xmax=1, ymin=-1, ymax=1)
-        sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$'])
+        sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$']) # not tested
+        Graphics object consisting in 1 graphics primitive
     """
     from carlin.transformation import truncated_matrix, kron_power
     from carlin.io import solve_ode_exp, get_Fj_from_model
