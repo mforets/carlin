@@ -96,7 +96,7 @@ def scalar_cubic(a=1, b=1):
     Compute the Carleman embedding truncated at order `N=4`::
 
         sage: from carlin.transformation import get_Fj_from_model, truncated_matrix 
-        sage: Fj = get_Fj_from_model(Q.funcs(), Q.dim(), Q.degree())
+        sage: Fj = get_Fj_from_model(C.funcs(), C.dim(), C.degree())
         sage: matrix(truncated_matrix(4, *Fj, input_format="Fj_matrices").toarray())
         [-1.0  0.0  1.0  0.0]
         [ 0.0 -2.0  0.0  2.0]
@@ -124,7 +124,7 @@ def scalar_quadratic(a=1, b=1):
     EXAMPLES::
 
         sage: from carlin.library import scalar_quadratic
-        sage: Q = scalar_quadratic()
+        sage: Q = scalar_quadratic(); Q
         A Polynomial ODE in n = 1 variables
         sage: Q.funcs()
         [x0^2 + x0]

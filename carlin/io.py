@@ -206,7 +206,7 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 
 def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
     r"""
-    Solve Carleman linearized 1st order ODE using matrix exponential calculus.
+    Solve 1st order ODE with initial condition in Kronecker power form.
 
     INPUT:
 
@@ -237,7 +237,9 @@ def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
 
         sage: from carlin.transformation import get_Fj_from_model, truncated_matrix
         sage: from carlin.library import scalar_quadratic
-        sage: Fjnk = get_Fj_from_model(*scalar_quadratic())
+        sage: S = scalar_quadratic()
+        sage: (f, n, k) = S.funcs(), S.dim(), S.degree()
+        sage: Fjnk = get_Fj_from_model(*(f, n, k))
     
     Consider a fourth order truncation::
 
@@ -254,9 +256,9 @@ def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
         sage: ans = solve_ode_exp(AN_sparse, x0=[0.1], N=4, tini=0, \
                     T=1, NPOINTS=20)
 
-    It can also be solved using Sage matrices (although the speed is often
-    smaller in this case, because it works with dense matrices)::
-    
+    It can also be solved using Sage matrices (although this is often less performant,
+    since it works with dense matrices)::
+
         sage: AN_dense = matrix(AN_sparse.toarray())
         sage: ans = solve_ode_exp(AN_dense, x0=[0.1], N=4, tini=0, \
                     T=1, NPOINTS=20)
@@ -318,10 +320,12 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
     EXAMPLES::
 
         sage: from carlin.library import vanderpol
+        sage: from carlin.io import plot_truncated
         sage: G = plot_truncated(vanderpol(1, 1), 2, [0.1, 0], 0, 5, 100)
         sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$'])
+        Graphics object consisting in 1 graphics primitive
 
-    All other keyworded parameters are passed to the `list_plot` function. For example, specify color and 
+    All other keyword arguments are passed to the ``list_plot`` function. For example, specify color and 
     maximum and minimum values for the axes::
 
         sage: G = plot_truncated(vanderpol(1, 1), 2, [0.1, 0], 0, 5, 100, color='green', xmin=-1, xmax=1, ymin=-1, ymax=1)
