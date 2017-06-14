@@ -98,11 +98,20 @@ class PolynomialODE(SageObject):
             return f
         S.function = funcs
 
-        # jacobian is not provided (but possible)
-        #S.jacobian = j_1
+        def jac(t, x, params):
+            n = self._dim
+            # jacobian
+            dfi_dyj = [[self._funcs[i].derivative(x[j]) for j in range(n)] for i in range(n)]
+
+            # we consider autonomous systems
+            dfi_dt = [0]*n
+
+            return dfi_dyj + dfi_dt
+        S.jacobian = jac
 
         # choose integration algorithm
         S.algorithm = "rk4"
+
         # solve
         S.ode_solve(y_0=x0, t_span=[tini, T], params=[0], num_points=NPOINTS)
         return S
@@ -123,8 +132,8 @@ class PolynomialODE(SageObject):
 
         - ``xcoord`` -- (default: `0`), x-coordinate in plot
 
-        - ``ycoord`` -- (default: `1`), y coordinate in plot   
+        - ``ycoord`` -- (default: `1`), y coordinate in plot
         """
-        S = self.solve(self, x0=None, tini=0, T=1, NPOINTS=100, xcoord=xcoord, ycoord=ycoord)
-        x1x2 = [S.solution[i][1] for i in range(len(S.solution))]
-        return list_plot(x1x2, **kwargs)    
+        S = self.solve(x0=x0, tini=tini, T=T, NPOINTS=NPOINTS)
+        sol_xy = [(S_ti[1][xcoord], S_ti[1][ycoord]) for S_ti in S.solution]
+        return list_plot(sol_xy, **kwargs)
