@@ -74,31 +74,45 @@ class PolynomialODE(SageObject):
 
         EXAMPLES:
 
+        Let us solve the scalar equation `x' = -2x + 3`::
+    
+            sage: from carlin.polynomial_ode import PolynomialODE
+            sage: x = polygen(QQ, 'x')
+            sage: P = PolynomialODE([-2*x+3], 1, 1)
+            sage: P.solve(x0=[0], tini=0, T=4)
+            
         Let us compute and plot the osolution of the vanderpol ODE::
 
             sage: from carlin.library import vanderpol
             sage: S = vanderpol(1, 1).solve(x0=[0.5, 1.])
             sage: x1x2 = [S.solution[i][1] for i in range(len(S.solution))]
             sage: LPLOT = list_plot(x1x2, plotjoined=True)
+            
+        
         """
         from sage.calculus.ode import ode_solver
-        from sage.misc.functional import symbolic_sum
+        from sage.misc.misc_c import prod
 
         S = ode_solver()
 
         if x0 is None:
             raise ValueError("to solve, you should specify the initial condition")
 
-        def funcs(t, x, params):
+        def funcs(t, x):
             f = []
-            for i, fi in enumerate(self._funcs):
-                fid = fi.dict()
-                row_i = symbolic_sum([fid[fiex] * prod([x[i]**ai for i, ai in enumerate(fiex)]) for fiex in fid.keys()])
-                f.append(row_i)
-            return f
+            if self._dim == 1:
+                fid = self._funcs[0].dict()
+                f = sum([fid[fiex] * x[0]**fiex for fiex in fid.keys()])
+                return [f]
+            elif self._dim > 1:
+                for i, fi in enumerate(self._funcs):
+                    fid = fi.dict()
+                    row_i = sum([fid[fiex] * prod([x[i]**ai for i, ai in enumerate(fiex)]) for fiex in fid.keys()])
+                    f.append(row_i)
+                return f
         S.function = funcs
 
-        def jac(t, x, params):
+        def jac(t, x):
             n = self._dim
             # jacobian
             dfi_dyj = [[self._funcs[i].derivative(x[j]) for j in range(n)] for i in range(n)]
@@ -109,11 +123,9 @@ class PolynomialODE(SageObject):
             return dfi_dyj + dfi_dt
         S.jacobian = jac
 
-        # choose integration algorithm
+        # choose integration algorithm and solve
         S.algorithm = "rk4"
-
-        # solve
-        S.ode_solve(y_0=x0, t_span=[tini, T], params=[0], num_points=NPOINTS)
+        S.ode_solve(y_0=x0, t_span=[tini, T], num_points=NPOINTS)
         return S
 
     def plot_solution(self, x0=None, tini=0, T=1, NPOINTS=100, xcoord=0, ycoord=1, plotjoined=True, **kwargs):
