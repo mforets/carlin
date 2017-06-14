@@ -8,7 +8,9 @@ Carleman linearization in SageMath
 Installation
 ~~~~~~~~~~~~
 
-To install the package use the following command::
+This package requires sage v.7.6. or greater, see the `download page <http://www.sagemath.org/>`_ for further information about installing SageMath in your own computer, or use it online from `CoCalc <https://cocalc.com/>`_.
+
+To install `carlin`, use the following command::
 
    sage -pip install --upgrade -v git+https://github.com/mforets/polyhedron_tools.git git+https://github.com/mforets/carlin.git
 
