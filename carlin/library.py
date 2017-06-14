@@ -56,8 +56,8 @@ def vanderpol(mu=1, omega=1):
     EXAMPLES::
 
         sage: from carlin.library import vanderpol
-        sage: vanderpol(SR.var('mu'), SR.var('omega'))
-        ([x1, -omega^2*x0 - (x0^2 - 1)*mu*x1], 2, 3)
+        sage: vanderpol(SR.var('mu'), SR.var('omega')).funcs()
+        [x1, -omega^2*x0 - (x0^2 - 1)*mu*x1]
     """
     # dimension of state-space
     n=2
@@ -89,13 +89,14 @@ def scalar_cubic(a=1, b=1):
     EXAMPLES::
 
         sage: from carlin.library import scalar_cubic
-        sage: scalar_cubic()
-        ([x0^3 - x0], 1, 3)
+        sage: C = scalar_cubic()
+        sage: C.funcs()
+        [x0^3 - x0]
 
     Compute the Carleman embedding truncated at order `N=4`::
 
         sage: from carlin.transformation import get_Fj_from_model, truncated_matrix 
-        sage: Fj = get_Fj_from_model(*scalar_cubic())
+        sage: Fj = get_Fj_from_model(Q.funcs(), Q.dim(), Q.degree())
         sage: matrix(truncated_matrix(4, *Fj, input_format="Fj_matrices").toarray())
         [-1.0  0.0  1.0  0.0]
         [ 0.0 -2.0  0.0  2.0]
@@ -123,13 +124,15 @@ def scalar_quadratic(a=1, b=1):
     EXAMPLES::
 
         sage: from carlin.library import scalar_quadratic
-        sage: scalar_quadratic()
-        ([x0^2 + x0], 1, 2)
+        sage: Q = scalar_quadratic()
+        A Polynomial ODE in n = 1 variables
+        sage: Q.funcs()
+        [x0^2 + x0]
 
     Compute the Carleman embedding truncated at order `N=4`::
 
         sage: from carlin.transformation import get_Fj_from_model, truncated_matrix 
-        sage: Fj = get_Fj_from_model(*scalar_quadratic())
+        sage: Fj = get_Fj_from_model(Q.funcs(), Q.dim(), Q.degree())
         sage: matrix(truncated_matrix(4, *Fj, input_format="Fj_matrices").toarray())
         [1.0 1.0 0.0 0.0]
         [0.0 2.0 2.0 0.0]
