@@ -150,7 +150,7 @@ class PolynomialODE(SageObject):
 
             sage: from carlin.library import vanderpol
             sage: S = vanderpol(1, 1)
-            sage: S.plot_solution(x0=[0.5, 1], T=20, NPOINTS=200)
+            sage: S.plot_solution(x0=[0.5, 1], T=20, NPOINTS=200) # not tested
             Graphics object consisting of 1 graphics primitive
         """
         S = self.solve(x0=x0, tini=tini, T=T, NPOINTS=NPOINTS)

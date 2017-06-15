@@ -155,6 +155,32 @@ def truncated_matrix(N, *args, **kwargs):
 
     The transfer matrices `A^{i}_{i+j-1}` that correspond to `i = 1, \ldots, N`.
     It is given as a list of lists, and each inner list has dimension `k`.
+
+    EXAMPLES:
+
+    Conisder the polynomial ODE::
+
+        sage: from carlin.polynomial_ode import PolynomialODE
+        sage: x = polygens(QQ, ["x0", "x1"])
+        sage: f = [x[0]^3*x[1], -2*x[0]+2*x[1]^2]
+        sage: P = PoynomialODE(f, 2, 4)
+
+    Compute the Carleman matrix arising from linearization at order `N=2`::
+
+        sage: from carlin.transformation import get_Fj_from_model, truncated_matrix
+        sage: Fj = get_Fj_from_model(P.funcs(), P.dim(), P.degree())
+        sage: matrix(truncated_matrix(2, *Fj, input_format="Fj_matrices").toarray())
+        [ 0.0  0.0  0.0  0.0  0.0  0.0]
+        [-2.0  0.0  0.0  0.0  0.0  2.0]
+        [ 0.0  0.0  0.0  0.0  0.0  0.0]
+        [ 0.0  0.0 -2.0  0.0  0.0  0.0]
+        [ 0.0  0.0 -2.0  0.0  0.0  0.0]
+        [ 0.0  0.0  0.0 -2.0 -2.0  0.0]
+
+    Try a higher truncation order::
+
+        sage: sage: matrix(truncated_matrix(4, *Fj, input_format="Fj_matrices").toarray())
+        30 x 30 dense matrix over Real Double Field (use the '.str()' method to see the entries)
     """
     from scipy.sparse import bmat
     
@@ -251,12 +277,16 @@ def quadratic_reduction(F, n, k):
         (1, 3)
         sage: [matrix(Fi.toarray()) for Fi in F]
         [[1.0], [0.0], [-1.0]]
+
+    Introducing the auxiliary variables `\tilde{x}_1 := x` and `\tilde{x}_2:=x^2`,
+    the corresponding quadratic system in `\tilde{x} := (\tilde{x}_1, \tilde{x}_2)` is::
+
         sage: (Fred, nred, kred) = quadratic_reduction(F, n, k)
         sage: nred, kred
         (2, 2)
         sage: matrix(Fred[0].toarray())
-        [-1.0  0.0]
-        [ 0.0 -2.0]
+        [1.0  0.0]
+        [0.0  2.0]
         sage: matrix(Fred[1].toarray())
         [ 0.0 -1.0  0.0  0.0]
         [ 0.0  0.0  0.0 -2.0]
@@ -289,7 +319,6 @@ def quadratic_reduction(F, n, k):
                 newRow.append(lil_matrix((n**(i+1), n**(h+k))))
             else:
                 newRow.append(A[i][k-i-1+h])
-
 
         F2_tilde_list.append(newRow)
 

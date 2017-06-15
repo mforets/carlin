@@ -145,6 +145,19 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
        sage: F[1].toarray()
        array([[ 1. ,  0. ,  0. ,  0. ],
               [ 0. ,  1.5,  0. ,  0. ]])
+
+    TESTS:
+
+    Check if a polynomial with a non-numeric coefficient is allowed::
+
+    sage: from carlin.io import get_Fj_from_model
+    sage: x = polygens(QQ, ["x0"]); mu = SR.var("mu")
+    sage; from carlin.polynomial_ode import PolynomialODE
+    sage: T = PolynomialODE([mu*x[0]^2 - x[0]], 1, 2)
+    sage: get_Fj_from_model(T.funcs(), T.dim(), T.degree())
+    Traceback (most recent call last)
+    ...
+    NotImplementedError("the coefficients of the polynomial should be numeric")
     """
     if model_filename is not None and f is None:
         got_model_by_filename = True
@@ -161,7 +174,13 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
     F = [dok_matrix((n, n**i), dtype=np.float64) for i in range(1, k+1)]
 
     # read the powers appearing in each monomial
-    dictionary_f = [fi.dict() for fi in f];
+    try:
+        dictionary_f = [fi.dict() for fi in f]
+
+    except AttributeError:
+        # if the polynomial has symbolic coefficients, we have to parse the 
+        # expression tree
+        raise NotImplementedError("the coefficients of the polynomial should be numeric")
 
     if (n>1):
         from carlin.transformation import get_index_from_key
