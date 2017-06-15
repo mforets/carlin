@@ -84,6 +84,9 @@ import scipy.sparse.linalg
 # Carleman input/output libraries
 from carlin.io import get_Fj_from_model
 
+# Class for polynomial ODEs
+from carlin.polynomial_ode import PolynomialODE
+
 # Toolbox for operations on polytopes
 from polyhedron_tools.misc import polyhedron_to_Hrep, chebyshev_center, radius
 
@@ -333,42 +336,59 @@ def quadratic_reduction(F, n, k):
 
     return [F_tilde, nquad, kquad]
 
-def error_function(model_filename, N, x0):
+def error_function(model, N, x0):
     """
     Compute the error function of a truncated ODE.
-    
+
     INPUT:
 
-    - ``model_filename`` -- string containing the model in text format
+    - ``model`` -- Polynomial ODE or string containing the model in text format
 
-    - ``N`` -- truncation order
+    - ``N`` -- integer; truncation order
 
-    - ``x0`` -- initial point, a list
+    - ``x0`` -- list; initial point
+
+    OUTPUT:
+
+    - ``Ts`` -- convergence time computed from the reduced quadratic system
+
+    - ``error`` -- function of `t`, the estimated truncation error in the supremum norm
+
+    EXAMPLES::
+
+        sage: from carlin.transformation import error_function
+        sage: from carlin.library import quadratic_scalar as P
+        sage: Ts, error = error_function(P(0.5, 2), 2, [0, 0.5])
+        sage: Ts
+        0.8109...
+        sage: error
+        0.5*(2.0*e^(0.5*t) - 2.0)^2*e^(0.5*t)/(-2.0*e^(0.5*t) + 3.0)
     """
     from numpy.linalg import norm
     from sage.symbolic.ring import SR
-    
-    [F, n, k] = get_Fj_from_model(model_filename)
-    [Fquad, nquad, kquad] = quadratic_reduction(F, n, k)
-    ch = characteristics(Fquad, nquad, kquad);
 
-    norm_F1_tilde = ch['norm_Fi_inf'][0]
-    norm_F2_tilde = ch['norm_Fi_inf'][1]
+    if isinstance(model, string):
+        [F, n, k] = get_Fj_from_model(model)
+    elif isinstance(model, PolynomialODE):
+        [F, n, k] = get_Fj_from_model(model.funcs(), model.dim(), model.degree())
+
+    [Fquad, nquad, kquad] = quadratic_reduction(F, n, k)
+
+    ch = characteristics(Fquad, nquad, kquad)
+
+    norm_F1_tilde, norm_F2_tilde = ch['norm_Fi_inf']
 
     x0_hat = [kron_power(x0, i+1) for i in range(k-1)]
-    
+
     #transform to flat list
     x0_hat = [item for sublist in x0_hat for item in sublist]
 
     norm_x0_hat = norm(x0_hat, ord=inf)
-
     beta0 = ch['beta0_const']*norm_x0_hat
-
     Ts = 1/norm_F1_tilde*log(1+1/beta0)
 
     t = SR.var('t')
     error = norm_x0_hat*exp(norm_F1_tilde*t)/(1+beta0-beta0*exp(norm_F1_tilde*t))*(beta0*(exp(norm_F1_tilde*t)-1))**N
-
     return [Ts, error]
 
 def plot_error_function(model_filename, N, x0, Tfrac=0.8):
