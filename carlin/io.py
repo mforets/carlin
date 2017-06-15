@@ -152,12 +152,12 @@ def get_Fj_from_model(model_filename=None, f=None, n=None, k=None):
 
     sage: from carlin.io import get_Fj_from_model
     sage: x = polygens(QQ, ["x0"]); mu = SR.var("mu")
-    sage; from carlin.polynomial_ode import PolynomialODE
+    sage: from carlin.polynomial_ode import PolynomialODE
     sage: T = PolynomialODE([mu*x[0]^2 - x[0]], 1, 2)
     sage: get_Fj_from_model(T.funcs(), T.dim(), T.degree())
-    Traceback (most recent call last)
+    Traceback (most recent call last):
     ...
-    NotImplementedError("the coefficients of the polynomial should be numeric")
+    NotImplementedError: the coefficients of the polynomial should be numeric
     """
     if model_filename is not None and f is None:
         got_model_by_filename = True

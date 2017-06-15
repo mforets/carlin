@@ -163,7 +163,7 @@ def truncated_matrix(N, *args, **kwargs):
         sage: from carlin.polynomial_ode import PolynomialODE
         sage: x = polygens(QQ, ["x0", "x1"])
         sage: f = [x[0]^3*x[1], -2*x[0]+2*x[1]^2]
-        sage: P = PoynomialODE(f, 2, 4)
+        sage: P = PolynomialODE(f, 2, 4)
 
     Compute the Carleman matrix arising from linearization at order `N=2`::
 
@@ -179,7 +179,7 @@ def truncated_matrix(N, *args, **kwargs):
 
     Try a higher truncation order::
 
-        sage: sage: matrix(truncated_matrix(4, *Fj, input_format="Fj_matrices").toarray())
+        sage: matrix(truncated_matrix(4, *Fj, input_format="Fj_matrices").toarray())
         30 x 30 dense matrix over Real Double Field (use the '.str()' method to see the entries)
     """
     from scipy.sparse import bmat
