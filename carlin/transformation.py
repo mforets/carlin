@@ -367,7 +367,7 @@ def error_function(model, N, x0):
     from numpy.linalg import norm
     from sage.symbolic.ring import SR
 
-    if isinstance(model, string):
+    if isinstance(model, str):
         [F, n, k] = get_Fj_from_model(model)
     elif isinstance(model, PolynomialODE):
         [F, n, k] = get_Fj_from_model(model.funcs(), model.dim(), model.degree())
