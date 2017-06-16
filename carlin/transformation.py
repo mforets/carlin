@@ -448,7 +448,7 @@ def linearize(model, target_filename, N, x0, **kwargs):
     """
     
     dic = dict()
-    dic['model_name'] = model_filename
+    dic['model_name'] = model
     dic['N'] = N
 
     print 'Obtaining the canonical representation...',
@@ -464,7 +464,7 @@ def linearize(model, target_filename, N, x0, **kwargs):
 
     print 'Computing matrix BN...',
     if isinstance(model, str):
-        B_N = truncated_matrix(N, model_filename)
+        B_N = truncated_matrix(N, model)
     elif isinstance(model, PolynomialODE):
         B_N = truncated_matrix(N, F, n, k, input_format="Fj_matrices")
     print 'done'
