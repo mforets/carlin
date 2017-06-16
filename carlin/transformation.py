@@ -488,9 +488,9 @@ def linearize(model, target_filename, N, x0, **kwargs):
     dic['log_norm_F1_inf'] = ch['log_norm_F1_inf']
 
     if 'polyhedron' in str(type(x0)):
-
-        norm_initial_states = polyhedron_sup_norm(x0).n()
-
+        from polyhedron_tools.misc import radius, polyhedron_to_Hrep
+        [Fx0, gx0] = polyhedron_to_Hrep(x0)
+        norm_initial_states = radius([Fx0, gx0])
         if (norm_initial_states >= 1):
             norm_x0_hat = norm_initial_states**(k-1)
         elif (norm_initial_states < 1):
