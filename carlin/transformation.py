@@ -425,13 +425,13 @@ def plot_error_function(model_filename, N, x0, Tfrac=0.8):
 # Functions to export Carleman linearization
 #===============================================
 
-def linearize(model_filename, target_filename, N, x0, **kwargs):
+def linearize(model, target_filename, N, x0, **kwargs):
     r"""
     Compute Carleman linearization and export to a MAT file.
 
     INPUT:
 
-    - ``model_filename`` -- string containing the model in text format
+    - ``mode`` -- model as a PolynomialODE or a string containing the model in text format
     
     - ``target_filename`` -- string with the name of the output file in MAT format
     
@@ -452,14 +452,21 @@ def linearize(model_filename, target_filename, N, x0, **kwargs):
     dic['N'] = N
 
     print 'Obtaining the canonical representation...',
-    [F, n, k] = get_Fj_from_model(model_filename)
+
+    if isinstance(model, str):
+        [F, n, k] = get_Fj_from_model(model)
+    elif isinstance(model, PolynomialODE):
+        [F, n, k] = get_Fj_from_model(model.funcs(), model.dim(), model.degree())
     print 'done'
 
     dic['n'] = n
     dic['k'] = k
 
     print 'Computing matrix BN...',
-    B_N = truncated_matrix(N, model_filename)
+    if isinstance(model, str):
+        B_N = truncated_matrix(N, model_filename)
+    elif isinstance(model, PolynomialODE):
+        B_N = truncated_matrix(N, F, n, k, input_format="Fj_matrices")
     print 'done'
 
     dic['BN'] = B_N
