@@ -96,7 +96,10 @@
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><a class="reference internal" href="#carlin.io.solve_ode_exp" title="carlin.io.solve_ode_exp"><code class="xref py py-func docutils literal"><span class="pre">solve_ode_exp()</span></code></a></td>
-<td>Solve Carleman linearized 1st order ODE using matrix exponentiation</td>
+<td>Solve Carleman linearized ODE.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.io.plot_truncated" title="carlin.io.plot_truncated"><code class="xref py py-func docutils literal"><span class="pre">plot_truncated()</span></code></a></td>
+<td>Solve and return the graphics in phase space.</td>
 </tr>
 </tbody>
 </table>
@@ -141,6 +144,42 @@ These are formatted in dictionary-of-keys (dok) form.</li>
 <li><code class="docutils literal"><span class="pre">n</span></code> &#8211; dimension of the state-space of the system</li>
 <li><code class="docutils literal"><span class="pre">k</span></code> &#8211; degree of the system</li>
 </ul>
+<p>EXAMPLES:</p>
+<p>Let&#8217;s create a two-dimensional system of second order:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">x</span> <span class="o">=</span> <span class="n">polygens</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x0&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">])</span>
+<span class="gp">sage: </span><span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.polynomial_ode</span> <span class="kn">import</span> <span class="n">PolynomialODE</span>
+<span class="gp">sage: </span><span class="n">T</span> <span class="o">=</span> <span class="n">PolynomialODE</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">T</span>
+<span class="go">A Polynomial ODE in n = 2 variables</span>
+</pre></div>
+</div>
+<p>There are two <span class="math">\(F_j\)</span> matrices in sparse representation, which can be visualizeda
+with the <code class="docutils literal"><span class="pre">toarray</span></code> method:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="n">sage</span><span class="p">:</span> <span class="kn">from</span> <span class="nn">carlin.io</span> <span class="k">import</span> <span class="n">get_Fj_from_model</span>
+ <span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">funcs</span><span class="p">(),</span> <span class="n">T</span><span class="o">.</span><span class="n">dim</span><span class="p">(),</span> <span class="n">T</span><span class="o">.</span><span class="n">degree</span><span class="p">())</span>
+ <span class="n">sage</span><span class="p">:</span> <span class="n">F</span>
+ <span class="p">[</span><span class="o">&lt;</span><span class="mi">2</span><span class="n">x2</span> <span class="n">sparse</span> <span class="n">matrix</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;&lt;type &#39;</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="s1">&#39;&gt;&#39;</span>
+         <span class="k">with</span> <span class="mi">3</span> <span class="n">stored</span> <span class="n">elements</span> <span class="ow">in</span> <span class="n">Dictionary</span> <span class="n">Of</span> <span class="n">Keys</span> <span class="nb">format</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="o">&lt;</span><span class="mi">2</span><span class="n">x4</span> <span class="n">sparse</span> <span class="n">matrix</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;&lt;type &#39;</span><span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="s1">&#39;&gt;&#39;</span>
+         <span class="k">with</span> <span class="mi">2</span> <span class="n">stored</span> <span class="n">elements</span> <span class="ow">in</span> <span class="n">Dictionary</span> <span class="n">Of</span> <span class="n">Keys</span> <span class="nb">format</span><span class="o">&gt;</span><span class="p">]</span>
+ <span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+ <span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">]])</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">F</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.</span> <span class="p">],</span>
+       <span class="p">[</span> <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">1.5</span><span class="p">,</span>  <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.</span> <span class="p">]])</span>
+</pre></div>
+</div>
+<p>TESTS:</p>
+<p>Check if a polynomial with a non-numeric coefficient is allowed:</p>
+<p>sage: from carlin.io import get_Fj_from_model
+sage: x = polygens(QQ, [&#8220;x0&#8221;]); mu = SR.var(&#8220;mu&#8221;)
+sage: from carlin.polynomial_ode import PolynomialODE
+sage: T = PolynomialODE([mu*x[0]^2 - x[0]], 1, 2)
+sage: get_Fj_from_model(T.funcs(), T.dim(), T.degree())
+Traceback (most recent call last):
+...
+NotImplementedError: the coefficients of the polynomial should be numeric</p>
 </dd></dl>
 
 <dl class="function">
@@ -161,14 +200,49 @@ each component in the polynomial ring <span class="math">\(\mathbb{Q}[x_1,\ldots
 </dd></dl>
 
 <dl class="function">
+<dt id="carlin.io.plot_truncated">
+<code class="descclassname">carlin.io.</code><code class="descname">plot_truncated</code><span class="sig-paren">(</span><em>model</em>, <em>N</em>, <em>x0</em>, <em>tini</em>, <em>T</em>, <em>NPOINTS</em>, <em>xcoord=0</em>, <em>ycoord=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.plot_truncated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve and return graphics in phase space of a given model.</p>
+<p>INPUT:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">model</span></code> &#8211; PolynomialODE, defining the tuple <span class="math">\((f, n, k)\)</span></li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; integer; truncation order</li>
+<li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; vector; initial condition</li>
+<li><code class="docutils literal"><span class="pre">tini</span></code> &#8211; initial time of simulation</li>
+<li><code class="docutils literal"><span class="pre">T</span></code> &#8211; final time of simulation</li>
+<li><code class="docutils literal"><span class="pre">NPOINTS</span></code> &#8211; number of points sampled</li>
+<li><code class="docutils literal"><span class="pre">xcoord</span></code> &#8211; (default: <span class="math">\(0\)</span>), x-coordinate in plot</li>
+<li><code class="docutils literal"><span class="pre">ycoord</span></code> &#8211; (default: <span class="math">\(1\)</span>), y coordinate in plot</li>
+</ul>
+<p>NOTES:</p>
+<p>By default, returns a plot in the plane <span class="math">\((x_1, x_2)\)</span>. All other keyword arguments
+passes are sent to the <span class="math">\(list_plot\)</span> command (use to set line color, style, etc.)</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">vanderpol</span>
+<span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.io</span> <span class="kn">import</span> <span class="n">plot_truncated</span>
+<span class="gp">sage: </span><span class="n">G</span> <span class="o">=</span> <span class="n">plot_truncated</span><span class="p">(</span><span class="n">vanderpol</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">sage: </span><span class="n">G</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">gridlines</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">axes_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">,</span> <span class="s1">&#39;$x_2$&#39;</span><span class="p">])</span> <span class="c1"># not tested</span>
+<span class="go">Graphics object consisting in 1 graphics primitive</span>
+</pre></div>
+</div>
+<p>All other keyword arguments are passed to the <code class="docutils literal"><span class="pre">list_plot</span></code> function. For example, specify color and 
+maximum and minimum values for the axes:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">G</span> <span class="o">=</span> <span class="n">plot_truncated</span><span class="p">(</span><span class="n">vanderpol</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">sage: </span><span class="n">G</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">gridlines</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">axes_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">,</span> <span class="s1">&#39;$x_2$&#39;</span><span class="p">])</span> <span class="c1"># not tested</span>
+<span class="go">Graphics object consisting in 1 graphics primitive</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="carlin.io.solve_ode_exp">
-<code class="descclassname">carlin.io.</code><code class="descname">solve_ode_exp</code><span class="sig-paren">(</span><em>AN=None</em>, <em>x0=None</em>, <em>N=2</em>, <em>tini=0</em>, <em>T=1</em>, <em>NPOINTS=100</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.solve_ode_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solve Carleman linearized 1st order ODE using matrix exponential calculus.</p>
+<code class="descclassname">carlin.io.</code><code class="descname">solve_ode_exp</code><span class="sig-paren">(</span><em>AN</em>, <em>x0</em>, <em>N</em>, <em>tini=0</em>, <em>T=1</em>, <em>NPOINTS=100</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.io.solve_ode_exp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve 1st order ODE with initial condition in Kronecker power form.</p>
 <p>INPUT:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">AN</span></code> &#8211; matrix, it can be Sage dense or NumPy sparse in COO format</li>
 <li><code class="docutils literal"><span class="pre">x0</span></code> &#8211; vector, initial point</li>
-<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; (optional, default: 2) order of the truncation</li>
+<li><code class="docutils literal"><span class="pre">N</span></code> &#8211; integer, order of the truncation</li>
 <li><code class="docutils literal"><span class="pre">tini</span></code> &#8211; (optional, default: 0) initial time</li>
 <li><code class="docutils literal"><span class="pre">T</span></code> &#8211; (optional, default: 1) final time</li>
 <li><code class="docutils literal"><span class="pre">NPOINTS</span></code> &#8211; (optional, default: 100) number of points computed</li>
@@ -181,8 +255,10 @@ condition <span class="math">\(x(0) = x_0\)</span>. The solution is computed the
 the matrix exponential is computed using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.expm_multiply.html">scipy.sparse.linalg.expm_multiply</a>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_Fj_from_model</span><span class="p">,</span> <span class="n">truncated_matrix</span>
-<span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">scalar_quadratic</span>
-<span class="gp">sage: </span><span class="n">Fjnk</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="o">*</span><span class="n">scalar_quadratic</span><span class="p">())</span>
+<span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">quadratic_scalar</span>
+<span class="gp">sage: </span><span class="n">S</span> <span class="o">=</span> <span class="n">quadratic_scalar</span><span class="p">()</span>
+<span class="gp">sage: </span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">funcs</span><span class="p">(),</span> <span class="n">S</span><span class="o">.</span><span class="n">dim</span><span class="p">(),</span> <span class="n">S</span><span class="o">.</span><span class="n">degree</span><span class="p">()</span>
+<span class="gp">sage: </span><span class="n">Fjnk</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Consider a fourth order truncation:</p>
@@ -200,8 +276,8 @@ the matrix exponential is computed using <a class="reference external" href="htt
 <span class="go">            T=1, NPOINTS=20)</span>
 </pre></div>
 </div>
-<p>It can also be solved using Sage matrices (although the speed is often
-smaller in this case, because it works with dense matrices):</p>
+<p>It can also be solved using Sage matrices (although this is often less performant,
+since it works with dense matrices):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">AN_dense</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">AN_sparse</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
 <span class="gp">sage: </span><span class="n">ans</span> <span class="o">=</span> <span class="n">solve_ode_exp</span><span class="p">(</span><span class="n">AN_dense</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tini</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> \
 <span class="go">            T=1, NPOINTS=20)</span>

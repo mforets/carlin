@@ -72,10 +72,10 @@
 <tr class="row-odd"><td><a class="reference internal" href="#carlin.library.chen_seven_dim" title="carlin.library.chen_seven_dim"><code class="xref py py-func docutils literal"><span class="pre">chen_seven_dim()</span></code></a></td>
 <td>Seven-dimensional nonlinear system of quadratic order</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#carlin.library.scalar_cubic" title="carlin.library.scalar_cubic"><code class="xref py py-func docutils literal"><span class="pre">scalar_cubic()</span></code></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#carlin.library.cubic_scalar" title="carlin.library.cubic_scalar"><code class="xref py py-func docutils literal"><span class="pre">cubic_scalar()</span></code></a></td>
 <td>Scalar ODE with a cubic term</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#carlin.library.scalar_quadratic" title="carlin.library.scalar_quadratic"><code class="xref py py-func docutils literal"><span class="pre">scalar_quadratic()</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#carlin.library.quadratic_scalar" title="carlin.library.quadratic_scalar"><code class="xref py py-func docutils literal"><span class="pre">quadratic_scalar()</span></code></a></td>
 <td>Scalar ODE with a quadratic term</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#carlin.library.vanderpol" title="carlin.library.vanderpol"><code class="xref py py-func docutils literal"><span class="pre">vanderpol()</span></code></a></td>
@@ -121,22 +121,23 @@ been neglected here for convenience (hence we take <span class="math">\(u=0\)</s
 </dd></dl>
 
 <dl class="function">
-<dt id="carlin.library.scalar_cubic">
-<code class="descclassname">carlin.library.</code><code class="descname">scalar_cubic</code><span class="sig-paren">(</span><em>a=1</em>, <em>b=1</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.scalar_cubic" title="Permalink to this definition">¶</a></dt>
+<dt id="carlin.library.cubic_scalar">
+<code class="descclassname">carlin.library.</code><code class="descname">cubic_scalar</code><span class="sig-paren">(</span><em>a=1</em>, <em>b=1</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.cubic_scalar" title="Permalink to this definition">¶</a></dt>
 <dd><p>A scalar ODE with a cubic term.</p>
 <p>It is defined as:</p>
 <div class="math">
-\[x'(t) = -ax(t) + bx(t)^3\]</div>
+\[x'(t) = ax(t) + bx(t)^3\]</div>
 <p>where <span class="math">\(a\)</span> and <span class="math">\(b\)</span> are paremeters of the ODE.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">scalar_cubic</span>
-<span class="gp">sage: </span><span class="n">scalar_cubic</span><span class="p">()</span>
-<span class="go">([x0^3 - x0], 1, 3)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">cubic_scalar</span>
+<span class="gp">sage: </span><span class="n">C</span> <span class="o">=</span> <span class="n">cubic_scalar</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">sage: </span><span class="n">C</span><span class="o">.</span><span class="n">funcs</span><span class="p">()</span>
+<span class="go">[x0^3 - x0]</span>
 </pre></div>
 </div>
 <p>Compute the Carleman embedding truncated at order <span class="math">\(N=4\)</span>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_Fj_from_model</span><span class="p">,</span> <span class="n">truncated_matrix</span> 
-<span class="gp">sage: </span><span class="n">Fj</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="o">*</span><span class="n">scalar_cubic</span><span class="p">())</span>
+<span class="gp">sage: </span><span class="n">Fj</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">funcs</span><span class="p">(),</span> <span class="n">C</span><span class="o">.</span><span class="n">dim</span><span class="p">(),</span> <span class="n">C</span><span class="o">.</span><span class="n">degree</span><span class="p">())</span>
 <span class="gp">sage: </span><span class="n">matrix</span><span class="p">(</span><span class="n">truncated_matrix</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">*</span><span class="n">Fj</span><span class="p">,</span> <span class="n">input_format</span><span class="o">=</span><span class="s2">&quot;Fj_matrices&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
 <span class="go">[-1.0  0.0  1.0  0.0]</span>
 <span class="go">[ 0.0 -2.0  0.0  2.0]</span>
@@ -147,22 +148,24 @@ been neglected here for convenience (hence we take <span class="math">\(u=0\)</s
 </dd></dl>
 
 <dl class="function">
-<dt id="carlin.library.scalar_quadratic">
-<code class="descclassname">carlin.library.</code><code class="descname">scalar_quadratic</code><span class="sig-paren">(</span><em>a=1</em>, <em>b=1</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.scalar_quadratic" title="Permalink to this definition">¶</a></dt>
+<dt id="carlin.library.quadratic_scalar">
+<code class="descclassname">carlin.library.</code><code class="descname">quadratic_scalar</code><span class="sig-paren">(</span><em>a=1</em>, <em>b=1</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.library.quadratic_scalar" title="Permalink to this definition">¶</a></dt>
 <dd><p>A scalar ODE with a quadratic term.</p>
 <p>It is defined as:</p>
 <div class="math">
 \[x'(t) = ax(t) + bx(t)^2\]</div>
 <p>where <span class="math">\(a\)</span> and <span class="math">\(b\)</span> are paremeters of the ODE.</p>
 <p>EXAMPLES:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">scalar_quadratic</span>
-<span class="gp">sage: </span><span class="n">scalar_quadratic</span><span class="p">()</span>
-<span class="go">([x0^2 + x0], 1, 2)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">quadratic_scalar</span>
+<span class="gp">sage: </span><span class="n">Q</span> <span class="o">=</span> <span class="n">quadratic_scalar</span><span class="p">();</span> <span class="n">Q</span>
+<span class="go">A Polynomial ODE in n = 1 variables</span>
+<span class="gp">sage: </span><span class="n">Q</span><span class="o">.</span><span class="n">funcs</span><span class="p">()</span>
+<span class="go">[x0^2 + x0]</span>
 </pre></div>
 </div>
 <p>Compute the Carleman embedding truncated at order <span class="math">\(N=4\)</span>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_Fj_from_model</span><span class="p">,</span> <span class="n">truncated_matrix</span> 
-<span class="gp">sage: </span><span class="n">Fj</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="o">*</span><span class="n">scalar_quadratic</span><span class="p">())</span>
+<span class="gp">sage: </span><span class="n">Fj</span> <span class="o">=</span> <span class="n">get_Fj_from_model</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">funcs</span><span class="p">(),</span> <span class="n">Q</span><span class="o">.</span><span class="n">dim</span><span class="p">(),</span> <span class="n">Q</span><span class="o">.</span><span class="n">degree</span><span class="p">())</span>
 <span class="gp">sage: </span><span class="n">matrix</span><span class="p">(</span><span class="n">truncated_matrix</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">*</span><span class="n">Fj</span><span class="p">,</span> <span class="n">input_format</span><span class="o">=</span><span class="s2">&quot;Fj_matrices&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
 <span class="go">[1.0 1.0 0.0 0.0]</span>
 <span class="go">[0.0 2.0 2.0 0.0]</span>
@@ -186,8 +189,8 @@ y' &amp;= -\omega^2  x - (x^2 - 1) \mu y
 For additional information see the <a class="reference external" href="https://en.wikipedia.org/wiki/Van_der_Pol_oscillator">Wikipedia article Van_der_Pol_oscillator</a>.</p>
 <p>EXAMPLES:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.library</span> <span class="kn">import</span> <span class="n">vanderpol</span>
-<span class="gp">sage: </span><span class="n">vanderpol</span><span class="p">(</span><span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">),</span> <span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;omega&#39;</span><span class="p">))</span>
-<span class="go">([x1, -omega^2*x0 - (x0^2 - 1)*mu*x1], 2, 3)</span>
+<span class="gp">sage: </span><span class="n">vanderpol</span><span class="p">(</span><span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;mu&#39;</span><span class="p">),</span> <span class="n">SR</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;omega&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">funcs</span><span class="p">()</span>
+<span class="go">[x1, -omega^2*x0 - (x0^2 - 1)*mu*x1]</span>
 </pre></div>
 </div>
 </dd></dl>
