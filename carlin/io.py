@@ -68,6 +68,8 @@ from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
 from sage.modules.free_module_element import vector
 
+from carlin.transformation import kron_power
+
 #==========================
 # Functions to load a model
 #==========================
@@ -250,6 +252,12 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 # Functions to solve ODE's
 #===============================================
 
+def lift(x0, N):
+    y0 = kron_power(x0, 1)
+    for i in range(2, N+1):
+        y0 = y0 + kron_power(x0, i)
+    return y0
+
 def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
     r"""
     Solve 1st order ODE with initial condition in Kronecker power form.
@@ -309,16 +317,8 @@ def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
         sage: ans = solve_ode_exp(AN_dense, x0=[0.1], N=4, tini=0, \
                     T=1, NPOINTS=20)
     """
-    import numpy as np
-    def initial_state_kron(x0, N):
-        from carlin.transformation import kron_power
-        y0 = kron_power(x0, 1)
-        for i in range(2, N+1):
-            y0 = y0 + kron_power(x0, i)
-        return vector(y0)
-
-    # transform to x0, x0^[2], ..., x0^[N]
-    y0 = initial_state_kron(x0, N)
+    # transform to [x0, x0^[2], ..., x0^[N]]
+    y0 = vector(lift(x0, N))
 
     # compute solution
     if "sage.matrix" in str(type(AN)):
@@ -378,7 +378,7 @@ def plot_truncated(model, N, x0, tini, T, NPOINTS, xcoord=0, ycoord=1, **kwargs)
         sage: G.show(gridlines=True, axes_labels = ['$x_1$', '$x_2$']) # not tested
         Graphics object consisting in 1 graphics primitive
     """
-    from carlin.transformation import truncated_matrix, kron_power
+    from carlin.transformation import truncated_matrix
     from carlin.io import solve_ode_exp, get_Fj_from_model
     from sage.plot.plot import list_plot
 
