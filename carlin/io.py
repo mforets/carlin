@@ -68,7 +68,7 @@ from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
 from sage.modules.free_module_element import vector
 
-from carlin.transformation import kron_power
+from carlin.utils import kron_power
 
 #==========================
 # Functions to load a model
@@ -251,12 +251,6 @@ def export_model_to_mat(model_filename, F=None, n=None, k=None, **kwargs):
 #===============================================
 # Functions to solve ODE's
 #===============================================
-
-def lift(x0, N):
-    y0 = kron_power(x0, 1)
-    for i in range(2, N+1):
-        y0 = y0 + kron_power(x0, i)
-    return y0
 
 def solve_ode_exp(AN, x0, N, tini=0, T=1, NPOINTS=100):
     r"""
