@@ -208,7 +208,7 @@ def truncated_matrix(N, *args, **kwargs):
     else:
         raise ValueError('invalid input format')
 
-    BN_list = []
+    AN_list = []
 
     for i in range(N):
 
@@ -223,11 +223,11 @@ def truncated_matrix(N, *args, **kwargs):
         for j in range(n3_i):
             newBlockRow.append(None)
 
-        BN_list.append(newBlockRow)
+        AN_list.append(newBlockRow)
 
-    BN = bmat(BN_list)
+    AN = bmat(AN_list)
 
-    return BN
+    return AN
 
 def quadratic_reduction(F, n, k):
     r"""
@@ -462,14 +462,14 @@ def linearize(model, target_filename, N, x0, **kwargs):
     dic['n'] = n
     dic['k'] = k
 
-    print 'Computing matrix BN...',
+    print 'Computing matrix AN...',
     if isinstance(model, str):
-        B_N = truncated_matrix(N, model)
+        A_N = truncated_matrix(N, model)
     elif isinstance(model, PolynomialODE):
-        B_N = truncated_matrix(N, F, n, k, input_format="Fj_matrices")
+        A_N = truncated_matrix(N, F, n, k, input_format="Fj_matrices")
     print 'done'
 
-    dic['BN'] = B_N
+    dic['AN'] = A_N
 
     print 'Computing the quadratic reduction...',
     [Fquad, nquad, kquad] = quadratic_reduction(F, n, k)
