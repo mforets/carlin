@@ -448,7 +448,7 @@ def linearize(model, target_filename, N, x0, **kwargs):
     computes Carleman linearization together with the error estimates and exports the resulting
     matrix `A_N` and characteristics to a MAT file.
     """
-    
+
     dic = dict()
     dic['model_name'] = model
     dic['N'] = N

@@ -2,33 +2,25 @@
 # Dependencies
 #===============================================
 
-# Working numerical libraries: NumPy
+# NumPy
 import numpy as np
 from numpy.linalg import norm
 
-# Working numerical libraries: SciPy
+# SciPy
 import scipy as sp
 from scipy import inf
 from scipy.io import savemat
 from scipy.sparse import kron, eye
 import scipy.sparse.linalg
 
-# Carleman input/output libraries
-from carlin.io import get_Fj_from_model
-
-# Class for polynomial ODEs
-from carlin.polynomial_ode import PolynomialODE
-
 # Toolbox for operations on polytopes
 from polyhedron_tools.misc import polyhedron_to_Hrep, chebyshev_center, radius
 
-# Sage objects: Rings, Polynomials, Linear algebra
+# Sage objects: Rings, Polynomials, Linear algebra and all that
 from sage.rings.all import RR, QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
-
 from sage.modules.free_module_element import vector
-
 from sage.functions.other import real_part, imag_part
 from sage.functions.log import log, exp
 
