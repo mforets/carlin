@@ -4,7 +4,13 @@ Carleman linearization in SageMath
 
 .. image:: https://api.travis-ci.org/mforets/carlin.svg
    :target: https://travis-ci.org/mforets/carlin
+  
+.. image:: https://img.shields.io/badge/docs-latest-blue.svg
+   :target: http://mforets.github.io/carlin/doc/html
 
+.. image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
+   :target: https://github.com/mforets/carlin/blob/master/LICENSE
+   
 Installation
 ~~~~~~~~~~~~
 
