@@ -1,5 +1,5 @@
 ==================================
-Carleman linearization in SageMath
+carlin
 ==================================
 
 .. image:: https://travis-ci.org/mforets/carlin.svg?branch=master
@@ -13,6 +13,8 @@ Carleman linearization in SageMath
 
 .. image:: https://zenodo.org/badge/84454287.svg
    :target: https://zenodo.org/badge/latestdoi/84454287
+   
+Carleman Linearization of Polynomial Differential Equations in SageMath. 
    
 Installation
 ~~~~~~~~~~~~
