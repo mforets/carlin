@@ -90,19 +90,19 @@
 <col width="70%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="carlin_transformation.html#carlin.transformation.get_index_from_key" title="carlin.transformation.get_index_from_key"><code class="xref py py-func docutils literal"><span class="pre">get_index_from_key()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-func docutils literal"><span class="pre">get_index_from_key()</span></code></td>
 <td>Return first occurrence of given key over a Kronecker power</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="carlin_transformation.html#carlin.transformation.get_key_from_index" title="carlin.transformation.get_key_from_index"><code class="xref py py-func docutils literal"><span class="pre">get_key_from_index()</span></code></a></td>
+<tr class="row-even"><td><code class="xref py py-func docutils literal"><span class="pre">get_key_from_index()</span></code></td>
 <td>Return multi-index of Kronecker power given an index and the order</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="carlin_transformation.html#carlin.transformation.kron_prod" title="carlin.transformation.kron_prod"><code class="xref py py-func docutils literal"><span class="pre">kron_prod()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-func docutils literal"><span class="pre">kron_prod()</span></code></td>
 <td>Compute the Kronecker product of x and y</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="carlin_transformation.html#carlin.transformation.kron_power" title="carlin.transformation.kron_power"><code class="xref py py-func docutils literal"><span class="pre">kron_power()</span></code></a></td>
+<tr class="row-even"><td><code class="xref py py-func docutils literal"><span class="pre">kron_power()</span></code></td>
 <td>Receives a <span class="math">\(n\times 1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="carlin_transformation.html#carlin.transformation.log_norm" title="carlin.transformation.log_norm"><code class="xref py py-func docutils literal"><span class="pre">log_norm()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-func docutils literal"><span class="pre">log_norm()</span></code></td>
 <td>Compute the logarithmic norm of a matrix</td>
 </tr>
 </tbody>
@@ -178,77 +178,6 @@ for <span class="math">\(p=\infty\)</span></li>
 </dd></dl>
 
 <dl class="function">
-<dt id="carlin.transformation.get_index_from_key">
-<code class="descclassname">carlin.transformation.</code><code class="descname">get_index_from_key</code><span class="sig-paren">(</span><em>key</em>, <em>j</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.get_index_from_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return first occurrence of given key over a Kronecker power.</p>
-<p>INPUT:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">key</span></code> &#8211; list or tuple, key corresponding to the exponent vector in the
-Kronecker power</li>
-<li><code class="docutils literal"><span class="pre">j</span></code> &#8211; integer, order of the Kronecker power</li>
-<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, number of dimensions</li>
-</ul>
-<p>NOTES:</p>
-<ul class="simple">
-<li>We assume <span class="math">\(n \geq 2\)</span>. Notice that if <span class="math">\(n=1\)</span>, we would return always that <code class="docutils literal"><span class="pre">first_occurence</span> <span class="pre">=</span> <span class="pre">0</span></code>.</li>
-</ul>
-<p>EXAMPLES:</p>
-<p>Take <span class="math">\(x^{[2]}\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute retrive the first ocurrence of
-the given key:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_index_from_key</span>
-<span class="gp">sage: </span><span class="n">get_index_from_key</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">1</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="carlin.transformation.get_key_from_index">
-<code class="descclassname">carlin.transformation.</code><code class="descname">get_key_from_index</code><span class="sig-paren">(</span><em>i</em>, <em>j</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.get_key_from_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return multi-index of Kronecker power given an index and the order.</p>
-<p>INPUT:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">i</span></code> &#8211; integer, index in the canonial Kronecker power enumeration</li>
-<li><code class="docutils literal"><span class="pre">j</span></code> &#8211; integer, order of the Kronecker power</li>
-<li><code class="docutils literal"><span class="pre">n</span></code> &#8211; integer, number of dimensions</li>
-</ul>
-<p>EXAMPLES:</p>
-<p>Take <span class="math">\(x^{[2]}\)</span> for <span class="math">\(x=(x_1, x_2)\)</span> and compute the exponent vector of the element
-in position <span class="math">\(1\)</span>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">carlin.transformation</span> <span class="kn">import</span> <span class="n">get_key_from_index</span>
-<span class="gp">sage: </span><span class="n">get_key_from_index</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">[1, 1]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="carlin.transformation.kron_power">
-<code class="descclassname">carlin.transformation.</code><code class="descname">kron_power</code><span class="sig-paren">(</span><em>x</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_power" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receives a <span class="math">\(n\times 1\)</span> vector and computes its Kronecker power <span class="math">\(x^{[i]}\)</span>.</p>
-<p>INPUT:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">x</span></code> &#8211; list or vector</li>
-<li><code class="docutils literal"><span class="pre">i</span></code> &#8211; integer</li>
-</ul>
-<p>OUTPUT:</p>
-<p>A list corresponding to the <span class="math">\(i\)</span>-th Kronecker power of <span class="math">\(x\)</span>, namely <span class="math">\(x^{[i]}\)</span>.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="carlin.transformation.kron_prod">
-<code class="descclassname">carlin.transformation.</code><code class="descname">kron_prod</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.kron_prod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the Kronecker product of x and y.</p>
-<p>INPUT:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">x</span></code> &#8211; vector or list</li>
-<li><code class="docutils literal"><span class="pre">y</span></code> &#8211; vector or list</li>
-</ul>
-<p>OUTPUT:</p>
-<p>A list is returned, corresponding to the Kronecker product <span class="math">\(x\otimes y\)</span>.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="carlin.transformation.linearize">
 <code class="descclassname">carlin.transformation.</code><code class="descname">linearize</code><span class="sig-paren">(</span><em>model</em>, <em>target_filename</em>, <em>N</em>, <em>x0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.linearize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute Carleman linearization and export to a MAT file.</p>
@@ -264,21 +193,6 @@ further details</li>
 <p>This function is self-contained; it transforms to canonical quadratic form, then
 computes Carleman linearization together with the error estimates and exports the resulting
 matrix <span class="math">\(A_N\)</span> and characteristics to a MAT file.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="carlin.transformation.log_norm">
-<code class="descclassname">carlin.transformation.</code><code class="descname">log_norm</code><span class="sig-paren">(</span><em>A</em>, <em>p='inf'</em><span class="sig-paren">)</span><a class="headerlink" href="#carlin.transformation.log_norm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the logarithmic norm of a matrix.</p>
-<p>INPUT:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">A</span></code> &#8211; a rectangular (Sage dense) matrix of order <span class="math">\(n\)</span>. The coefficients can be either real or complex</li>
-<li><code class="docutils literal"><span class="pre">p</span></code> &#8211; (default: <code class="docutils literal"><span class="pre">'inf'</span></code>). The vector norm; possible choices are <code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">2</span></code>, or <code class="docutils literal"><span class="pre">'inf'</span></code></li>
-</ul>
-<p>OUTPUT:</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">lognorm</span></code> &#8211; the log-norm of <span class="math">\(A\)</span> in the <span class="math">\(p\)</span>-norm</li>
-</ul>
 </dd></dl>
 
 <dl class="function">
