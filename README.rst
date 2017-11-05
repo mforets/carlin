@@ -14,7 +14,7 @@ carlin
 .. image:: https://zenodo.org/badge/84454287.svg
    :target: https://zenodo.org/badge/latestdoi/84454287
    
-Carleman Linearization of Polynomial Differential Equations in SageMath. 
+`carlin` is a SageMath package for Carleman linearization of polynomial differential equations.
    
 Installation
 ~~~~~~~~~~~~
