@@ -2,7 +2,7 @@
 Carleman linearization in SageMath
 ==================================
 
-.. image:: https://api.travis-ci.org/mforets/carlin.svg
+.. image:: https://travis-ci.org/mforets/carlin.svg?branch=master
    :target: https://travis-ci.org/mforets/carlin
   
 .. image:: https://img.shields.io/badge/docs-latest-blue.svg
