@@ -68,7 +68,7 @@ from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens 
 from sage.modules.free_module_element import vector
 
-from carlin.utils import kron_power
+from carlin.utils import kron_power, lift
 
 #==========================
 # Functions to load a model
