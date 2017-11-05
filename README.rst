@@ -10,6 +10,9 @@ Carleman linearization in SageMath
 
 .. image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
    :target: https://github.com/mforets/carlin/blob/master/LICENSE
+
+.. image:: https://zenodo.org/badge/84454287.svg
+   :target: https://zenodo.org/badge/latestdoi/84454287
    
 Installation
 ~~~~~~~~~~~~
