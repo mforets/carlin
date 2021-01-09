@@ -8,7 +8,7 @@ carlin
 .. image:: https://img.shields.io/badge/docs-latest-blue.svg
    :target: http://mforets.github.io/carlin/doc/html
 
-.. image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
+.. image:: https://img.shields.io/github/license/mforets/carlin
    :target: https://github.com/mforets/carlin/blob/master/LICENSE
 
 .. image:: https://zenodo.org/badge/84454287.svg
