@@ -36,7 +36,7 @@ setup(
       'Intended Audience :: Science/Research',
       'Topic :: Scientific/Engineering :: Mathematics',
       'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-      'Programming Language :: Python :: 2.7',
+      'Programming Language :: Python :: 3',
     ], # classifiers list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     keywords = "sage differential-equations polynomials",
     packages = ['carlin'],
