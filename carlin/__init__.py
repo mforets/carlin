@@ -1,2 +1,6 @@
 # This is the init file for carlin.
-from sage.all_cmdline import *
+
+try:
+    import sage.all
+except ImportError:
+    import sage.all__sagemath_modules

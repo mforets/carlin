@@ -91,7 +91,8 @@ from carlin.polynomial_ode import PolynomialODE
 from polyhedron_tools.misc import polyhedron_to_Hrep, chebyshev_center, radius
 
 # Sage objects: Rings, Polynomials, Linear algebra
-from sage.rings.all import RR, QQ
+from sage.rings.real_mpfr import RR
+from sage.rings.rational_field import Q as QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
 
