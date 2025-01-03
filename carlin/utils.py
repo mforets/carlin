@@ -8,7 +8,7 @@ from numpy.linalg import norm
 
 # SciPy
 import scipy as sp
-from scipy import inf
+from numpy import inf
 from scipy.io import savemat
 from scipy.sparse import kron, eye
 import scipy.sparse.linalg

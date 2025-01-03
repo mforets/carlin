@@ -57,7 +57,7 @@ import numpy as np
 
 # Working numerical libraries: SciPy
 import scipy as sp
-from scipy import inf
+from numpy import inf
 import scipy.sparse.linalg
 from scipy.sparse import dok_matrix
 
