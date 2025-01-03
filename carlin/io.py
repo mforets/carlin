@@ -57,15 +57,16 @@ import numpy as np
 
 # Working numerical libraries: SciPy
 import scipy as sp
-from scipy import inf
+from numpy import inf
 import scipy.sparse.linalg
 from scipy.sparse import dok_matrix
 
 # Sage objects: Rings and Polynomials
 from sage.rings.integer import Integer
-from sage.rings.all import RR, QQ
+from sage.rings.real_mpfr import RR
+from sage.rings.rational_field import Q as QQ
 from sage.rings.real_double import RDF
-from sage.rings.polynomial.polynomial_ring import polygens 
+from sage.rings.polynomial.polynomial_ring import polygens
 from sage.modules.free_module_element import vector
 
 from carlin.utils import kron_power, lift

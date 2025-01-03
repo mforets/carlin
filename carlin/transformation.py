@@ -76,7 +76,7 @@ from numpy.linalg import norm
 
 # Working numerical libraries: SciPy
 import scipy as sp
-from scipy import inf
+from numpy import inf
 from scipy.io import savemat
 from scipy.sparse import kron, eye
 import scipy.sparse.linalg
@@ -91,7 +91,8 @@ from carlin.polynomial_ode import PolynomialODE
 from polyhedron_tools.misc import polyhedron_to_Hrep, chebyshev_center, radius
 
 # Sage objects: Rings, Polynomials, Linear algebra
-from sage.rings.all import RR, QQ
+from sage.rings.real_mpfr import RR
+from sage.rings.rational_field import Q as QQ
 from sage.rings.real_double import RDF
 from sage.rings.polynomial.polynomial_ring import polygens
 
